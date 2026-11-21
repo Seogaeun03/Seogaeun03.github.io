@@ -12,21 +12,21 @@
 .wall { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(5, 1fr); align-content: center; gap: 1.4cqw .4cqw; padding: 2cqw 3cqw 2cqw 8cqw; background: #1d2026; }
 .wall img { height: 15cqw; width: auto; margin: 0 auto; }
 .loop { display: grid; grid-template-columns: repeat(5, 1fr); gap: .6cqw; position: relative; }
-.loop .n { border: 2px solid var(--line); border-radius: 5px; padding: .8cqw .6cqw; font-size: .98cqw; font-weight: 700; text-align: center; color: var(--ink); background: var(--paper); word-break: keep-all; }
-.loop .n small { display: block; font-weight: 400; font-size: .8cqw; color: var(--soft); margin-top: .2cqw; }
+.loop .n { border: 2px solid var(--line); border-radius: 5px; padding: .9cqw .6cqw; font-size: 1.15cqw; font-weight: 700; text-align: center; color: var(--ink); background: var(--paper); word-break: keep-all; }
+.loop .n small { display: block; font-weight: 400; font-size: .95cqw; color: var(--soft); margin-top: .2cqw; }
 .loop .n.a { border-color: var(--accent); background: var(--accent-soft); }
 .bars { display: grid; gap: 1.6cqw; }
-.bars .t { font-size: 1.1cqw; font-weight: 700; color: var(--ink); }
+.bars .t { font-size: 1.25cqw; font-weight: 700; color: var(--ink); }
 .bars .t small { font-weight: 400; color: var(--soft); font-size: .82cqw; margin-left: .3cqw; }
 .bar { display: flex; align-items: center; gap: .5cqw; height: 1.8cqw; margin-top: .3cqw; }
 .bar i { display: block; height: 100%; border-radius: 2px; min-width: .3cqw; background: var(--muted); }
 .bar.a i { background: var(--accent); }
-.bar span { font-size: .88cqw; color: var(--soft); white-space: nowrap; }
+.bar span { font-size: 1.05cqw; color: var(--soft); white-space: nowrap; }
 .bar.a span { color: var(--ink); font-weight: 700; }
 .qc { display: flex; gap: 1cqw; }
 .qc figure { margin: 0; text-align: center; background: #fff; border: 2px solid var(--line); border-radius: 4px; padding: .5cqw .5cqw .2cqw; }
-.qc img { height: 5.5cqw; width: auto; }
-.qc figcaption { font-size: .85cqw; font-weight: 700; }
+.qc img { height: 7cqw; width: auto; }
+.qc figcaption { font-size: 1cqw; font-weight: 700; }
 .qc .bad figcaption { color: #d9452f; } .qc .ok figcaption { color: #1f9d55; }
 </style>
 </head>
@@ -34,7 +34,7 @@
 <a class="home" href="./">&larr; 서가은 포트폴리오 홈</a>
 <main class="deck">
 
-s!-- 1 표지 -->
+<!-- 1 표지 -->
 <section class="slide dk cover hj" aria-label="표지">
   <div class="l" style="--accent:#23a7b5;">
     <span class="role">TECHNICAL ARTIST | PORTFOLIO 2026</span>
@@ -54,7 +54,7 @@ s!-- 1 표지 -->
   </div>
 </section>
 
-s!-- 2 소개와 기술 -->
+<!-- 2 소개와 기술 -->
 <section class="slide" aria-label="소개와 기술">
   <div class="kicker"><b>ABOUT</b> 이렇게 일합니다</div>
   <h2>예쁜 한 장보다, <em>천 장이 같은 규격</em>으로 나오게</h2>
@@ -72,7 +72,7 @@ s!-- 2 소개와 기술 -->
   </div>
 </section>
 
-s!-- 3 AI 사용 방식 -->
+<!-- 3 AI 사용 방식 -->
 <section class="slide" aria-label="AI를 쓰는 방식">
   <div class="kicker"><b>AI</b> 생성 AI를 쓰는 방식</div>
   <h2>AI는 초안을 만들고, <em>규칙과 마지막 손질</em>은 제가 합니다</h2>
@@ -93,7 +93,7 @@ s!-- 3 AI 사용 방식 -->
   </div>
 </section>
 
-s!-- 4 한짝 개요 -->
+<!-- 4 한짝 개요 -->
 <section class="slide pv hj" aria-label="한짝 개요">
   <div class="info">
     <div class="kicker"><b>01</b> 한짝</div>
@@ -111,7 +111,7 @@ s!-- 4 한짝 개요 -->
   <div class="shot"><video src="media/wardrobe-sets.webm" poster="media/wardrobe-sets-poster.jpg" muted loop playsinline preload="metadata"></video></div>
 </section>
 
-s!-- 5 마네킹 착용 -->
+<!-- 5 마네킹 착용 -->
 <section class="slide hj" aria-label="사례 마네킹 착용 파이프라인">
   <div class="kicker"><b>01 한짝</b> 사례 1. 장비 착용 파이프라인</div>
   <h2>부위를 다시 그리게 하지 말고, <em>같은 마네킹에 입힌다</em></h2>
@@ -125,7 +125,7 @@ s!-- 5 마네킹 착용 -->
   </div>
   <div class="row">
     <div class="col" style="flex:1.2;">
-      <img src="media/deck-pipeline.jpg" alt="치장 제작 4단계" style="border-radius:5px; border:2px solid var(--line); max-height:17cqw; width:auto;">
+      <img src="media/deck-pipeline.jpg" alt="치장 제작 4단계" style="border-radius:5px; border:2px solid var(--line); max-height:22cqw; width:auto;">
       <div class="qc" style="margin-top:1cqw;">
         <figure class="bad"><img class="px" src="img/qc-bad.png" alt="떠 있는 모자"><figcaption>떠 있음</figcaption></figure>
         <figure class="ok"><img class="px" src="img/qc-ok.png" alt="맞게 얹힌 모자"><figcaption>통과</figcaption></figure>
@@ -146,7 +146,7 @@ s!-- 5 마네킹 착용 -->
   </div>
 </section>
 
-s!-- 6 4프레임 한 장 -->
+<!-- 6 4프레임 한 장 -->
 <section class="slide hj" aria-label="사례 4프레임 한 장 생성">
   <div class="kicker"><b>01 한짝</b> 사례 2. 모션 시트</div>
   <h2>프레임마다 따로 그리면 옷이 흐른다. <em>네 칸을 한 장에</em></h2>
@@ -170,15 +170,15 @@ s!-- 6 4프레임 한 장 -->
   </div>
 </section>
 
-s!-- 7 몬스터 대량 -->
+<!-- 7 몬스터 대량 -->
 <section class="slide hj" aria-label="사례 몬스터 대량 반입">
   <div class="kicker"><b>01 한짝</b> 사례 3. 대량 반입</div>
   <h2>몬스터 90종 1,800프레임, <em>발끝 0px</em></h2>
   <div class="row">
     <div class="col" style="flex:1;">
       <div class="g2">
-        <figure style="margin:0;"><div class="frame light"><img src="hj/chicken-king.gif" alt="통닭 대왕" style="height:26cqw; width:auto; margin:0 auto;"></div><p class="cap"><b>통닭 대왕</b> 약 55px 떠 있던 것을 0px로</p></figure>
-        <figure style="margin:0;"><div class="frame light"><img src="hj/octopus.gif" alt="문어 장군" style="height:26cqw; width:auto; margin:0 auto;"></div><p class="cap"><b>문어 장군</b> 공격 모션</p></figure>
+        <figure style="margin:0;"><div class="frame light"><img src="hj/chicken-king.gif" alt="통닭 대왕" style="height:30cqw; width:auto; margin:0 auto;"></div><p class="cap"><b>통닭 대왕</b> 약 55px 떠 있던 것을 0px로</p></figure>
+        <figure style="margin:0;"><div class="frame light"><img src="hj/octopus.gif" alt="문어 장군" style="height:30cqw; width:auto; margin:0 auto;"></div><p class="cap"><b>문어 장군</b> 공격 모션</p></figure>
       </div>
     </div>
     <div class="col" style="flex:1;">
@@ -196,7 +196,7 @@ s!-- 7 몬스터 대량 -->
   </div>
 </section>
 
-s!-- 8 내 손보정 학습 -->
+<!-- 8 내 손보정 학습 -->
 <section class="slide hj" aria-label="사례 손보정을 규칙으로">
   <div class="kicker"><b>01 한짝</b> 사례 4. 손보정을 규칙으로</div>
   <h2>제가 매번 고치던 걸 <em>초안 도구가 먼저</em> 하게</h2>
@@ -225,7 +225,7 @@ s!-- 8 내 손보정 학습 -->
   </div>
 </section>
 
-s!-- 9 DEVIANT 개요 -->
+<!-- 9 DEVIANT 개요 -->
 <section class="slide dk pv" aria-label="DEVIANT 개요">
   <div class="info">
     <div class="kicker"><b>02</b> DEVIANT</div>
@@ -243,7 +243,7 @@ s!-- 9 DEVIANT 개요 -->
   <div class="shot"><video src="dv/highlight.mp4" poster="dv/highlight-poster.png" muted loop playsinline preload="metadata"></video></div>
 </section>
 
-s!-- 10 HTML 시험장 -->
+<!-- 10 HTML 시험장 -->
 <section class="slide" aria-label="사례 HTML 시험장에서 Unity로">
   <div class="kicker"><b>02 DEVIANT</b> 사례 5. 시험장에서 엔진으로</div>
   <h2>엔진에 넣기 전에 <em>HTML 시험장</em>에서 정한다</h2>
@@ -270,7 +270,7 @@ s!-- 10 HTML 시험장 -->
   </div>
 </section>
 
-s!-- 11 도구 -->
+<!-- 11 도구 -->
 <section class="slide" aria-label="사례 편집기와 검수 도구">
   <div class="kicker"><b>02 DEVIANT</b> 사례 6. 도구</div>
   <h2>고칠 사람이 직접 고칠 수 있게, <em>도구부터</em></h2>
@@ -291,7 +291,7 @@ s!-- 11 도구 -->
   <p class="mine" style="margin-top:1.2cqw;"><b>제 몫</b> 어떤 도구가 필요한지, 무엇을 비교할지, 어디까지 손으로 고칠지. 도구 코드는 AI와 함께 썼습니다.</p>
 </section>
 
-s!-- 12 무기 모션 규격 -->
+<!-- 12 무기 모션 규격 -->
 <section class="slide" aria-label="사례 무기 스킬 모션">
   <div class="kicker"><b>02 DEVIANT</b> 사례 7. 모션을 게임 시간에</div>
   <h2>생성한 모션을 <em>스킬 시간표</em>에 맞춘다</h2>
@@ -314,7 +314,7 @@ s!-- 12 무기 모션 규격 -->
   </div>
 </section>
 
-s!-- 13 AIVO -->
+<!-- 13 AIVO -->
 <section class="slide av" aria-label="AIVO">
   <div class="kicker"><b>03</b> AIVO, SSAFY 공통 프로젝트 (웹디자인), 우수상</div>
   <h2>화면이 멀쩡해 보여도 <em>진짜 데이터</em>인지 확인한다</h2>
@@ -342,7 +342,7 @@ s!-- 13 AIVO -->
   </div>
 </section>
 
-s!-- 14 마무리 -->
+<!-- 14 마무리 -->
 <section class="slide dk end" aria-label="마무리">
   <div class="kicker" style="justify-content:center;"><b>THANK YOU</b></div>
   <h2>AI가 그린 천 장이<br><em>한 사람이 그린 것처럼</em> 보이게</h2>
