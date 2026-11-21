@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서가은 게임 UI 포트폴리오</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body data-label="게임 UI 디자이너 포트폴리오">
+<a class="home" href="./">&larr; 서가은 포트폴리오 홈</a>
+<main class="deck">
+
+s!-- 1 표지 -->
+<section class="slide dk cover" aria-label="표지">
+  <div class="l">
+    <span class="role">GAME UI DESIGNER | PORTFOLIO 2026</span>
+    <h1>게임 화면의 규칙을 정하고<br><em>마지막 픽셀까지</em><br>맞춥니다</h1>
+    <p class="name">서가은<small>게임 UI, 픽셀 아트, 생성 AI 아트 파이프라인</small></p>
+    <div class="awards">
+      <span class="award"><b>우수상</b>한짝, SSAFY 특화 프로젝트</span>
+      <span class="award"><b>우수상</b>AIVO, SSAFY 공통 프로젝트</span>
+    </div>
+    <p class="links">github.com/Seogaeun03<br>seogu0307@gmail.com</p>
+  </div>
+  <div class="r"><img src="dv/title.png" alt="DEVIANT 타이틀 화면"></div>
+</section>
+
+s!-- 2 소개와 기술 -->
+<section class="slide" aria-label="소개와 기술">
+  <div class="kicker"><b>ABOUT</b> 이렇게 일합니다</div>
+  <h2>화면을 그리는 데서 끝내지 않고, <em>게임 안에서 맞을 때까지</em></h2>
+  <div class="pr">
+    <div><b>규칙부터 정한다</b><p>해상도, 테두리 두께, 색 수를 먼저 정하고 모든 창을 그 규칙으로 맞춥니다.</p></div>
+    <div><b>엔진 밖에서 여러 안을 비교한다</b><p>시안 여러 장을 실제 장면 위에 나란히 놓고 고른 뒤에 엔진으로 옮깁니다.</p></div>
+    <div><b>게임 안에서 직접 확인한다</b><p>적용한 뒤 직접 플레이하며 어긋난 픽셀과 흐름을 다시 잡습니다.</p></div>
+  </div>
+  <div class="tools">
+    <div class="tool"><div class="th c"><img class="px" src="dv/bld-mine.png" alt="직접 다듬은 픽셀 건물"></div><b>픽셀 아트</b><p>HUD, 아이콘 54장, 건물 손수정</p><small>DEVIANT</small></div>
+    <div class="tool"><div class="th"><img src="dv/hud-d1.png" alt="Unity 전투 HUD" style="object-position:12% 90%"></div><b>Unity</b><p>HUD와 연출을 넣고 플레이로 검수</p><small>DEVIANT</small></div>
+    <div class="tool"><div class="th"><img src="media/aivo-presentation-practice.jpg" alt="AIVO 화면" style="object-position:top left"></div><b>Figma, Vue</b><p>화면 흐름 설계와 프론트 구현</p><small>AIVO</small></div>
+    <div class="tool"><div class="th c"><img src="img/set-wizard.png" alt="치장 세트" style="object-fit:contain"></div><b>생성 AI 이미지</b><p>치장 세트, 몬스터 1,800프레임</p><small>한짝, DEVIANT</small></div>
+    <div class="tool"><div class="th"><img src="dv/craft-slot.jpg" alt="HTML 시험장" style="object-position:top"></div><b>HTML, CSS 시험장</b><p>조작 흐름을 먼저 만져 보는 비교본</p><small>DEVIANT, 한짝</small></div>
+  </div>
+</section>
+
+s!-- 3 AI 사용 방식 -->
+<section class="slide" aria-label="AI를 쓰는 방식">
+  <div class="kicker"><b>AI</b> 생성 AI를 쓰는 방식</div>
+  <h2>AI는 초안을 만들고, <em>규칙과 마지막 손질</em>은 제가 합니다</h2>
+  <div class="row">
+    <div class="col" style="flex:1; gap:1.6cqw;">
+      <div><p class="lab">AI에게 맡긴 것</p><p>그림과 모션 초안, 반복 계산(정합, 배치), 시험장과 엔진 코드 작성</p></div>
+      <div><p class="lab a">제가 한 것</p><p><strong>규격과 규칙 정하기</strong>(크기, 색 수, 테두리), <strong>여러 안 중에 고르기</strong>, <strong>마지막 픽셀 손질</strong>, <strong>게임 안에서 직접 확인</strong></p></div>
+      <div><p class="lab">지키는 원칙</p><p>자동 검사를 통과해도 눈으로 다시 봅니다. 확정한 그림은 AI가 다시 그리지 못하게 고정합니다.</p></div>
+    </div>
+    <div class="col" style="flex:1.25; justify-content:center;">
+      <div class="ba">
+        <figure><p class="lab">밑그림</p><div class="frame light"><img class="px" src="dv/bld-base.png" alt="건물 밑그림" style="height:24cqw; width:auto; margin:0 auto;"></div></figure>
+        <span class="arw">→</span>
+        <figure><p class="lab a">직접 다듬은 판</p><div class="frame light"><img class="px" src="dv/bld-mine.png" alt="직접 다듬은 건물" style="height:24cqw; width:auto; margin:0 auto;"></div></figure>
+      </div>
+      <p class="cap"><b>DEVIANT 마을 공방</b> 158×203 밑그림을 30색 규격과 선 규칙에 맞춰 직접 다듬었습니다.</p>
+    </div>
+  </div>
+</section>
+
+s!-- 4 DEVIANT 개요 -->
+<section class="slide dk pv" aria-label="DEVIANT 개요">
+  <div class="info">
+    <div class="kicker"><b>01</b> DEVIANT</div>
+    <img class="logo" src="dv/logo.webp" alt="DEVIANT 로고" style="filter:invert(1) hue-rotate(180deg);">
+    <h2>잉크 스케치 세계의<br><em>2D 액션 로그라이트</em></h2>
+    <dl class="facts">
+      <dt>기간</dt><dd>2026.10.06 ~ 진행 중, SSAFY 자율 프로젝트</dd>
+      <dt>팀</dt><dd>6인</dd>
+      <dt>개요</dt><dd>무기 13종을 바꿔 들며 스케치 세계의 챕터를 돌파하는 횡스크롤 액션</dd>
+      <dt>역할</dt><dd><strong>팀장, 아트: 전투 HUD, 아이콘, 픽셀 규격, 인벤토리 화면</strong></dd>
+      <dt>기술</dt><dd><span class="chips"><span class="chip on">Unity</span><span class="chip on">픽셀 아트</span><span class="chip on">HTML 시험장</span><span class="chip">생성 AI</span><span class="chip">GitLab</span></span></dd>
+    </dl>
+    <p class="cap" style="margin-top:auto;">SSAFY 판을 마친 뒤 지금은 팀과 기획을 다시 짜는 중입니다.</p>
+  </div>
+  <div class="shot"><video src="dv/highlight.mp4" poster="dv/highlight-poster.png" muted loop playsinline preload="metadata"></video></div>
+</section>
+
+s!-- 5 아트 규칙 -->
+<section class="slide" aria-label="DEVIANT 아트 규칙">
+  <div class="kicker"><b>01 DEVIANT</b> 아트 규칙</div>
+  <h2>모든 화면이 <em>같은 손으로</em> 그려진 것처럼</h2>
+  <div class="g3" style="flex:1;">
+    <div class="col">
+      <div class="frame light" style="flex:1; display:grid; place-items:center;"><img src="dv/hud-3stages.png" alt="선 규칙 세 단계" style="max-height:27cqw; width:auto;"></div>
+      <p class="cap"><b>선</b> 직선은 같은 마디로만, 곡선은 마디가 차례로 늘거나 줄게. 원은 4×4 서브픽셀로 매끈하게.</p>
+    </div>
+    <div class="col">
+      <div class="frame light" style="flex:1; display:grid; place-items:center;"><img src="dv/palette.png" alt="건물 색 규격표" style="max-height:27cqw; width:auto;"></div>
+      <p class="cap"><b>색</b> 지형은 6색, 마을 건물은 30색 규격. 색 빠진 세계라는 설정을 색 수로 지킵니다.</p>
+    </div>
+    <div class="col">
+      <div class="frame light" style="flex:1; display:grid; place-items:center;"><img src="dv/wall-before-after.png" alt="벽 테두리 전후" style="max-height:27cqw; width:auto;"></div>
+      <p class="cap"><b>테두리</b> UI는 먹 2px, 크림 1px. 통과할 수 있는 벽은 가장자리만 다르게.</p>
+    </div>
+  </div>
+</section>
+
+s!-- 6 HUD -->
+<section class="slide" aria-label="사례 전투 HUD">
+  <div class="kicker"><b>01 DEVIANT</b> 사례 1. 전투 HUD</div>
+  <h2>혼자 매끈하던 HUD를 <em>도트로 통일</em></h2>
+  <div class="ba" style="grid-template-columns:1fr auto 1fr;">
+    <figure><p class="lab">전</p><div class="frame"><img src="dv/hud-before.png" alt="통일 전 HUD"></div></figure>
+    <span class="arw">→</span>
+    <figure><p class="lab a">후</p><div class="frame"><img src="dv/hud-d1.png" alt="통일 후 HUD"></div></figure>
+  </div>
+  <div class="row" style="margin-top:1.6cqw; align-items:flex-start;">
+    <div class="three" style="flex:1.2;">
+      <div><span>문제</span><p>체력판만 도트이고 동전, 버튼, 무기 원, 숫자는 매끈한 그림. 내구도는 5px 줄이라 거의 안 보였습니다.</p></div>
+      <div><span>판단</span><p>배치 시안 넷 중 체력판 아래에 버프칸을 내린 안을 골랐습니다. 무기 파괴는 HUD는 지워지고 캐릭터는 번쩍이게 나눴습니다.</p></div>
+    </div>
+    <div class="col" style="flex:.8;">
+      <div class="frame"><img src="dv/gauge-full.webp" alt="게이지 가득 연출"></div>
+      <p class="cap"><b>게이지 가득 연출</b> 끝부분은 편집기로 직접 고쳤습니다.</p>
+    </div>
+  </div>
+</section>
+
+s!-- 7 아이콘 -->
+<section class="slide" aria-label="사례 무기와 스킬 아이콘">
+  <div class="kicker"><b>01 DEVIANT</b> 사례 2. 아이콘</div>
+  <h2>무기 14개, 스킬 40개를 <em>한 벌로</em></h2>
+  <div class="row">
+    <div class="col" style="flex:1.5;">
+      <div class="frame light"><img class="px" src="dv/icons-weapon.png" alt="무기 아이콘 14개"></div>
+      <p class="cap"><b>무기 아이콘</b> 48×48. 발사기 세 종류는 실루엣만으로 구분되게.</p>
+    </div>
+    <div class="col" style="flex:1;">
+      <div class="g2">
+        <figure style="margin:0;"><p class="lab">1차</p><div class="frame light" style="height:17cqw;"><img class="px" src="dv/icons-v1.png" alt="스킬 아이콘 1차" style="height:100%; width:100%; object-fit:cover; object-position:top;"></div></figure>
+        <figure style="margin:0;"><p class="lab a">최종</p><div class="frame light" style="height:17cqw;"><img class="px" src="dv/icons-skill.png" alt="스킬 아이콘 최종" style="height:100%; width:100%; object-fit:cover; object-position:top;"></div></figure>
+      </div>
+      <div class="three" style="margin-top:1.4cqw;">
+        <div><span>문제</span><p>자동 축소한 그림이라 선이 울퉁불퉁하고 작은 원 안에서 읽히지 않았습니다.</p></div>
+        <div><span>판단</span><p>크고 단순하게. 채찍은 스케치를, 방패는 참고 그림을 직접 주며 여섯 차례 방향을 잡았습니다.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+s!-- 8 인벤토리 -->
+<section class="slide" aria-label="사례 인벤토리 흐름">
+  <div class="kicker"><b>01 DEVIANT</b> 사례 3. 제작과 장착 흐름</div>
+  <h2>칸마다 반복하던 조작을 <em>한 화면으로</em></h2>
+  <div class="row" style="flex:none; gap:3cqw; align-items:center;">
+    <div class="col" style="gap:.5cqw;"><p class="lab">전: 입력 14회, 화면 전환 14회</p><div class="steps-bar"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+    <div class="col" style="gap:.5cqw;"><p class="lab a">후: 입력 7회, 화면 전환 3회</p><div class="steps-bar a"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+  </div>
+  <div class="row" style="margin-top:1.6cqw;">
+    <div class="three" style="flex:.85; align-content:start;">
+      <div><span>문제</span><p>4칸을 채우려면 칸마다 같은 단계를 되풀이했고, F 키 하나가 여러 행동에 걸려 무엇이 실행될지 몰랐습니다.</p></div>
+      <div><span>판단</span><p>제작 탭을 없애고, 칸을 고르기 전엔 잉크 영역을 흐리게, 제작 완료는 한 화면으로. 교체는 이동 미리보기로 보이게.</p></div>
+      <div><span>검증</span><p>Unity 대신 직접 눌러 보는 HTML 비교본으로 횟수를 쟀습니다.</p></div>
+      <p class="mine"><b>제 몫</b> 화면과 조작 순서. 잉크를 끼우는 규칙은 팀원 기획입니다.</p>
+    </div>
+    <div class="col" style="flex:1.15; gap:1cqw;">
+      <div class="frame"><img src="dv/craft-slot.jpg" alt="칸 고르기 화면" style="aspect-ratio:2.9/1; object-fit:cover; object-position:center 15%;"></div>
+      <div class="frame"><img src="dv/craft-complete.jpg" alt="제작 완료 화면" style="aspect-ratio:2.9/1; object-fit:cover; object-position:center 22%;"></div>
+    </div>
+  </div>
+</section>
+
+s!-- 9 픽셀 통일 -->
+<section class="slide" aria-label="사례 에셋 픽셀 통일">
+  <div class="kicker"><b>01 DEVIANT</b> 사례 4. 에셋 통일</div>
+  <h2>따로 놀던 에셋을 <em>게임 격자</em>에 맞춰 다시 그리기</h2>
+  <div class="row">
+    <div class="col" style="flex:1.7;">
+      <div class="frame light"><img src="dv/px-lineup-village.png" alt="마을 에셋 예전과 현재"></div>
+      <p class="cap"><b>마을 에셋</b> 위가 예전, 아래가 현재. 해상도와 테두리, 색 수를 한 규격으로.</p>
+    </div>
+    <div class="col" style="flex:1;">
+      <div class="frame" style="height:23cqw;"><img src="dv/shop-before-after.png" alt="정비소 전후" style="height:100%; width:100%; object-fit:cover; object-position:top;"></div>
+      <p class="cap"><b>2챕터 정비소</b> 자동 축소판은 퇴짜. 맵의 관과 이어지게 다시 그렸습니다.</p>
+      <div class="three" style="margin-top:auto;">
+        <div><span>결과</span><p>1, 2챕터 맵과 마을 건물을 같은 규격으로 다시 그려 게임에 적용</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+s!-- 10 한짝 개요 -->
+<section class="slide pv hj" aria-label="한짝 개요">
+  <div class="info">
+    <div class="kicker"><b>02</b> 한짝</div>
+    <img class="logo px" src="img/logo.png" alt="한짝 로고" style="width:15cqw;">
+    <h2>꺼 둬도 싸우는<br><em>웹 방치형 게임</em></h2>
+    <dl class="facts">
+      <dt>기간</dt><dd>2026.08.18 ~ 09.28 (6주), SSAFY 특화 프로젝트</dd>
+      <dt>팀</dt><dd>6인, 실서비스 운영</dd>
+      <dt>개요</dt><dd>젓가락 캐릭터가 알아서 싸우고, 재료를 거래소에서 사고팔며 키우는 게임</dd>
+      <dt>역할</dt><dd><strong>팀장, 디자인 총괄: UI 전체 규칙, 치장 아트</strong></dd>
+      <dt>기술</dt><dd><span class="chips"><span class="chip on">UI 디자인</span><span class="chip on">생성 AI 이미지</span><span class="chip">Python 이미지 처리</span><span class="chip">React (팀)</span></span></dd>
+      <dt>수상</dt><dd><strong>우수상</strong></dd>
+    </dl>
+  </div>
+  <div class="shot"><video src="media/battle-sushi.webm" poster="media/battle-sushi-poster.jpg" muted loop playsinline preload="metadata"></video></div>
+</section>
+
+s!-- 11 한짝 UI 규칙 -->
+<section class="slide hj" aria-label="한짝 UI 규칙">
+  <div class="kicker"><b>02 한짝</b> UI 규칙</div>
+  <h2>모든 창이 <em>같은 말투</em>로 말하게</h2>
+  <div class="row">
+    <div class="col" style="flex:.7; gap:1.1cqw;">
+      <div class="three">
+        <div><span>해상도</span><p>640×360 기준, 2배 3배로만 키워 픽셀이 뭉개지지 않게</p></div>
+        <div><span>재질</span><p>창은 종이, 틀은 나무, 강조는 황동</p></div>
+        <div><span>테두리</span><p>둥근 모서리 대신 직각과 2~3px 픽셀 테두리</p></div>
+        <div><span>버튼</span><p>주황 버튼은 한 화면에 하나. 지금 눌러야 할 것이 늘 한눈에</p></div>
+        <div><span>글자</span><p>갈무리11, 12px 격자</p></div>
+      </div>
+    </div>
+    <div class="col" style="flex:1.5;">
+      <div class="g3">
+        <figure style="margin:0;"><div class="frame wide"><img src="media/character.jpg" alt="캐릭터 창"></div><p class="cap"><b>캐릭터</b></p></figure>
+        <figure style="margin:0;"><div class="frame wide"><img src="media/equipment.jpg" alt="장비 강화 창"></div><p class="cap"><b>장비 강화</b></p></figure>
+        <figure style="margin:0;"><div class="frame wide"><img src="media/inventory.jpg" alt="인벤토리 창"></div><p class="cap"><b>인벤토리</b></p></figure>
+        <figure style="margin:0;"><div class="frame wide"><img src="media/skill.jpg" alt="스킬 창"></div><p class="cap"><b>스킬</b></p></figure>
+        <figure style="margin:0;"><div class="frame wide"><img src="media/gem.jpg" alt="보석 창"></div><p class="cap"><b>보석</b></p></figure>
+        <figure style="margin:0;"><div class="frame wide"><img src="media/market.jpg" alt="거래소 창"></div><p class="cap"><b>거래소</b></p></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+s!-- 12 한짝 치장과 도감 -->
+<section class="slide hj" aria-label="한짝 치장과 도감">
+  <div class="kicker"><b>02 한짝</b> 사례 5. 치장과 도감</div>
+  <h2>모으는 재미가 <em>숫자로 닿게</em></h2>
+  <div class="row">
+    <div class="col" style="flex:1.25;">
+      <div class="frame wide"><span class="tag">세트 착용 실제 녹화</span><video src="media/wardrobe-sets.webm" poster="media/wardrobe-sets-poster.jpg" muted loop playsinline preload="metadata"></video></div>
+      <div class="sets" style="margin-top:1.2cqw;">
+        <img src="img/set-fox.png" alt="구미호" style="height:6.6cqw"><img src="img/set-dokkaebi.png" alt="도깨비" style="height:6.6cqw"><img src="img/set-wizard.png" alt="마법사" style="height:6.6cqw"><img src="img/set-sushi.png" alt="스시야" style="height:6.6cqw"><img src="img/set-angel.png" alt="천사" style="height:6.6cqw">
+      </div>
+    </div>
+    <div class="col" style="flex:1;">
+      <div class="frame wide"><img src="media/collection.jpg" alt="치장 도감"></div>
+      <div class="three" style="margin-top:1.3cqw;">
+        <div><span>문제</span><p>노말 치장 5성까지 2,400개가 필요해 승급이 닿지 않는 목표였고, 카드가 길어 창 아래가 잘렸습니다.</p></div>
+        <div><span>판단</span><p>등급별 승급 수치를 다시 정하고, 표기는 "가진 개수 / 필요한 개수"로. 카드는 세로를 줄였습니다.</p></div>
+      </div>
+      <div class="row" style="flex:none; margin-top:1.2cqw; gap:2cqw;">
+        <p class="big">18개<small>2,400개에서</small></p>
+        <p class="big">142px<small>카드 높이, 252px에서</small></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+s!-- 13 AIVO -->
+<section class="slide av" aria-label="AIVO">
+  <div class="kicker"><b>03</b> AIVO, SSAFY 공통 프로젝트 (웹디자인), 우수상</div>
+  <h2>점수가 아니라 <em>고칠 순간</em>을 보여 주는 리포트</h2>
+  <div class="row">
+    <div class="col" style="flex:.9;">
+      <dl class="facts">
+        <dt>기간</dt><dd>2026.07.06 ~ 08.10 (5주), 6인</dd>
+        <dt>개요</dt><dd>발표와 면접을 촬영하면 음성, 몸짓, 내용을 분석해 영상과 리포트로 다시 보여 주는 AI 말하기 코치</dd>
+        <dt>역할</dt><dd><strong>프론트엔드: 면접과 폴더 화면, 리포트 화면, API 연동</strong></dd>
+        <dt>기술</dt><dd><span class="chips"><span class="chip on">Vue 3</span><span class="chip on">Pinia</span><span class="chip">Figma</span><span class="chip">MediaPipe</span></span></dd>
+      </dl>
+      <div class="three" style="margin-top:1.6cqw;">
+        <div><span>그래프</span><p>연속되는 값(말 속도, 음량)은 선으로, 사건(시선 이탈, 추임새)은 점으로 나눠 그렸습니다.</p></div>
+        <div><span>숫자</span><p>상단 시선 이탈 11회와 질문별 합계 10회가 달라, 같은 기준으로 보이게 고쳤습니다.</p></div>
+        <div><span>유저테스트</span><p>결과를 녹화 전 시선 가이드, 실제 업로드 단계 표시 등 할 일 다섯 개로 정리했습니다.</p></div>
+      </div>
+    </div>
+    <div class="col" style="flex:1.1; gap:1cqw;">
+      <div class="frame"><img src="media/aivo-interview-report.jpg" alt="면접 리포트 화면"></div>
+      <div class="g2">
+        <div class="frame wide"><img src="media/aivo-presentation-practice.jpg" alt="발표 연습 화면" style="object-position:top left"></div>
+        <div class="frame wide"><img src="media/aivo-presentation-report.jpg" alt="발표 리포트 화면" style="object-position:top left"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+s!-- 14 마무리 -->
+<section class="slide dk end" aria-label="마무리">
+  <div class="kicker" style="justify-content:center;"><b>THANK YOU</b></div>
+  <h2>규칙을 정하고, 고르고,<br><em>마지막 픽셀까지</em> 맞춥니다</h2>
+  <div class="pr">
+    <div><b>규칙부터</b><p>선, 색, 테두리를 먼저 정해 모든 화면을 한 손으로</p></div>
+    <div><b>여러 안을 놓고</b><p>엔진 밖에서 비교하고 고른 것만 옮긴다</p></div>
+    <div><b>게임 안에서 끝까지</b><p>적용한 뒤 직접 플레이하며 다시 맞춘다</p></div>
+  </div>
+  <p class="ct">서가은 | github.com/Seogaeun03 | seogu0307@gmail.com</p>
+</section>
+
+</main>
+<script src="deck.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서가은 | 게임 UI, 테크니컬 아트</title>
+<meta name="description" content="게임 화면의 규칙을 정하고, 생성 AI 그림을 게임 규격으로 길들이는 서가은의 포트폴리오">
+<meta property="og:title" content="서가은 | 게임 UI, 테크니컬 아트">
+<meta property="og:description" content="게임 화면의 규칙을 정하고, 생성 AI 그림을 게임 규격으로 길들입니다.">
+<meta property="og:image" content="https://seogaeun03.github.io/assets/cover-ui.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: "Galmuri11"; src: url("font/Galmuri11.woff") format("woff"); font-display: swap; }
+:root {
+  --bg: #f4f5f7; --paper: #ffffff; --ink: #16181d; --soft: #5b6070; --line: #e2e5eb;
+  --accent: #23a7b5; --orange: #f07a2a; --violet: #5865f2; --dark: #15171b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0e1013; --paper: #181b21; --ink: #eef0f4; --soft: #a6adbb; --line: #2b303a; }
+}
+:root[data-theme="dark"] { --bg: #0e1013; --paper: #181b21; --ink: #eef0f4; --soft: #a6adbb; --line: #2b303a; }
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+.px { image-rendering: pixelated; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+.mono { font-family: "Galmuri11", monospace; letter-spacing: .05em; }
+
+/* 머리 */
+.hero { background: var(--dark); color: #f2f3f5; padding-bottom: 56px; }
+.banner { width: 100%; background: var(--dark); }
+.banner img { width: 100%; max-width: 1280px; margin: 0 auto; }
+.hero .wrap { padding-top: 40px; }
+.role { color: var(--accent); font-size: 13px; }
+.hero h1 { font-size: clamp(30px, 5vw, 52px); font-weight: 900; letter-spacing: -.03em; line-height: 1.2; margin: 14px 0 16px; word-break: keep-all; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p.lead { color: #b8bec9; font-size: clamp(15px, 1.6vw, 18px); max-width: 680px; word-break: keep-all; }
+.awards { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.award { font-size: 13.5px; padding: 6px 12px; border-radius: 4px; border: 1.5px solid rgba(255,255,255,.22); color: #e8eaee; }
+.award b { color: #ffcf4a; margin-right: 4px; }
+.contact { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; font-size: 14px; color: #b8bec9; }
+.contact a { color: #e8eaee; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.3); }
+.contact a:hover { border-color: var(--accent); }
+
+section { padding: 56px 0 8px; }
+h2 { font-size: 26px; font-weight: 900; letter-spacing: -.02em; margin-bottom: 6px; }
+.sub { color: var(--soft); margin-bottom: 22px; word-break: keep-all; }
+
+/* 포트폴리오 두 판 */
+.decks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.deck { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform .15s, box-shadow .15s; }
+.deck:hover, .deck:focus-visible { transform: translateY(-3px); box-shadow: 0 16px 30px -18px rgba(0,0,0,.45); }
+.deck:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.deck img { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
+.deck .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.deck .kind { font-size: 12px; color: var(--accent); }
+.deck b { font-size: 20px; }
+.deck p { color: var(--soft); font-size: 14.5px; word-break: keep-all; }
+.deck .go { margin-top: auto; padding-top: 10px; display: flex; gap: 14px; font-size: 14px; font-weight: 700; }
+.deck .go span { color: var(--accent); }
+.pdf { color: var(--soft); font-size: 13.5px; margin-top: 12px; }
+.pdf a { color: var(--soft); }
+
+/* 프로젝트 */
+.projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.proj { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+.proj img { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
+.proj .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.proj .meta { font-size: 12.5px; color: var(--soft); }
+.proj b { font-size: 18px; }
+.proj .who { font-size: 14px; font-weight: 700; color: var(--c); }
+.proj ul { padding-left: 18px; margin: 6px 0 0; color: var(--soft); font-size: 14px; display: grid; gap: 2px; }
+.proj a.code { margin-top: auto; padding-top: 10px; font-size: 13.5px; color: var(--c); font-weight: 700; text-decoration: none; }
+.proj a.code:hover { text-decoration: underline; }
+
+/* 일하는 방식 */
+.ways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.way { border-top: 3px solid var(--accent); padding-top: 12px; }
+.way b { display: block; font-size: 17px; margin-bottom: 4px; }
+.way p { color: var(--soft); font-size: 14.5px; word-break: keep-all; }
+
+footer { padding: 56px 0 40px; color: var(--soft); font-size: 13px; }
+
+@media (max-width: 820px) {
+  .decks, .projects, .ways { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .deck { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="banner"><img src="assets/banner.gif" alt="한짝 치장 세트 10벌이 달리는 그림"></div>
+  <div class="wrap">
+    <p class="role mono">GAME UI | TECHNICAL ART</p>
+    <h1>게임 화면의 규칙을 정하고,<br>생성 AI 그림을 <em>게임 규격으로</em> 길들입니다</h1>
+    <p class="lead">서가은입니다. 해상도, 테두리, 색 수 같은 규칙을 먼저 정하고, 엔진 밖에서 여러 안을 비교해 고른 뒤, 게임 안에서 직접 플레이하며 마지막 픽셀까지 맞춥니다.</p>
+    <div class="awards">
+      <span class="award"><b>우수상</b>한짝, SSAFY 특화 프로젝트</span>
+      <span class="award"><b>우수상</b>AIVO, SSAFY 공통 프로젝트</span>
+    </div>
+    <div class="contact">
+      <a href="mailto:seogu0307@gmail.com">seogu0307@gmail.com</a>
+      <a href="https://github.com/Seogaeun03">github.com/Seogaeun03</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section aria-labelledby="h-decks">
+    <h2 id="h-decks">포트폴리오</h2>
+    <p class="sub">같은 세 프로젝트를 직무에 맞춰 두 가지로 엮었습니다. 화면에서 보면 플레이 영상이 재생됩니다.</p>
+    <div class="decks">
+      <a class="deck" href="ui.html">
+        <img src="assets/cover-ui.jpg" alt="게임 UI 디자이너 포트폴리오 표지">
+        <div class="body">
+          <span class="kind mono">GAME UI DESIGNER</span>
+          <b>게임 UI 디자이너 포트폴리오</b>
+          <p>아트 규칙, 전투 HUD 도트 통일, 아이콘 54장, 인벤토리 흐름, 한짝 UI 규칙과 도감</p>
+          <div class="go"><span>보러 가기 →</span></div>
+        </div>
+      </a>
+      <a class="deck" href="ta.html">
+        <img src="assets/cover-ta.jpg" alt="테크니컬 아트 포트폴리오 표지">
+        <div class="body">
+          <span class="kind mono">TECHNICAL ARTIST</span>
+          <b>테크니컬 아트 포트폴리오</b>
+          <p>마네킹 착용 파이프라인, 모션 네 칸 한 장 생성, 몬스터 1,800프레임 정합, 편집기와 검수 도구</p>
+          <div class="go"><span>보러 가기 →</span></div>
+        </div>
+      </a>
+    </div>
+    <p class="pdf">PDF로 받기: <a href="pdf/seogaeun-game-ui.pdf">게임 UI 판</a>, <a href="pdf/seogaeun-technical-art.pdf">테크니컬 아트 판</a></p>
+  </section>
+
+  <section aria-labelledby="h-proj">
+    <h2 id="h-proj">프로젝트</h2>
+    <p class="sub">세 프로젝트 모두 6인 팀입니다. 제 판단, AI가 한 일, 팀원의 몫을 나눠 적었습니다.</p>
+    <div class="projects">
+      <article class="proj" style="--c:#1f97a4">
+        <img src="assets/deviant.jpg" alt="DEVIANT 전투 화면">
+        <div class="body">
+          <span class="meta">2026.10 ~ 진행 중, SSAFY 자율 프로젝트</span>
+          <b>DEVIANT</b>
+          <span class="who">팀장, 아트</span>
+          <ul>
+            <li>전투 HUD 도트 통일, 무기와 스킬 아이콘 54장</li>
+            <li>제작과 장착 흐름 재설계 (입력 14회 → 7회)</li>
+            <li>HTML 시험장에서 정하고 Unity로 옮기는 흐름</li>
+          </ul>
+          <a class="code" href="https://github.com/Seogaeun03/deviant">저장소 보기 →</a>
+        </div>
+      </article>
+      <article class="proj" style="--c:#e06a1c">
+        <img src="assets/hanjjak.jpg" alt="한짝 전투 화면">
+        <div class="body">
+          <span class="meta">2026.08 ~ 09, SSAFY 특화 프로젝트, 우수상</span>
+          <b>한짝</b>
+          <span class="who">팀장, 디자인 총괄, 치장 제작</span>
+          <ul>
+            <li>생성 AI 장비를 고정 마네킹에 입히는 파이프라인</li>
+            <li>모션 네 칸을 한 장에 생성해 옷 흐름 해결</li>
+            <li>몬스터 90종 1,800프레임 발끝 0px 정합</li>
+          </ul>
+          <a class="code" href="https://github.com/Seogaeun03/hanjjak">저장소 보기 →</a>
+        </div>
+      </article>
+      <article class="proj" style="--c:#4f5ce8">
+        <img src="assets/aivo.jpg" alt="AIVO 리포트 화면">
+        <div class="body">
+          <span class="meta">2026.07 ~ 08, SSAFY 공통 프로젝트, 우수상</span>
+          <b>AIVO</b>
+          <span class="who">프론트엔드</span>
+          <ul>
+            <li>면접과 폴더 화면, 리포트 화면 구현</li>
+            <li>가짜 데이터와 실제 API 연결을 구분해 검수</li>
+            <li>리포트 그래프와 숫자 기준 정리</li>
+          </ul>
+          <a class="code" href="https://github.com/Seogaeun03/aivo">저장소 보기 →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-way">
+    <h2 id="h-way">이렇게 일합니다</h2>
+    <p class="sub">생성 AI에게는 초안과 반복 계산을 맡기고, 규칙과 마지막 손질은 제가 합니다.</p>
+    <div class="ways">
+      <div class="way"><b>규칙부터 정한다</b><p>선, 색, 테두리, 기준점을 먼저 정하고 어긋난 걸 자동으로 잡습니다.</p></div>
+      <div class="way"><b>엔진 밖에서 여러 안을 놓고 고른다</b><p>HTML 시험장과 비교판으로 고른 것만 엔진으로 옮깁니다.</p></div>
+      <div class="way"><b>게임 안에서 끝까지 본다</b><p>자동 검사를 통과해도 직접 플레이하며 눈으로 다시 봅니다.</p></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>서가은 | <a href="mailto:seogu0307@gmail.com">seogu0307@gmail.com</a> | 마지막 갱신 2026.11</p>
+</footer>
+
+</body>
+</html>
