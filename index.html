@@ -1,206 +1,435 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>서가은 | 게임 UI, 테크니컬 아트</title>
-<meta name="description" content="게임 화면의 규칙을 정하고, 생성 AI 그림을 게임 규격으로 길들이는 서가은의 포트폴리오">
-<meta property="og:title" content="서가은 | 게임 UI, 테크니컬 아트">
-<meta property="og:description" content="게임 화면의 규칙을 정하고, 생성 AI 그림을 게임 규격으로 길들입니다.">
-<meta property="og:image" content="https://seogaeun03.github.io/assets/cover-ui.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
 <style>
-@font-face { font-family: "Galmuri11"; src: url("font/Galmuri11.woff") format("woff"); font-display: swap; }
-:root {
-  --bg: #f4f5f7; --paper: #ffffff; --ink: #16181d; --soft: #5b6070; --line: #e2e5eb;
-  --accent: #23a7b5; --orange: #f07a2a; --violet: #5865f2; --dark: #15171b;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --bg: #0e1013; --paper: #181b21; --ink: #eef0f4; --soft: #a6adbb; --line: #2b303a; }
-}
-:root[data-theme="dark"] { --bg: #0e1013; --paper: #181b21; --ink: #eef0f4; --soft: #a6adbb; --line: #2b303a; }
-* { box-sizing: border-box; margin: 0; }
-body { background: var(--bg); color: var(--ink); font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; line-height: 1.65; -webkit-font-smoothing: antialiased; }
-a { color: inherit; }
-img { display: block; max-width: 100%; }
-.px { image-rendering: pixelated; }
-.wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
-.mono { font-family: "Galmuri11", monospace; letter-spacing: .05em; }
+body { overflow: hidden; }
+body.in-village { overflow-y: auto; height: 520vh; }
+.scene { position: fixed; inset: 0; display: none; }
+.scene.on { display: block; }
 
-/* 머리 */
-.hero { background: var(--dark); color: #f2f3f5; padding-bottom: 56px; }
-.banner { width: 100%; background: var(--dark); }
-.banner img { width: 100%; height: auto; max-width: 1200px; margin: 0 auto; }
-.hero .wrap { padding-top: 40px; }
-.role { color: var(--accent); font-size: 13px; }
-.hero h1 { font-size: clamp(30px, 5vw, 52px); font-weight: 900; letter-spacing: -.03em; line-height: 1.2; margin: 14px 0 16px; word-break: keep-all; }
-.hero h1 em { font-style: normal; color: var(--accent); }
-.hero p.lead { color: #b8bec9; font-size: clamp(15px, 1.6vw, 18px); max-width: 680px; word-break: keep-all; }
-.awards { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
-.award { font-size: 13.5px; padding: 6px 12px; border-radius: 4px; border: 1.5px solid rgba(255,255,255,.22); color: #e8eaee; }
-.award b { color: #ffcf4a; margin-right: 4px; }
-.contact { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; font-size: 14px; color: #b8bec9; }
-.contact a { color: #e8eaee; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.3); }
-.contact a:hover { border-color: var(--accent); }
+/* ── 타이틀 ── */
+.sky { position: absolute; inset: 0; background:
+  radial-gradient(2px 2px at 12% 18%, var(--tan) 99%, transparent), radial-gradient(2px 2px at 32% 9%, var(--cream) 99%, transparent),
+  radial-gradient(2px 2px at 71% 14%, var(--tan) 99%, transparent), radial-gradient(2px 2px at 86% 30%, var(--cream) 99%, transparent),
+  radial-gradient(2px 2px at 54% 26%, var(--gold) 99%, transparent), radial-gradient(2px 2px at 22% 38%, var(--cream) 99%, transparent), var(--ink);
+  animation: tw 2.4s steps(2) infinite; }
+@keyframes tw { 50% { filter: brightness(.6); } }
+.center { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 14vh; text-align: center; }
+.role { font-size: 12px; color: var(--tan); letter-spacing: .12em; }
+.logo { font-size: clamp(56px, 9vw, 120px); line-height: 1; margin: 16px 0 20px; text-shadow: 6px 6px 0 var(--teal-d), 12px 12px 0 var(--ink); }
+.logo b { color: var(--gold); font-weight: 400; }
+.intro { font-size: 17px; line-height: 30px; color: var(--cream); max-width: 34em; word-break: keep-all; padding: 0 16px; }
+.menu { list-style: none; padding: 0; margin-top: 6vh; display: grid; gap: 4px; text-align: left; }
+.menu button { font-size: 18px; line-height: 36px; padding: 0 24px 0 36px; position: relative; color: var(--tan); }
+.menu button[aria-selected="true"] { color: var(--cream); }
+.menu button[aria-selected="true"]::before { content: "▶"; position: absolute; left: 6px; color: var(--gold); animation: nudge .6s steps(2) infinite; }
+@keyframes nudge { 50% { transform: translateX(4px); } }
+@keyframes blink { 50% { opacity: 0; } }
+/* 위 띠: 프로젝트 페이지 머리와 같은 모양 */
+.bar { position: fixed; left: 0; right: 0; top: 0; z-index: 8; display: flex; align-items: center; gap: 18px; padding: 12px 24px; font-size: 12px; line-height: 24px; }
+.bar a, .bar button { color: var(--tan); text-decoration: none; }
+.bar a:hover, .bar button:hover, .bar a:focus-visible, .bar button:focus-visible { color: var(--cream); outline: none; }
+.bar .name { color: var(--cream); }
+.bar .r { margin-left: auto; display: flex; gap: 18px; }
+#vbar { background: rgba(27,22,22,.94); border-bottom: 1px solid #2b2424; display: none; }
+#vbar .zones { display: flex; gap: 18px; margin: 0 auto; }
+#vbar .zones button[aria-current="true"] { color: var(--gold); }
+@media (max-width: 760px) { #vbar .zones { display: none; } }
+.t-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: var(--teal-d); z-index: 1; }
+.t-ground::before, .v-ground::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: repeating-linear-gradient(90deg, var(--tan) 0 12px, transparent 12px 24px); }
+.parade { position: absolute; left: 0; bottom: 96px; z-index: 2; display: flex; align-items: flex-end; gap: 12px; animation: march 22s linear infinite; }
+@keyframes march { from { transform: translateX(-100%); } to { transform: translateX(100vw); } }
 
-section { padding: 56px 0 8px; }
-h2 { font-size: 26px; font-weight: 900; letter-spacing: -.02em; margin-bottom: 6px; }
-.sub { color: var(--soft); margin-bottom: 22px; word-break: keep-all; }
+/* ── 마을 ── */
+.world { position: absolute; left: 0; top: 0; height: 100%; width: 500vw; display: flex; will-change: transform; }
+.zone { width: 100vw; height: 100%; position: relative; }
+.v-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 22vh; background: var(--teal-d); }
+.z-hj .v-ground { background: #5a3a24; } .z-hj .v-ground::before { background: repeating-linear-gradient(90deg, var(--hj) 0 12px, transparent 12px 24px); }
+.z-av .v-ground { background: #2a2f5c; } .z-av .v-ground::before { background: repeating-linear-gradient(90deg, var(--cream) 0 12px, transparent 12px 24px); }
+.board { position: absolute; left: 50%; top: calc(48px + 5vh); width: min(620px, 60vw); transform: translateX(-50%); padding: 12px; }
+.board img { width: 100%; aspect-ratio: 16/6.6; object-fit: cover; }
+.board .t { display: flex; justify-content: space-between; align-items: baseline; margin-top: 10px; }
+.board h2 { font-size: 28px; line-height: 36px; font-weight: 900; }
+.board .r { font-size: 12px; color: var(--gold); }
+.board p, .info p { color: var(--tan); font-size: 14px; }
+.board .r b, .info .r b { font-weight: 400; color: var(--ink); background: var(--gold); padding: 0 6px; margin-left: 6px; }
+.links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.links a { padding: 8px 14px; font-size: 13px; text-decoration: none; color: var(--cream); }
+.links a:hover, .links a:focus-visible { border-image-source: var(--frame-hot); color: var(--gold); outline: none; }
+.sign { position: absolute; bottom: 22vh; left: 16%; width: 132px; text-align: center; }
+.sign .plate { padding: 6px 8px; font-size: 12px; line-height: 18px; }
+.sign .pole { width: 12px; height: 48px; margin: 0 auto; background: var(--tan); }
+.hello { position: absolute; left: 50%; top: 14vh; transform: translateX(-50%); text-align: center; width: 90vw; }
+.hello h2 { font-size: clamp(28px, 4vw, 48px); line-height: 1.25; }
+.hello h2 b { color: var(--gold); font-weight: 400; }
+.hello p { color: var(--tan); margin-top: 12px; }
+.me { position: absolute; left: 50%; bottom: calc(22vh - 18px); transform: translateX(-50%); z-index: 5; }
+.bubble { position: absolute; left: calc(50% + 64px); bottom: calc(22vh + 150px); z-index: 6; font-size: 12px; line-height: 24px; padding: 6px 12px; white-space: nowrap; display: none; }
+.bubble.on { display: block; }
+.bubble kbd { font-family: inherit; background: var(--gold); color: var(--ink); padding: 0 6px; margin-right: 6px; }
+.next h2 { font-size: 32px; line-height: 44px; }
 
-/* 포트폴리오 두 판 */
-.decks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.deck { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform .15s, box-shadow .15s; }
-.deck:hover, .deck:focus-visible { transform: translateY(-3px); box-shadow: 0 16px 30px -18px rgba(0,0,0,.45); }
-.deck:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-.deck img { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
-.deck .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-.deck .kind { font-size: 12px; color: var(--accent); }
-.deck b { font-size: 20px; }
-.deck p { color: var(--soft); font-size: 14.5px; word-break: keep-all; }
-.deck .go { margin-top: auto; padding-top: 10px; display: flex; gap: 14px; font-size: 14px; font-weight: 700; }
-.deck .go span { color: var(--accent); }
-.pdf { color: var(--soft); font-size: 13.5px; margin-top: 12px; }
-.pdf a { color: var(--soft); }
+/* ── 창들 ── */
+.modal { position: fixed; inset: 0; z-index: 30; display: none; place-items: center; background: rgba(27,22,22,.75); }
+.modal.on { display: grid; }
+.win { width: min(640px, 92vw); max-height: 84vh; overflow: auto; padding: 24px; }
+.win .wh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.win .wh h3 { font-size: 12px; font-weight: 400; color: var(--gold); }
+.win .x { font-size: 12px; color: var(--tan); } .win .x:hover { color: var(--cream); }
+.win h4 { font-size: 26px; line-height: 36px; font-weight: 900; }
+.win .lines { display: grid; gap: 12px; margin-top: 16px; }
+.win .lines div { display: grid; grid-template-columns: 64px 1fr; gap: 12px; }
+.win .lines span { font-size: 12px; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 2px; }
+.win .lines p { color: var(--cream); }
+.win .more { margin-top: 18px; font-size: 12px; color: var(--tan); }
+.intro-card { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; align-items: start; }
+.ic-img { background: #241e1e; padding: 4px; }
+.ic-img img { width: 100%; aspect-ratio: 16/8; object-fit: cover; }
+.ic-meta { margin-top: 14px; font-size: 12px; color: var(--tan); }
+.ic-meta .ic-award { margin: 0 0 0 8px; }
+.ic-line { margin-top: 6px; font-size: 16px; line-height: 28px; color: var(--cream); word-break: keep-all; }
+.ic-facts { display: grid; grid-template-columns: 40px 1fr; gap: 4px 10px; margin-top: 12px; font-size: 12px; line-height: 20px; }
+.ic-facts dt { color: var(--gold); } .ic-facts dd { margin: 0; color: var(--tan); }
+.ic-award { display: inline-block; font-size: 11px; line-height: 20px; padding: 0 6px; background: var(--gold); color: var(--ink); }
+.ic-h { font-size: 12px; color: var(--gold); margin: 18px 0 8px; }
+.ic-best { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.ic-best > div { padding: 10px 12px; }
+.ic-best b { display: block; font-weight: 400; font-size: 20px; line-height: 28px; color: var(--gold); }
+.ic-best span { font-size: 13px; color: var(--cream); }
+.go { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: 18px; padding: 10px 12px; font-size: 14px; color: var(--ink); background: var(--gold); text-decoration: none; }
+.go span { margin-right: auto; } .go kbd { background: var(--ink); color: var(--gold); box-shadow: none; }
+.go:hover, .go:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
+@media (max-width: 760px) { .intro-card, .ic-best { grid-template-columns: 1fr; } }
+.shots { display: grid; grid-template-columns: repeat(var(--k, 2), 1fr); gap: 12px; margin-top: 16px; align-items: end; }
+.shots figure { margin: 0; }
+.shots .im { background: #241e1e; padding: 4px; display: grid; place-items: center; height: 180px; }
+.shots img { max-width: 100%; max-height: 172px; width: auto; height: auto; object-fit: contain; }
+.shots figcaption { font-family: "Galmuri11", monospace; font-size: 12px; color: var(--tan); margin-top: 4px; }
+.shots figcaption b { color: var(--gold); font-weight: 400; }
+/* 연습실 */
+.info { position: absolute; left: 50%; top: calc(48px + 5vh); width: min(620px, 60vw); transform: translateX(-50%); padding: 14px 16px; }
+.info .t { display: flex; justify-content: space-between; align-items: baseline; }
+.info h2 { font-size: 28px; line-height: 36px; font-weight: 900; }
+.info .r { font-size: 12px; color: var(--gold); }
+.info p { color: var(--tan); font-size: 14px; margin-top: 4px; }
+.studio { position: absolute; left: 50%; bottom: 22vh; transform: translateX(-50%); display: flex; align-items: flex-end; gap: 190px; }
+.studio .house { height: min(405px, 50vh); width: auto; image-rendering: pixelated; filter: drop-shadow(0 4px 0 rgba(0,0,0,.35)); }
+.studio .tv { position: relative; flex: none; width: min(320px, 26vw); aspect-ratio: 64 / 54; }
+.studio svg { width: 100%; height: 100%; display: block; }
+.studio .screen { position: absolute; left: 6.25%; top: 7.4%; width: 87.5%; height: 55.6%; overflow: hidden; background: #0d0b0b; }
+.studio .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top left; filter: brightness(.18) saturate(0); transition: filter .25s steps(3); }
+.studio.on .screen img { filter: none; }
+.studio .rec { position: absolute; left: 6px; top: 4px; font-size: 10px; line-height: 16px; padding: 0 5px; background: #1B1616; color: #FDEEDA; opacity: 0; }
+.studio.on .rec { opacity: 1; }
+.studio .rec::before { content: "●"; color: #e5483b; margin-right: 3px; }
+.studio .lamp { animation: none; }
+.studio.on .lamp { animation: lamp 1s steps(2) infinite; }
+@keyframes lamp { 50% { fill: #1B1616; } }
+.dexgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.quests a { color: var(--cream); text-decoration: none; } .quests a:hover { color: var(--gold); }
+.dexgrid a:hover, .dexgrid a:focus-visible { border-image-source: var(--frame-hot); outline: none; }
+.keys { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; }
+.keys h5 { font-size: 12px; font-weight: 400; color: var(--gold); margin-bottom: 8px; }
+.keys dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; align-items: center; font-size: 12px; line-height: 20px; }
+.keys dd { margin: 0; color: var(--cream); font-family: "Noto Sans KR", sans-serif; font-size: 14px; }
+kbd { display: inline-block; min-width: 22px; padding: 0 5px; margin: 0 1px; text-align: center; font-family: "Galmuri11", monospace; font-size: 11px; line-height: 20px; color: var(--ink); background: var(--tan); box-shadow: 0 -2px 0 rgba(0,0,0,.35) inset; }
+@media (max-width: 760px) { .keys { grid-template-columns: 1fr; } }
+.dexgrid a:focus-visible, .quests a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.keyhint { position: absolute; right: 24px; bottom: 132px; z-index: 3; font-size: 12px; color: var(--tan); }
+.keyhint:hover { color: var(--cream); }
+.me.hop { animation: hop .52s steps(8); }
+@keyframes hop { 50% { transform: translate(-50%, -80px); } }
+.dexgrid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: top; }
+.dexgrid b { display: block; font-size: 16px; margin-top: 6px; } .dexgrid small { display: block; font-size: 12px; line-height: 18px; color: var(--tan); word-break: keep-all; }
+.quests { list-style: none; padding: 0; display: grid; gap: 8px; }
+.quests li { display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; padding: 8px 0; border-bottom: 1px solid #2b2424; }
+.quests li::before { content: "✓"; color: var(--gold); font-family: "Galmuri11", monospace; }
+.quests small { color: var(--tan); font-size: 12px; }
 
-/* 프로젝트 */
-.projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.proj { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
-.proj img { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
-.proj .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
-.proj .meta { font-size: 12.5px; color: var(--soft); }
-.proj b { font-size: 18px; }
-.proj .who { font-size: 14px; font-weight: 700; color: var(--c); }
-.proj ul { padding-left: 18px; margin: 6px 0 0; color: var(--soft); font-size: 14px; display: grid; gap: 2px; }
-.proj a.code { margin-top: auto; padding-top: 10px; font-size: 13.5px; color: var(--c); font-weight: 700; text-decoration: none; }
-.proj a.code:hover { text-decoration: underline; }
+/* 전환: 픽셀 칸이 덮였다 걷힌다 */
+#wipe { position: fixed; inset: 0; z-index: 40; pointer-events: none; image-rendering: pixelated; }
 
-/* 일하는 방식 */
-.ways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.way { border-top: 3px solid var(--accent); padding-top: 12px; }
-.way b { display: block; font-size: 17px; margin-bottom: 4px; }
-.way p { color: var(--soft); font-size: 14.5px; word-break: keep-all; }
-
-footer { padding: 56px 0 40px; color: var(--soft); font-size: 13px; }
-
-@media (max-width: 820px) {
-  .decks, .projects, .ways { grid-template-columns: 1fr; }
-}
-@media (prefers-reduced-motion: reduce) { .deck { transition: none; } }
+/* 설정: 편집 모드 */
+.grid-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 20; display: none;
+  background-image: linear-gradient(to right, rgba(2,100,140,.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(2,100,140,.35) 1px, transparent 1px); background-size: 12px 12px; }
+body.edit .grid-overlay { display: block; }
+.palette { position: fixed; right: 12px; top: 12px; z-index: 21; padding: 10px 12px; font-size: 12px; line-height: 22px; display: none; }
+body.edit .palette { display: block; }
+.palette .sw { display: grid; grid-template-columns: 22px auto auto; gap: 0 10px; align-items: center; }
+.palette i { width: 22px; height: 12px; border: 1px solid var(--tan); }
+.palette small { color: var(--tan); }
+@media (prefers-reduced-motion: reduce) { .sky, .parade { animation: none; } }
 </style>
 </head>
 <body>
+<!-- 타이틀 -->
+<section class="scene on" id="title" aria-label="타이틀">
+  <div class="sky" aria-hidden="true"></div>
+  <header class="bar g" id="tbar"><span class="name">서가은</span><nav class="r" aria-label="바로 가기"><a href="pdf/seogaeun-game-ui.pdf">PDF</a><a href="https://github.com/Seogaeun03">GitHub</a><a href="mailto:seogu0307@gmail.com">메일</a></nav></header>
+  <div class="center">
+    <p class="role g">게임 UI 디자이너 / 테크니컬 아티스트</p>
+    <h1 class="logo g">SEO <b>GAEUN</b></h1>
+    <p class="intro">게임 화면의 규칙을 세우고, 그 규칙대로 그림이 나오는 제작 흐름을 만들어요.</p>
+    <ul class="menu g" role="listbox" aria-label="메뉴" id="menu">
+      <li><button role="option" aria-selected="true" data-go="village">마을 걸어 보기</button></li>
+      <li><button role="option" aria-selected="false" data-go="dex">프로젝트 목록</button></li>
+      <li><button role="option" aria-selected="false" data-go="contact">연락처</button></li>
+    </ul>
+    <button class="keyhint g" data-keys type="button"><kbd>?</kbd> 키 안내</button>
+  </div>
+  <div class="t-ground" aria-hidden="true"></div>
+  <div class="parade" aria-hidden="true" id="parade"></div>
+</section>
 
-<header class="hero">
-  <div class="banner"><img src="assets/banner.png" srcset="assets/banner.png 1x, assets/banner@2x.png 2x" width="1200" height="187" alt="한짝 치장 세트 10벌이 달리는 그림"></div>
-  <div class="wrap">
-    <p class="role mono">GAME UI | TECHNICAL ART</p>
-    <h1>게임 화면의 규칙을 정하고,<br>생성 AI 그림을 <em>게임 규격으로</em> 길들입니다</h1>
-    <p class="lead">서가은입니다. 해상도, 테두리, 색 수 같은 규칙을 먼저 정하고, 엔진 밖에서 여러 안을 비교해 고른 뒤, 게임 안에서 직접 플레이하며 마지막 픽셀까지 맞춥니다.</p>
-    <div class="awards">
-      <span class="award"><b>우수상</b>한짝, SSAFY 특화 프로젝트</span>
-      <span class="award"><b>우수상</b>AIVO, SSAFY 공통 프로젝트</span>
+<!-- 마을 -->
+<section class="scene" id="village" aria-label="프로젝트 마을">
+  <div class="world" id="world">
+    <div class="zone"><div class="v-ground"></div>
+      <div class="hello"><h2 class="g">프로젝트 <b>세 개</b>가 이 길 위에 있어요</h2><p><kbd>→</kbd> 걷기 <kbd>F</kbd> 소개</p></div>
     </div>
-    <div class="contact">
-      <a href="mailto:seogu0307@gmail.com">seogu0307@gmail.com</a>
-      <a href="https://github.com/Seogaeun03">github.com/Seogaeun03</a>
+    <div class="zone z-dv" data-zone="dv"><div class="v-ground"></div>
+      <div class="sign"><div class="plate frame g">DEVIANT</div><div class="pole"></div></div>
+      <div class="board frame"><img class="px" src="img/highlight-poster.png" alt="DEVIANT 전투 화면"><div class="t"><h2>DEVIANT</h2><span class="r g">2026.10 ~ 진행 중 / 팀장, 아트</span></div><p>잉크로 그린 스케치 세계를 무기를 바꿔 들며 돌파하는 액션 게임</p></div>
+    </div>
+    <div class="zone z-hj" data-zone="hj"><div class="v-ground"></div>
+      <div class="sign"><div class="plate frame g" style="color:var(--hj)">한짝</div><div class="pole" style="background:var(--hj)"></div></div>
+      <div class="board frame"><img src="img/battle.jpg" alt="한짝 전투 화면"><div class="t"><h2>한짝</h2><span class="r g">2026.08 ~ 09 / 팀장, 디자인 총괄<b>우수상</b></span></div><p>바탕화면에 띄워 두면 젓가락이 알아서 싸우는 게임</p></div>
+    </div>
+    <div class="zone z-av" data-zone="av"><div class="v-ground"></div>
+      <div class="sign" style="left:4%"><div class="plate frame g">연습실</div><div class="pole" style="background:var(--cream)"></div></div>
+      <div class="info frame"><div class="t"><h2>AIVO</h2><span class="r g">2026.07 ~ 08 / 프론트엔드<b>우수상</b></span></div><p>발표와 면접 연습을 다시 보여 주는 AI 말하기 코치. 게임이 아니라서 마을의 연습실에 두었어요.</p></div>
+      <div class="studio" id="studio">
+        <img class="house px" src="img/bld-mine2.png" alt="연습실 건물 (직접 다듬은 DEVIANT 마을 건물)">
+        <div class="tv">
+          <svg viewBox="0 0 64 54" shape-rendering="crispEdges" aria-hidden="true">
+            <rect x="1" y="0" width="62" height="40" fill="#1B1616"/><rect x="0" y="1" width="64" height="38" fill="#1B1616"/>
+            <rect x="2" y="2" width="60" height="36" fill="#025673"/><rect x="2" y="2" width="60" height="1" fill="#02648C"/>
+            <rect x="4" y="4" width="56" height="30" fill="#0d0b0b"/>
+            <rect x="6" y="35" width="2" height="1" fill="#D2B396"/><rect x="9" y="35" width="2" height="1" fill="#D2B396"/><rect x="12" y="35" width="2" height="1" fill="#D2B396"/>
+            <rect class="lamp" x="56" y="35" width="2" height="2" fill="#EBA516"/>
+            <rect x="29" y="40" width="6" height="9" fill="#1B1616"/><rect x="30" y="40" width="4" height="9" fill="#025673"/>
+            <rect x="20" y="49" width="24" height="5" fill="#1B1616"/><rect x="21" y="50" width="22" height="3" fill="#025673"/>
+          </svg>
+          <div class="screen" id="screen"><img id="avimg" src="img/aivo-interview-report.jpg" alt="연습실 모니터에 켜진 AIVO 화면"><span class="rec g">REC</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="zone next" data-zone="next"><div class="v-ground"></div>
+      <div class="hello"><h2 class="g">다음 구역은 <b>아직 비어 있어요</b></h2><p>여기를 함께 채울 팀을 찾고 있어요.</p>
+        <nav class="links g" aria-label="연락처"><a class="frame" href="mailto:seogu0307@gmail.com">seogu0307@gmail.com</a><a class="frame" href="https://github.com/Seogaeun03">GitHub</a><a class="frame" href="pdf/seogaeun-game-ui.pdf">PDF 게임 UI</a><a class="frame" href="pdf/seogaeun-technical-art.pdf">PDF 테크니컬 아트</a></nav></div>
     </div>
   </div>
-</header>
+  <div class="me" id="me"><div class="sp pixel" id="sprite"></div></div>
+  <div class="bubble frame g" id="bubble"></div>
+</section>
+<header class="bar g" id="vbar"><button class="name" data-go="title" type="button">서가은</button>
+  <nav class="zones" aria-label="구역" id="zones"><button type="button" data-z="0">입구</button><button type="button" data-z="1">DEVIANT</button><button type="button" data-z="2">한짝</button><button type="button" data-z="3">AIVO</button><button type="button" data-z="4">연락처</button></nav>
+  <span class="r"><button data-go="dex" type="button">목록</button><button data-keys type="button">키 안내</button></span></header>
 
-<main class="wrap">
+<!-- 창 -->
+<div class="modal" id="m-case" role="dialog" aria-modal="true" aria-labelledby="case-t"><div class="win frame"><div class="wh"><h3 class="g" id="case-k"></h3><button class="x g" data-close>닫기 ESC</button></div><h4 id="case-t"></h4><div id="case-s"></div><div class="lines" id="case-l"></div><a id="case-more" class="go g" href="#"><span>자세히 보기</span><kbd>F</kbd><kbd>ENTER</kbd></a></div></div>
+<div class="modal" id="m-keys" role="dialog" aria-modal="true" aria-label="키 안내"><div class="win frame"><div class="wh"><h3 class="g">키 안내</h3><button class="x g" data-close>닫기 ESC</button></div>
+  <div class="keys g">
+    <section><h5>타이틀</h5><dl><dt><kbd>↑</kbd><kbd>↓</kbd> <kbd>W</kbd><kbd>S</kbd></dt><dd>메뉴 고르기</dd><dt><kbd>ENTER</kbd> <kbd>SPACE</kbd> <kbd>F</kbd></dt><dd>고른 메뉴 열기</dd><dt><kbd>1</kbd> ~ <kbd>3</kbd></dt><dd>메뉴 바로 열기</dd></dl></section>
+    <section><h5>마을</h5><dl><dt><kbd>←</kbd><kbd>→</kbd> <kbd>A</kbd><kbd>D</kbd></dt><dd>누르고 있으면 걷기</dd><dt><kbd>SHIFT</kbd></dt><dd>같이 누르면 달리기</dd><dt><kbd>SPACE</kbd> <kbd>↑</kbd> <kbd>W</kbd></dt><dd>점프</dd><dt><kbd>F</kbd> <kbd>ENTER</kbd></dt><dd>간판 앞에서 프로젝트 소개 보기</dd><dt><kbd>0</kbd> ~ <kbd>4</kbd></dt><dd>입구, DEVIANT, 한짝, AIVO, 연락처로 이동</dd><dt><kbd>HOME</kbd> <kbd>END</kbd></dt><dd>처음, 끝</dd><dt><kbd>ESC</kbd> <kbd>M</kbd></dt><dd>타이틀로</dd></dl></section>
+    <section><h5>어디서나</h5><dl><dt><kbd>I</kbd></dt><dd>프로젝트 목록</dd><dt><kbd>G</kbd></dt><dd>격자와 팔레트 켜고 끄기</dd><dt><kbd>?</kbd></dt><dd>이 안내</dd></dl></section>
+    <section><h5>창 안에서</h5><dl><dt><kbd>←</kbd><kbd>→</kbd> <kbd>↑</kbd><kbd>↓</kbd></dt><dd>항목 고르기</dd><dt><kbd>F</kbd> <kbd>ENTER</kbd></dt><dd>열기, 소개 창에선 프로젝트 페이지로</dd><dt><kbd>ESC</kbd></dt><dd>닫기</dd></dl></section>
+  </div></div></div>
+<div class="modal" id="m-dex" role="dialog" aria-modal="true" aria-label="프로젝트 목록"><div class="win frame"><div class="wh"><h3 class="g">프로젝트</h3><button class="x g" data-close>닫기 ESC</button></div>
+  <div class="dexgrid">
+    <a class="frame" href="p-deviant.html" style="text-decoration:none;padding:8px;display:block"><img class="px" src="img/highlight-poster.png" alt=""><b>DEVIANT</b><small class="g">2026.10 ~ / 팀장, 아트</small></a>
+    <a class="frame" href="p-hanjjak.html" style="text-decoration:none;padding:8px;display:block"><img src="img/battle.jpg" alt=""><b>한짝</b><small class="g">2026.08 ~ 09 / 팀장, 디자인 총괄</small></a>
+    <a class="frame" href="p-aivo.html" style="text-decoration:none;padding:8px;display:block"><img src="img/aivo-interview-report.jpg" alt=""><b>AIVO</b><small class="g">2026.07 ~ 08 / 프론트엔드</small></a>
+  </div></div></div>
+<div class="toast"></div>
+<canvas id="wipe" aria-hidden="true"></canvas>
+<div class="grid-overlay" aria-hidden="true"></div>
+<div class="palette frame g" aria-label="팔레트"><div class="sw"><i style="background:#FDEEDA"></i>#FDEEDA<small>크림</small></div><div class="sw"><i style="background:#D2B396"></i>#D2B396<small>모래</small></div><div class="sw"><i style="background:#1B1616"></i>#1B1616<small>먹</small></div><div class="sw"><i style="background:#02648C"></i>#02648C<small>목도리</small></div><div class="sw"><i style="background:#025673"></i>#025673<small>그늘</small></div><div class="sw"><i style="background:#EBA516"></i>#EBA516<small>눈</small></div><div class="sw"><i style="background:#F07A2A"></i>#F07A2A<small>한짝</small></div></div>
 
-  <section aria-labelledby="h-decks">
-    <h2 id="h-decks">포트폴리오</h2>
-    <p class="sub">같은 세 프로젝트를 직무에 맞춰 두 가지로 엮었습니다. 화면에서 보면 플레이 영상이 재생됩니다.</p>
-    <div class="decks">
-      <a class="deck" href="ui.html">
-        <img src="assets/cover-ui.jpg" alt="게임 UI 디자이너 포트폴리오 표지">
-        <div class="body">
-          <span class="kind mono">GAME UI DESIGNER</span>
-          <b>게임 UI 디자이너 포트폴리오</b>
-          <p>아트 규칙, 전투 HUD 도트 통일, 아이콘 54장, 인벤토리 흐름, 한짝 UI 규칙과 도감</p>
-          <div class="go"><span>보러 가기 →</span></div>
-        </div>
-      </a>
-      <a class="deck" href="ta.html">
-        <img src="assets/cover-ta.jpg" alt="테크니컬 아트 포트폴리오 표지">
-        <div class="body">
-          <span class="kind mono">TECHNICAL ARTIST</span>
-          <b>테크니컬 아트 포트폴리오</b>
-          <p>마네킹 착용 파이프라인, 모션 네 칸 한 장 생성, 몬스터 1,800프레임 정합, 편집기와 검수 도구</p>
-          <div class="go"><span>보러 가기 →</span></div>
-        </div>
-      </a>
-    </div>
-    <p class="pdf">PDF로 받기: <a href="pdf/seogaeun-game-ui.pdf">게임 UI 판</a>, <a href="pdf/seogaeun-technical-art.pdf">테크니컬 아트 판</a></p>
-  </section>
+<script>
+(() => {
+  const W = { sushi:215, mage:163, "white-fox-spirit":197, chef:151, angel:196, "royal-knight":172 };
+  const $ = id => document.getElementById(id);
+  // 타이틀 행진
+  const p = $('parade');
+  p.insertAdjacentHTML('beforeend', '<div class="sp pixel" style="--src:url(img/hero-run.png);--n:12;--w:192px;--h:192px;--t:.72s;margin-bottom:-14px"></div>');
+  for (const s of Object.keys(W)) p.insertAdjacentHTML('beforeend', `<div class="sp" style="--src:url(img/hj-${s}-run.png);--n:4;--w:${Math.round(W[s]*.75)}px;--h:144px;--t:.56s"></div>`);
 
-  <section aria-labelledby="h-proj">
-    <h2 id="h-proj">프로젝트</h2>
-    <p class="sub">세 프로젝트 모두 6인 팀입니다. 제 판단, AI가 한 일, 팀원의 몫을 나눠 적었습니다.</p>
-    <div class="projects">
-      <article class="proj" style="--c:#1f97a4">
-        <img src="assets/deviant.jpg" alt="DEVIANT 전투 화면">
-        <div class="body">
-          <span class="meta">2026.10 ~ 진행 중, SSAFY 자율 프로젝트</span>
-          <b>DEVIANT</b>
-          <span class="who">팀장, 아트</span>
-          <ul>
-            <li>전투 HUD 도트 통일, 무기와 스킬 아이콘 54장</li>
-            <li>제작과 장착 흐름 재설계 (입력 14회 → 7회)</li>
-            <li>HTML 시험장에서 정하고 Unity로 옮기는 흐름</li>
-          </ul>
-          <a class="code" href="https://github.com/Seogaeun03/deviant">저장소 보기 →</a>
-        </div>
-      </article>
-      <article class="proj" style="--c:#e06a1c">
-        <img src="assets/hanjjak.jpg" alt="한짝 전투 화면">
-        <div class="body">
-          <span class="meta">2026.08 ~ 09, SSAFY 특화 프로젝트, 우수상</span>
-          <b>한짝</b>
-          <span class="who">팀장, 디자인 총괄, 치장 제작</span>
-          <ul>
-            <li>생성 AI 장비를 고정 마네킹에 입히는 파이프라인</li>
-            <li>모션 네 칸을 한 장에 생성해 옷 흐름 해결</li>
-            <li>몬스터 90종 1,800프레임 발끝 0px 정합</li>
-          </ul>
-          <a class="code" href="https://github.com/Seogaeun03/hanjjak">저장소 보기 →</a>
-        </div>
-      </article>
-      <article class="proj" style="--c:#4f5ce8">
-        <img src="assets/aivo.jpg" alt="AIVO 리포트 화면">
-        <div class="body">
-          <span class="meta">2026.07 ~ 08, SSAFY 공통 프로젝트, 우수상</span>
-          <b>AIVO</b>
-          <span class="who">프론트엔드</span>
-          <ul>
-            <li>면접과 폴더 화면, 리포트 화면 구현</li>
-            <li>가짜 데이터와 실제 API 연결을 구분해 검수</li>
-            <li>리포트 그래프와 숫자 기준 정리</li>
-          </ul>
-          <a class="code" href="https://github.com/Seogaeun03/aivo">저장소 보기 →</a>
-        </div>
-      </article>
-    </div>
-  </section>
+  // 픽셀 전환
+  const cv = $('wipe'), cx = cv.getContext('2d');
+  const wipe = (mid) => new Promise(res => {
+    const S = 24; cv.width = Math.ceil(innerWidth / S); cv.height = Math.ceil(innerHeight / S);
+    cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
+    const cells = []; for (let y = 0; y < cv.height; y++) for (let x = 0; x < cv.width; x++) cells.push([x, y]);
+    cells.sort(() => Math.random() - .5);
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const per = reduce ? cells.length : Math.ceil(cells.length / 14);
+    let i = 0, phase = 0; cx.fillStyle = '#1B1616';
+    const step = () => {
+      for (let k = 0; k < per && i < cells.length; k++, i++) { const [x, y] = cells[i]; phase ? cx.clearRect(x, y, 1, 1) : cx.fillRect(x, y, 1, 1); }
+      if (i < cells.length) return requestAnimationFrame(step);
+      if (phase === 0) { mid(); phase = 1; i = 0; cells.sort(() => Math.random() - .5); return requestAnimationFrame(step); }
+      cx.clearRect(0, 0, cv.width, cv.height); res();
+    };
+    step();
+  });
 
-  <section aria-labelledby="h-way">
-    <h2 id="h-way">이렇게 일합니다</h2>
-    <p class="sub">생성 AI에게는 초안과 반복 계산을 맡기고, 규칙과 마지막 손질은 제가 합니다.</p>
-    <div class="ways">
-      <div class="way"><b>규칙부터 정한다</b><p>선, 색, 테두리, 기준점을 먼저 정하고 어긋난 걸 자동으로 잡습니다.</p></div>
-      <div class="way"><b>엔진 밖에서 여러 안을 놓고 고른다</b><p>HTML 시험장과 비교판으로 고른 것만 엔진으로 옮깁니다.</p></div>
-      <div class="way"><b>게임 안에서 끝까지 본다</b><p>자동 검사를 통과해도 직접 플레이하며 눈으로 다시 봅니다.</p></div>
-    </div>
-  </section>
+  // 장면 전환
+  let scene = 'title';
+  const setScene = (s, jump) => wipe(() => {
+    scene = s;
+    $('title').classList.toggle('on', s === 'title');
+    $('village').classList.toggle('on', s === 'village');
+    $('vbar').style.display = s === 'village' ? 'flex' : 'none';
+    document.body.classList.toggle('in-village', s === 'village');
+    if (s === 'village') { scrollTo(0, jump ? jump * zoneStep() : 0); update(); } else scrollTo(0, 0);
+  });
+  const zoneStep = () => (document.documentElement.scrollHeight - innerHeight) / 4;
 
-</main>
+  // 타이틀 메뉴
+  const items = [...document.querySelectorAll('#menu button')]; let mi = 0;
+  const sel = k => { mi = (k + items.length) % items.length; items.forEach((b, j) => b.setAttribute('aria-selected', j === mi)); };
+  const run = go => {
+    if (go === 'village') setScene('village');
+    else if (go === 'title') setScene('title');
+    else if (go === 'contact') setScene('village', 4);
+    else open('m-' + go);
+  };
+  items.forEach((b, j) => { b.addEventListener('mouseenter', () => sel(j)); b.addEventListener('click', () => { sel(j); run(b.dataset.go); }); });
+  document.querySelectorAll('#vbar [data-go]').forEach(b => b.addEventListener('click', () => run(b.dataset.go)));
 
-<footer class="wrap">
-  <p>서가은 | <a href="mailto:seogu0307@gmail.com">seogu0307@gmail.com</a> | 마지막 갱신 2026.11</p>
-</footer>
+  // 창
+  const open = id => { closeAll(); $(id).classList.add('on'); ($(id).querySelector('.dexgrid a, .quests a') || $(id).querySelector('[data-close]')).focus(); };
+  const closeAll = () => document.querySelectorAll('.modal').forEach(m => m.classList.remove('on'));
+  document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeAll));
+  document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeAll(); }));
+  document.querySelectorAll('[data-jump]').forEach(b => b.addEventListener('click', () => { closeAll(); scene === 'village' ? scrollTo({ top: +b.dataset.jump * zoneStep(), behavior: 'smooth' }) : setScene('village', +b.dataset.jump); }));
 
+  // 간판 앞 미리보기 = 프로젝트 소개 카드. 자세한 사례는 프로젝트 페이지에서.
+  const CASES = {
+    dv: { kind: 'Unity 2D 액션 로그라이트', name: 'DEVIANT', img: 'img/highlight-poster.png', px: true,
+      meta: '2026.10 ~ 진행 중 / 6인 / 팀장, 아트',
+      line: '잉크로 그린 세계를 무기를 바꿔 들며 돌파하는 액션 게임이에요. 전투 HUD와 아이콘, 픽셀 규격을 세우고 게임 전체 그림을 한 손으로 맞췄어요.', href: 'p-deviant.html' },
+    hj: { kind: '웹 방치형 게임', name: '한짝', img: 'img/battle.jpg', award: '우수상',
+      meta: '2026.08 ~ 09 / 6인 / 팀장, 디자인 총괄',
+      line: '바탕화면에 띄워 두면 젓가락이 알아서 싸우는 게임이에요. UI 규칙을 정하고, 생성 AI 그림을 게임에 그대로 쓸 수 있게 만드는 치장 제작 방식을 설계했어요.', href: 'p-hanjjak.html' },
+    av: { kind: '웹 서비스', name: 'AIVO', img: 'img/aivo-interview-report.jpg', award: '우수상',
+      meta: '2026.07 ~ 08 / 6인 / 프론트엔드',
+      line: '발표와 면접 연습을 분석해 주는 AI 말하기 코치예요. 면접과 리포트 화면을 만들고, 화면 뒤의 데이터가 진짜인지 끝까지 확인했어요.', href: 'p-aivo.html' },
+  };
+  const openCase = z => {
+    const c = CASES[z]; $('case-k').textContent = c.kind; $('case-t').textContent = c.name;
+    $('case-s').innerHTML = `<div class="ic-img"><img ${c.px ? 'class="px"' : ''} src="${c.img}" alt="${c.name} 화면" style="object-position:${z === 'av' ? 'top left' : 'center'}"></div>
+      <p class="ic-meta g">${c.meta}${c.award ? ` <span class="ic-award">${c.award}</span>` : ''}</p>
+      <p class="ic-line">${c.line}</p>`;
+    $('case-l').innerHTML = '';
+    $('case-more').href = c.href;
+    open('m-case');
+  };
+  // 연습실 모니터: 다가가면 켜지고 화면이 넘어간다
+  const studio = $('studio'), avimg = $('avimg');
+  const AV = ['img/aivo-interview-report.jpg', 'img/aivo-presentation-practice.jpg', 'img/aivo-presentation-report.jpg', 'img/aivo-home.jpg'];
+  let avi = 0; setInterval(() => { if (studio.classList.contains('on')) { avi = (avi + 1) % AV.length; avimg.src = AV[avi]; } }, 1800);
+
+  // 마을 걷기
+  const world = $('world'), sp = $('sprite'), bubble = $('bubble'), zbtns = [...document.querySelectorAll('#zones button')];
+  const KEYS = [null, 'dv', 'hj', 'av', null];
+  let moving = false, stopT, zone = -1, look = '', lastY = 0, faceLeft = false;
+  const setLook = (kind, run) => {
+    const key = kind + run + faceLeft; if (key === look) return; look = key;
+    if (kind === 'hj') { sp.className = 'sp' + (faceLeft ? ' flip' : ''); sp.style.cssText = `--src:url(img/hj-sushi-${run ? 'run' : 'rest'}.png);--n:4;--w:${215*.8}px;--h:${192*.8}px;--t:${run ? '.56s' : '.9s'}`; }
+    else { sp.className = 'sp pixel' + (faceLeft ? ' flip' : ''); sp.style.cssText = `--src:url(img/hero-${run ? 'run' : 'idle'}.png);--n:12;--w:192px;--h:192px;--t:${run ? '.72s' : '1.2s'}`; }
+  };
+  const update = () => {
+    if (scene !== 'village') return;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const x = (max > 0 ? scrollY / max : 0) * 4 * innerWidth;
+    world.style.transform = `translateX(${-x}px)`;
+    const z = Math.min(4, Math.round(x / innerWidth));
+    if (z !== zone) { zone = z; zbtns.forEach((b, k) => b.setAttribute('aria-current', k === z)); }
+    const near = KEYS[z] && Math.abs(x - z * innerWidth) < innerWidth * .18;
+    const say = { 1: 'DEVIANT 소개', 2: '한짝 소개', 3: 'AIVO 소개' };
+    bubble.innerHTML = near ? `<kbd>F</kbd>${say[z]}` : '';
+    bubble.classList.toggle('on', !!near);
+    studio.classList.toggle('on', z === 3 && Math.abs(x - 3 * innerWidth) < innerWidth * .3);
+    setLook(z === 2 ? 'hj' : 'dv', moving);
+  };
+  addEventListener('scroll', () => {
+    if (scene !== 'village') return;
+    faceLeft = scrollY < lastY; lastY = scrollY;
+    moving = true; clearTimeout(stopT); stopT = setTimeout(() => { moving = false; update(); }, 140); update();
+  }, { passive: true });
+  addEventListener('resize', update);
+  // 프로젝트 페이지에서 돌아올 때: ?zone=N 이면 타이틀을 건너뛰고 그 구역에 선다
+  const qz = +new URLSearchParams(location.search).get('zone');
+  if (qz >= 0 && new URLSearchParams(location.search).has('zone')) {
+    scene = 'village'; $('title').classList.remove('on'); $('village').classList.add('on'); $('vbar').style.display = 'flex'; document.body.classList.add('in-village');
+    requestAnimationFrame(() => { scrollTo(0, qz * zoneStep()); update(); });
+  }
+
+  // ── 키 세팅 ──
+  // 글자가 아니라 키 위치(e.code)로 읽는다. 한글 입력 상태여도 F, A, D 가 그대로 동작한다.
+  const held = new Set(); let walkRAF = null, lastT = 0;
+  const walk = t => {
+    const dir = (held.has('R') ? 1 : 0) - (held.has('L') ? 1 : 0);
+    if (!dir || scene !== 'village') { walkRAF = null; lastT = 0; return; }
+    const dt = lastT ? Math.min(.05, (t - lastT) / 1000) : .016; lastT = t;
+    scrollBy(0, dir * innerHeight * (held.has('fast') ? 2.4 : 1.3) * dt);
+    walkRAF = requestAnimationFrame(walk);
+  };
+  const jump = () => { const m = $('me'); if (m.classList.contains('hop')) return; m.classList.add('hop'); setTimeout(() => m.classList.remove('hop'), 520); };
+  const goZone = n => { if (scene === 'village') scrollTo({ top: n * zoneStep(), behavior: 'smooth' }); else setScene('village', n); };
+  const moveFocus = (m, d) => {
+    const els = [...m.querySelectorAll('a[href]:not(#case-more), [data-focus]')]; if (!els.length) return;
+    const i = els.indexOf(document.activeElement); els[(i + d + els.length) % els.length].focus();
+  };
+  const is = (c, ...codes) => codes.includes(c);
+  addEventListener('keydown', e => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    const c = e.code, m = document.querySelector('.modal.on');
+    if (c === 'Slash' || e.key === '?') { e.preventDefault(); m && m.id === 'm-keys' ? closeAll() : open('m-keys'); return; }
+    if (m) {                                   // 창이 열려 있을 때
+      if (is(c, 'Escape', 'Backspace')) { e.preventDefault(); closeAll(); return; }
+      if (is(c, 'ArrowRight', 'ArrowDown', 'KeyD', 'KeyS')) { e.preventDefault(); moveFocus(m, 1); }
+      if (is(c, 'ArrowLeft', 'ArrowUp', 'KeyA', 'KeyW')) { e.preventDefault(); moveFocus(m, -1); }
+      if (m.id === 'm-case' && is(c, 'Enter', 'KeyF', 'Space')) { e.preventDefault(); location.href = $('case-more').href; }
+      return;
+    }
+    if (is(c, 'KeyI')) { e.preventDefault(); return open('m-dex'); }       // 도감
+    if (is(c, 'KeyG')) { e.preventDefault(); return document.body.classList.toggle('edit'); } // 격자
+    if (scene === 'title') {
+      if (is(c, 'ArrowDown', 'KeyS')) { e.preventDefault(); sel(mi + 1); }
+      if (is(c, 'ArrowUp', 'KeyW')) { e.preventDefault(); sel(mi - 1); }
+      if (is(c, 'Enter', 'Space', 'KeyF')) { e.preventDefault(); run(items[mi].dataset.go); }
+      const n = ['Digit1', 'Digit2', 'Digit3'].indexOf(c); if (n >= 0) { sel(n); run(items[n].dataset.go); }
+      return;
+    }
+    // 마을
+    if (is(c, 'ArrowRight', 'KeyD')) { e.preventDefault(); held.add('R'); if (!walkRAF) walkRAF = requestAnimationFrame(walk); }
+    if (is(c, 'ArrowLeft', 'KeyA')) { e.preventDefault(); held.add('L'); if (!walkRAF) walkRAF = requestAnimationFrame(walk); }
+    if (is(c, 'ShiftLeft', 'ShiftRight')) held.add('fast');
+    if (is(c, 'Space', 'ArrowUp', 'KeyW')) { e.preventDefault(); jump(); }
+    if (is(c, 'KeyF', 'Enter') && KEYS[zone]) { e.preventDefault(); openCase(KEYS[zone]); }
+    if (is(c, 'Home')) { e.preventDefault(); goZone(0); }
+    if (is(c, 'End')) { e.preventDefault(); goZone(4); }
+    const z = ['Digit0', 'Digit1', 'Digit2', 'Digit3', 'Digit4'].indexOf(c); if (z >= 0) goZone(z);
+    if (is(c, 'Escape', 'KeyM')) { held.clear(); setScene('title'); }
+  });
+  addEventListener('keyup', e => {
+    if (is(e.code, 'ArrowRight', 'KeyD')) held.delete('R');
+    if (is(e.code, 'ArrowLeft', 'KeyA')) held.delete('L');
+    if (is(e.code, 'ShiftLeft', 'ShiftRight')) held.delete('fast');
+  });
+  addEventListener('blur', () => held.clear());
+  zbtns.forEach((b, k) => b.addEventListener('click', () => goZone(k)));
+  document.querySelectorAll('[data-keys]').forEach(b => b.addEventListener('click', () => open('m-keys')));
+  bubble.addEventListener('click', () => KEYS[zone] && openCase(KEYS[zone]));
+  bubble.style.pointerEvents = 'auto'; bubble.style.cursor = 'pointer';
+})();
+</script>
 </body>
 </html>

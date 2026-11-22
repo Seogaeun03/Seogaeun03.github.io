@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIVO | 서가은</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css"><link rel="stylesheet" href="project.css">
+<style>:root { --acc: #8c96ff; }</style>
+</head>
+<body>
+<header class="ptop"><div class="pw g">
+  <a class="back" href="index.html?zone=3">← 마을로</a>
+  <nav class="tabs" aria-label="프로젝트"><a href="p-deviant.html">DEVIANT</a><a href="p-hanjjak.html">한짝</a><a href="p-aivo.html" aria-current="page">AIVO</a></nav>
+</div></header>
+<main class="pw">
+  <section class="phero">
+    <span class="kind g">웹 서비스</span>
+    <h1>AIVO</h1>
+    <p class="line">발표와 면접 연습을 촬영하면, 고칠 순간을 영상과 리포트로 다시 보여 주는 AI 말하기 코치.</p>
+    <p class="meta g">2026.07 ~ 08 / 6인 / 프론트엔드 <b>우수상</b></p>
+    <div class="cover"><img src="img/aivo-interview-report.jpg" alt="AIVO 면접 리포트" style="object-position:top left"></div>
+  </section>
+
+  <section class="about">
+    <h2 class="g">역할</h2>
+    <div>
+      <p>면접과 폴더, 리포트 화면을 Vue로 만들었어요. 게임은 아니지만, 사람이 보는 화면과 그 뒤의 데이터를 함께 다룬 경험이에요.</p>
+      <p>Vue 3, Pinia, Figma</p>
+    </div>
+  </section>
+
+  <article class="work">
+    <div class="vis two">
+      <figure><div class="im"><img src="img/aivo-presentation-practice.jpg" alt="발표 연습 화면"></div></figure>
+      <figure><div class="im"><img src="img/aivo-presentation-report.jpg" alt="발표 리포트 화면"></div></figure>
+    </div>
+    <div class="txt"><span class="no g">01</span><h3>멀쩡해 보이는 화면을 의심하기</h3>
+      <p>서버가 실패해도 가짜 데이터가 정상 화면을 그려서, 연결이 됐는지 알 수 없었어요. 자동 대체를 끄고 <strong>실제 응답과 명세를 하나씩 대조</strong>했어요.</p></div>
+  </article>
+
+  <article class="work rev">
+    <div class="vis"><figure><div class="im"><img src="img/aivo-growth.jpg" alt="학습 추이 화면"></div></figure></div>
+    <div class="txt"><span class="no g">02</span><h3>숫자와 그래프가 같은 말을 하게</h3>
+      <p>리포트 위의 합계와 질문별 합계가 서로 달랐어요. 같은 기준으로 맞추고, <strong>이어지는 값은 선으로, 사건은 점으로</strong> 나눠 그렸어요.</p></div>
+  </article>
+
+  <nav class="next" aria-label="다른 프로젝트"><a href="p-hanjjak.html"><small class="g">← 이전</small><b>한짝</b></a><a href="index.html?zone=4" style="text-align:right"><small class="g">마을로 →</small><b>돌아가기</b></a></nav>
+</main>
+<script src="keys.js"></script>
+</body>
+</html>

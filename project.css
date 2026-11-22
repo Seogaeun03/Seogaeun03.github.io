@@ -1,0 +1,48 @@
+/* 프로젝트 페이지: 개인 홈페이지처럼 조용하고 읽기 쉽게 */
+body { font-size: 17px; line-height: 30px; }
+.pw { max-width: 1040px; margin: 0 auto; padding: 0 20px 120px; }
+.ptop { position: sticky; top: 0; z-index: 10; background: rgba(27,22,22,.94); border-bottom: 1px solid #2b2424; }
+.ptop .pw { display: flex; align-items: center; gap: 18px; padding-top: 12px; padding-bottom: 12px; }
+.ptop a { font-size: 12px; line-height: 24px; text-decoration: none; color: var(--tan); }
+.ptop a:hover, .ptop a:focus-visible { color: var(--cream); outline: none; }
+.ptop .tabs { display: flex; gap: 18px; margin-left: auto; }
+.ptop .tabs a[aria-current="page"] { color: var(--acc); }
+
+.phero { padding: 72px 0 40px; }
+.phero .kind { font-size: 12px; color: var(--acc); }
+.phero h1 { font-size: clamp(40px, 5.4vw, 64px); line-height: 1.1; font-weight: 900; letter-spacing: -.03em; margin: 10px 0 16px; }
+.phero .line { font-size: 20px; line-height: 34px; color: var(--cream); max-width: 720px; word-break: keep-all; }
+.phero .meta { margin-top: 18px; font-size: 12px; color: var(--tan); }
+.phero .meta b { font-weight: 400; color: var(--ink); background: var(--gold); padding: 0 6px; margin-left: 8px; }
+.cover { margin-top: 36px; }
+.cover img, .cover video { width: 100%; aspect-ratio: 16/8; object-fit: cover; background: #000; display: block; }
+
+.about { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; padding: 56px 0; border-bottom: 1px solid #2b2424; }
+@media (max-width: 820px) { .about { grid-template-columns: 1fr; gap: 12px; } }
+.about h2 { font-size: 12px; font-weight: 400; color: var(--acc); }
+.about p { color: var(--cream); word-break: keep-all; }
+.about p + p { margin-top: 14px; color: var(--tan); }
+
+.work { display: grid; grid-template-columns: 1.35fr 1fr; gap: 40px; align-items: center; padding: 64px 0; border-bottom: 1px solid #2b2424; }
+.work.rev { grid-template-columns: 1fr 1.35fr; }
+.work.rev .vis { order: 2; }
+.work.full { grid-template-columns: 1fr; }
+@media (max-width: 820px) { .work, .work.rev { grid-template-columns: 1fr; } .work.rev .vis { order: 0; } }
+.vis { display: grid; gap: 10px; }
+.vis.two { grid-template-columns: 1fr 1fr; }
+.vis figure { margin: 0; }
+.vis .im { background: #221c1c; display: grid; place-items: center; overflow: hidden; }
+.vis .im img, .vis .im video { max-width: 100%; max-height: 380px; width: auto; height: auto; display: block; }
+.vis .im.light { background: #f3ecdf; padding: 12px; }
+.vis figcaption { font-size: 13px; line-height: 20px; color: var(--tan); margin-top: 8px; }
+.txt .no { font-size: 12px; color: var(--acc); }
+.txt h3 { font-size: 28px; line-height: 38px; font-weight: 900; letter-spacing: -.02em; margin: 6px 0 14px; word-break: keep-all; }
+.txt p { color: var(--tan); word-break: keep-all; }
+.txt p strong { color: var(--cream); font-weight: 700; }
+
+.next { display: flex; justify-content: space-between; gap: 16px; margin-top: 56px; }
+.next a { text-decoration: none; }
+.next small { font-size: 12px; color: var(--tan); display: block; }
+.next b { font-size: 22px; }
+.next a:hover b, .next a:focus-visible b { color: var(--acc); }
+.next a:focus-visible { outline: none; }
