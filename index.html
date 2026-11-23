@@ -75,12 +75,14 @@ body { background: #23305a; -webkit-user-select: none; user-select: none; }
 .viewer p { font-family: "Galmuri11", monospace; font-size: 12px; margin-top: 8px; }
 /* ── 한짝 위젯 ── */
 .hj .body { overflow: hidden; }
-.field { height: 160px; position: relative; background: linear-gradient(#fbe3c4, #f3c99a); overflow: hidden; }
+.field { height: 172px; position: relative; background: linear-gradient(#fbe3c4, #f3c99a); overflow: hidden; }
 .field::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22px; background: #c98a52; border-top: 2px solid #8a5a32; }
-.field .me { position: absolute; left: 24px; bottom: 16px; z-index: 2; }
-.field .mob { position: absolute; right: 22px; bottom: 18px; height: 108px; z-index: 2; transform: scaleX(-1); mix-blend-mode: multiply; }
-.field .mob.hurt { animation: hurt .25s steps(2); }
-@keyframes hurt { 50% { transform: scaleX(-1) translateX(-6px); filter: brightness(1.6); } }
+.field .actor { position: absolute; bottom: 18px; z-index: 2; background-repeat: no-repeat; }
+.field .me { left: 14px; width: 173px; height: 130px; background-image: url(img/hj/hero.webp); background-size: 2076px 130px; }
+.field .mob { right: 18px; width: 133px; height: 100px; background-size: 2660px 100px; transition: opacity .3s steps(3); }
+.field .mob.gone { opacity: 0; }
+.field .me.ouch { animation: ouch .3s steps(2); }
+@keyframes ouch { 50% { transform: translateX(-5px); filter: brightness(1.4) saturate(.6); } }
 .field .hp { position: absolute; top: 8px; height: 10px; width: 130px; background: var(--line); border: 2px solid var(--line); z-index: 3; }
 .field .hp i { display: block; height: 100%; background: #3fae7a; transition: width .2s steps(3); }
 .field .dmg { position: absolute; z-index: 4; font-family: "Galmuri11", monospace; font-size: 16px; color: #e5483b; text-shadow: 2px 2px 0 #fff; animation: up .8s steps(5) forwards; pointer-events: none; }
@@ -113,7 +115,7 @@ body { background: #23305a; -webkit-user-select: none; user-select: none; }
   .ic { width: auto; }
   .wnd:not(.hj) { left: 6px !important; right: 6px; top: 6px !important; width: auto !important; max-height: calc(100vh - var(--task) - 12px); }
   .wnd.hj { left: auto !important; right: 6px; top: auto !important; bottom: calc(var(--task) + 6px); width: 260px !important; }
-  .field { height: 120px; } .field .mob { height: 80px; } .field .me { transform: scale(.75); transform-origin: 0 100%; }
+  .field { height: 140px; } .field .actor { transform: scale(.78); } .field .me { transform-origin: 0 100%; } .field .mob { transform-origin: 100% 100%; }
   .task .app span { display: none; } .task .tray .kb { display: none; }
 }
 </style>
@@ -210,9 +212,7 @@ const DEF = {
       <span><kbd>F</kbd></span><span>맨 앞 창의 프로젝트 페이지로</span><span><kbd>ESC</kbd></span><span>맨 앞 창 닫기</span>
       <span><kbd>TAB</kbd></span><span>창 바꾸기</span><span><kbd>M</kbd></span><span>시작 메뉴</span></div>` },
   widget: { title: '한짝 위젯', acc: '#d9621c', w: 340, x: -1, y: -1, cls: 'hj', body: () => `<div class="field" id="field">
-      <div class="hp" style="left:8px"><i id="hp-me" style="width:100%"></i></div><div class="hp" style="right:8px"><i id="hp-mob" style="width:100%;background:#e5483b"></i></div>
-      <div class="me" id="me"><div class="sp" id="mesp" style="--src:url(img/hj-sushi-rest.png);--n:4;--w:134px;--h:120px;--t:.9s"></div></div>
-      <img class="mob" id="mob" src="img/octopus.gif" alt=""></div>`, st: ['Lv.<span id="lv">12</span>', '처치 <span id="kills">0</span>'] },
+      <div class="hp" style="left:8px"><i id="hp-me" style="width:100%"></i></div><div class="hp" style="right:8px"><i id="hp-mob" style="width:100%;background:#e5483b"></i></div><div class="actor me" id="me"></div><div class="actor mob" id="mob"></div></div>`, st: ['Lv.<span id="lv">12</span>', '처치 <span id="kills">0</span>'] },
 };
 function projBody(k) {
   const p = PROJ[k];
@@ -274,24 +274,57 @@ const clock = () => { const d = new Date(); $('#clock').textContent = String(d.g
 clock(); setInterval(clock, 10000);
 
 // ── 한짝 위젯: 젓가락이 알아서 싸운다 ──
-const MOBS = ['img/octopus.gif', 'img/chicken-king.gif'];
-let bt = null, mobHp = 100, kills = 0, mi = 0;
-function battle(on) {
-  clearInterval(bt); bt = null; if (!on) return;
-  bt = setInterval(() => {
-    const f = document.getElementById('field'); if (!f) return;
-    const sp = document.getElementById('mesp'), mob = document.getElementById('mob');
-    sp.style.setProperty('--src', 'url(img/hj-sushi-run.png)'); setTimeout(() => sp.style.setProperty('--src', 'url(img/hj-sushi-rest.png)'), 300);
-    const crit = Math.random() < .2, d = Math.round((crit ? 2.2 : 1) * (8 + Math.random() * 10));
-    mobHp -= d; mob.classList.remove('hurt'); void mob.offsetWidth; mob.classList.add('hurt');
-    const n = document.createElement('span'); n.className = 'dmg' + (crit ? ' crit' : ''); n.textContent = '-' + d * 8;
-    n.style.left = (f.clientWidth - 150 + Math.random() * 40) + 'px'; n.style.top = (40 + Math.random() * 30) + 'px'; f.appendChild(n); setTimeout(() => n.remove(), 800);
-    if (mobHp <= 0) { kills++; mobHp = 100; mi = (mi + 1) % MOBS.length; mob.src = MOBS[mi]; document.getElementById('kills').textContent = kills; if (kills % 3 === 0) document.getElementById('lv').textContent = 12 + kills / 3; }
-    document.getElementById('hp-mob').style.width = Math.max(0, mobHp) + '%';
-    document.getElementById('hp-me').style.width = (70 + Math.random() * 30) + '%';
-  }, 900);
+// 게임의 안 입은 젓가락(기본 나무검)과 같은 크기의 니기리 다섯
+const MOBS = ['salmon-nigiri', 'shrimp-nigiri', 'tamago-nigiri', 'tuna-nigiri', 'flatfish-nigiri'];
+const HW = 173, MW = 133;               // 화면에 그리는 한 칸 폭
+let alive = false, mobHp = 100, meHp = 100, kills = 0, mi = 0, turn = 0, idleT = null;
+const $id = id => document.getElementById(id);
+const frame = (el, i, w) => { if (el) el.style.backgroundPosition = `${-i * w}px 0`; };
+const wait = ms => new Promise(r => setTimeout(r, ms));
+async function play(el, from, n, w, ms, onFrame) { for (let k = 0; k < n; k++) { frame(el, from + k, w); onFrame && onFrame(k); await wait(ms); } }
+function idle() {                       // 둘 다 숨 쉬기
+  clearInterval(idleT); let k = 0;
+  idleT = setInterval(() => { if (!busyMe) frame($id('me'), k % 4, HW); if (!busyMob) frame($id('mob'), k % 4, MW); k++; }, 200);
 }
-
+let busyMe = false, busyMob = false;
+function setMob() { const m = $id('mob'); if (!m) return; m.style.backgroundImage = `url(img/hj/${MOBS[mi]}.webp)`; frame(m, 0, MW); m.classList.remove('gone'); }
+function pop(text, crit, x, y) {
+  const f = $id('field'); if (!f) return; const n = document.createElement('span'); n.className = 'dmg' + (crit ? ' crit' : ''); n.textContent = text;
+  n.style.left = x + 'px'; n.style.top = y + 'px'; f.appendChild(n); setTimeout(() => n.remove(), 800);
+}
+async function round() {
+  if (!alive || !$id('field')) return;
+  const me = $id('me'), mob = $id('mob'), f = $id('field');
+  turn++;
+  if (turn % 3 === 0) {                 // 몬스터 차례
+    busyMob = true;
+    await play(mob, 8, 4, MW, 120, k => { if (k === 2) { meHp = Math.max(20, meHp - 8 - Math.random() * 8); $id('hp-me').style.width = meHp + '%'; me.classList.remove('ouch'); void me.offsetWidth; me.classList.add('ouch'); pop('-' + Math.round(40 + Math.random() * 40), false, 60, 40); } });
+    busyMob = false;
+  } else {                              // 젓가락 차례: 내려치기와 찌르기를 번갈아
+    busyMe = true; const from = turn % 2 ? 4 : 8;
+    await play(me, from, 4, HW, 95, async k => {
+      if (k !== 2) return;
+      const crit = Math.random() < .2, d = Math.round((crit ? 2.2 : 1) * (9 + Math.random() * 9));
+      mobHp -= d; $id('hp-mob').style.width = Math.max(0, mobHp) + '%';
+      pop('-' + d * 8, crit, f.clientWidth - 130 + Math.random() * 30, 30 + Math.random() * 24);
+      busyMob = true; play(mob, 12, 4, MW, 80).then(() => { busyMob = false; });
+    });
+    busyMe = false;
+  }
+  if (mobHp <= 0) {                      // 쓰러짐 → 다음 니기리
+    busyMob = true; await wait(260); await play(mob, 16, 4, MW, 130); await wait(500);
+    mob.classList.add('gone'); await wait(350);
+    kills++; mi = (mi + 1) % MOBS.length; mobHp = 100; meHp = Math.min(100, meHp + 30);
+    $id('kills').textContent = kills; if (kills % 3 === 0) $id('lv').textContent = 12 + kills / 3;
+    $id('hp-mob').style.width = '100%'; $id('hp-me').style.width = meHp + '%';
+    setMob(); busyMob = false; await wait(400);
+  }
+  setTimeout(round, 900 + Math.random() * 400);
+}
+function battle(on) {
+  alive = on; clearInterval(idleT); if (!on) return;
+  setMob(); idle(); setTimeout(round, 800);
+}
 // ── 키 ──
 addEventListener('keydown', e => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
