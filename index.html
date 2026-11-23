@@ -32,16 +32,25 @@ body { background: #23305a; -webkit-user-select: none; user-select: none; }
 .aivo-ic { width: 52px; height: 52px; background: #fff; border: 2px solid var(--line); display: grid; place-items: center; }
 .aivo-ic img { max-width: 42px !important; image-rendering: auto !important; }
 /* ── 창: 크림 종이, 먹 2점 테, 딱딱한 그림자 ── */
-.wnd { position: fixed; background: var(--paper); border: 2px solid var(--line); box-shadow: 6px 6px 0 rgba(12,16,36,.5); display: flex; flex-direction: column; min-width: 240px; }
+/* 창: 게임 대화창 (먹, 크림, 먹 두 겹 테 + 먹색 머리띠 + 강조색 줄) */
+.wnd { position: fixed; background: var(--paper); box-shadow: 0 0 0 2px var(--line), 0 0 0 4px var(--paper), 0 0 0 6px var(--line), 8px 8px 0 6px rgba(12,16,36,.5); display: flex; flex-direction: column; min-width: 240px; }
 .wnd[hidden] { display: none; }
-.wnd .tb { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 4px 0 10px; background: var(--acc, #02648C); color: #fff; font-size: 12px; cursor: grab; flex: none; border-bottom: 2px solid var(--line); touch-action: none; }
+.wnd.max { left: 6px !important; top: 6px !important; width: calc(100vw - 12px) !important; height: calc(100vh - var(--task) - 12px) !important; }
+.wnd .tb { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 5px 0 0; background: var(--line); color: var(--paper); font-size: 12px; cursor: grab; flex: none; touch-action: none; }
+.wnd .tb .flag { width: 30px; height: 30px; flex: none; display: grid; place-items: center; background: var(--acc, #02648C); }
+.wnd .tb .flag svg, .wnd .tb button svg { width: 16px; height: 16px; display: block; }
 .wnd .tb .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.wnd.back .tb { background: #9a8f80; }
-.wnd .tb .bt { margin-left: auto; display: flex; gap: 4px; }
-.wnd .tb button { width: 20px; height: 20px; padding: 0; background: var(--paper); border: 2px solid var(--line); color: var(--line); font-size: 11px; line-height: 14px; font-family: inherit; cursor: pointer; }
-.wnd .tb button:hover { background: #fff; }
+.wnd .tb .stripes { flex: 1; min-width: 12px; height: 10px; background: repeating-linear-gradient(90deg, #3a3030 0 2px, transparent 2px 4px); }
+.wnd .tb .bt { display: flex; gap: 2px; }
+.wnd .tb button { width: 20px; height: 20px; padding: 0; display: grid; place-items: center; background: #3a3030; border: 0; cursor: pointer; }
+.wnd .tb button:hover { background: #5a4a4a; }
+.wnd .tb button[data-x] { background: #e5483b; } .wnd .tb button[data-x]:hover { background: #ff6a5a; }
+.wnd .rule { height: 4px; flex: none; background: var(--acc, #02648C); }
+.wnd.back .tb .flag, .wnd.back .rule { background: #8a7d6b; }
+.wnd.back .tb .t { color: #a89a88; }
+.wnd.back .tb button[data-x] { background: #5a4a4a; }
 .wnd .body { overflow: auto; color: var(--line); font-family: "Noto Sans KR", sans-serif; font-size: 14px; line-height: 23px; -webkit-user-select: text; user-select: text; }
-.wnd .st { display: flex; gap: 16px; padding: 4px 10px; font-size: 11px; line-height: 16px; color: #6b6052; border-top: 2px solid #d8ccb8; flex: none; overflow: hidden; white-space: nowrap; }
+.wnd .st { display: flex; gap: 16px; padding: 5px 10px; font-size: 11px; line-height: 16px; color: #6b6052; background: #efe3cf; flex: none; overflow: hidden; white-space: nowrap; }
 /* 프로젝트 창 */
 .proj { display: grid; grid-template-columns: 1fr 220px; }
 .proj .media { background: #000; display: grid; place-items: center; min-height: 0; }
@@ -99,9 +108,9 @@ body { background: #23305a; -webkit-user-select: none; user-select: none; }
 .task .app i { width: 10px; height: 10px; display: inline-block; background: var(--acc); }
 .task .tray { margin-left: auto; display: flex; gap: 14px; align-items: center; padding: 0 10px; color: var(--tan); }
 .task .tray a { color: var(--tan); text-decoration: none; } .task .tray a:hover { color: var(--paper); }
-.menu { position: fixed; left: 6px; bottom: calc(var(--task) + 4px); width: 260px; background: var(--paper); border: 2px solid var(--line); box-shadow: 6px 6px 0 rgba(12,16,36,.5); z-index: 9001; display: none; color: var(--line); }
+.menu { position: fixed; left: 12px; bottom: calc(var(--task) + 12px); width: 260px; background: var(--paper); box-shadow: 0 0 0 2px var(--line), 0 0 0 4px var(--paper), 0 0 0 6px var(--line), 8px 8px 0 6px rgba(12,16,36,.5); z-index: 9001; display: none; color: var(--line); }
 .menu.on { display: block; }
-.menu .hd { background: #EBA516; padding: 12px; font-size: 18px; line-height: 24px; border-bottom: 2px solid var(--line); }
+.menu .hd { background: var(--line); color: var(--paper); padding: 12px; font-size: 18px; line-height: 24px; border-bottom: 4px solid #EBA516; }
 .menu .hd small { display: block; font-size: 11px; line-height: 16px; }
 .menu a, .menu button { display: flex; justify-content: space-between; width: 100%; padding: 8px 12px; font-family: inherit; font-size: 13px; color: var(--line); text-decoration: none; background: none; border: 0; cursor: pointer; text-align: left; }
 .menu a:hover, .menu button:hover, .menu a:focus-visible, .menu button:focus-visible { background: var(--line); color: var(--paper); outline: none; }
@@ -214,6 +223,19 @@ const DEF = {
   widget: { title: '한짝 위젯', acc: '#d9621c', w: 340, x: -1, y: -1, cls: 'hj', body: () => `<div class="field" id="field">
       <div class="hp" style="left:8px"><i id="hp-me" style="width:100%"></i></div><div class="hp" style="right:8px"><i id="hp-mob" style="width:100%;background:#e5483b"></i></div><div class="actor me" id="me"></div><div class="actor mob" id="mob"></div></div>`, st: ['Lv.<span id="lv">12</span>', '처치 <span id="kills">0</span>'] },
 };
+const SVG = (d, c = '#fff') => `<svg viewBox="0 0 8 8" shape-rendering="crispEdges"><path fill="${c}" fill-rule="evenodd" d="${d}"/></svg>`;
+const GLYPH = {
+  dv: 'M2 0h4v1h1v4H6v1H5v2H3V6H2V5H1V1h1zM3 2v1h1V2zM5 2v1h1V2z',
+  hj: 'M2 0h1v7H2zM5 0h1v7H5zM1 7h2v1H1zM5 7h2v1H5z',
+  av: 'M3 0h2v1h1v3H5v1H3V4H2V1h1zM1 3h1v1h1v1h2V4h1V3h1v2H6v1H5v1h1v1H2V7h1V6H2V5H1z',
+  doc: 'M1 0h4v1h1v1h1v6H1zM2 3v1h4V3zM2 5v1h4V5z',
+  folder: 'M0 1h3v1h5v6H0z',
+  key: 'M1 1h3v1h1v1h3v2H7v1H6V5H5v1H4v1H1V6H0V2h1zM2 3v2h1V3z',
+  img: 'M0 1h8v6H0zM1 2v4h6V5H6V4H5v1H4V4H3v1H2V2z',
+  min: 'M1 6h6v1H1z', max: 'M1 1h6v6H1zM2 3v3h4V3z',
+  x: 'M1 1h1v1h1v1h2V2h1V1h1v1H6v1H5v2h1v1h1v1H6V6H5V5H3v1H2v1H1V6h1V5h1V3H2V2H1z',
+};
+const WGLYPH = { readme: 'doc', dv: 'dv', hjw: 'hj', av: 'av', work: 'folder', view: 'img', keys: 'key', widget: 'hj' };
 function projBody(k) {
   const p = PROJ[k];
   return `<div class="proj"><div class="media">${p.media}</div><div class="side"><div class="k">${p.kind}</div><h3>${p.name}</h3>
@@ -231,12 +253,13 @@ function openWin(id, opt = {}) {
   el.style.left = (d.x < 0 ? innerWidth - W - 16 : Math.min(d.x, innerWidth - W - 12)) + 'px';
   el.style.top = (d.y < 0 ? innerHeight - 44 - 236 : d.y) + 'px';
   const st = P ? P.st : d.st;
-  el.innerHTML = `<div class="tb"><span class="t">${opt.title || (P ? P.title : d.title)}</span><span class="bt"><button data-min aria-label="내리기">_</button><button data-x aria-label="닫기">×</button></span></div>
+  el.innerHTML = `<div class="tb"><span class="flag">${SVG(GLYPH[WGLYPH[id]])}</span><span class="t">${opt.title || (P ? P.title : d.title)}</span><span class="stripes"></span><span class="bt"><button data-min aria-label="내리기">${SVG(GLYPH.min, '#FDEEDA')}</button>${id === 'widget' ? '' : `<button data-max aria-label="크게">${SVG(GLYPH.max, '#FDEEDA')}</button>`}<button data-x aria-label="닫기">${SVG(GLYPH.x, '#FDEEDA')}</button></span></div><div class="rule"></div>
     <div class="body">${opt.body || (P ? projBody(pk) : d.body())}</div>${st ? `<div class="st">${st.map(s => `<span>${s}</span>`).join('')}</div>` : ''}`;
   el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', P ? P.name : d.title);
   winsEl.appendChild(el); wins[id] = el;
   el.addEventListener('pointerdown', () => front(id));
   el.querySelector('[data-x]').addEventListener('click', e => { e.stopPropagation(); closeWin(id); });
+  el.querySelector('[data-max]')?.addEventListener('click', e => { e.stopPropagation(); el.classList.toggle('max'); });
   el.querySelector('[data-min]').addEventListener('click', e => { e.stopPropagation(); el.hidden = true; bar(); });
   drag(el);
   const b = document.createElement('button'); b.className = 'app'; b.dataset.id = id; b.style.setProperty('--acc', P ? P.acc : d.acc);
