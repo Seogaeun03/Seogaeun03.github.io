@@ -4,7 +4,7 @@
   const pages = ['p-deviant.html', 'p-hanjjak.html', 'p-aivo.html'];
   const i = pages.indexOf(location.pathname.split('/').pop());
   const zone = i + 1;
-  const back = () => { location.href = `index.html?zone=${zone}`; };
+  const back = () => { location.href = `index.html?open=${zone}`; };
   const go = k => { if (k >= 0 && k < pages.length) location.href = pages[k]; };
 
   // 키 안내 창
@@ -16,7 +16,7 @@
       <dt><kbd>SPACE</kbd></dt><dd>한 화면 아래로</dd>
       <dt><kbd>←</kbd><kbd>→</kbd> <kbd>A</kbd><kbd>D</kbd></dt><dd>이전, 다음 프로젝트</dd>
       <dt><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></dt><dd>DEVIANT, 한짝, AIVO</dd>
-      <dt><kbd>ESC</kbd> <kbd>M</kbd></dt><dd>마을의 이 구역으로</dd>
+      <dt><kbd>ESC</kbd> <kbd>M</kbd></dt><dd>바탕화면으로</dd>
       <dt><kbd>?</kbd></dt><dd>이 안내 닫기</dd>
     </dl>`;
   document.body.appendChild(box);

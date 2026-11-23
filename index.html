@@ -6,468 +6,315 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="base.css">
 <style>
-body { overflow: hidden; }
-body.in-village { overflow-y: auto; height: 520vh; }
-.scene { position: fixed; inset: 0; display: none; }
-.scene.on { display: block; }
-
-/* ── 타이틀 ── */
-.sky { position: absolute; inset: 0; background:
-  radial-gradient(2px 2px at 12% 18%, var(--tan) 99%, transparent), radial-gradient(2px 2px at 32% 9%, var(--cream) 99%, transparent),
-  radial-gradient(2px 2px at 71% 14%, var(--tan) 99%, transparent), radial-gradient(2px 2px at 86% 30%, var(--cream) 99%, transparent),
-  radial-gradient(2px 2px at 54% 26%, var(--gold) 99%, transparent), radial-gradient(2px 2px at 22% 38%, var(--cream) 99%, transparent), var(--ink);
-  animation: tw 2.4s steps(2) infinite; }
-@keyframes tw { 50% { filter: brightness(.6); } }
-.center { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 14vh; text-align: center; }
-.role { font-size: 12px; color: var(--tan); letter-spacing: .12em; }
-.logo { font-size: clamp(56px, 9vw, 120px); line-height: 1; margin: 16px 0 20px; text-shadow: 6px 6px 0 var(--teal-d), 12px 12px 0 var(--ink); }
-.logo b { color: var(--gold); font-weight: 400; }
-.intro { font-size: 17px; line-height: 30px; color: var(--cream); max-width: 34em; word-break: keep-all; padding: 0 16px; }
-.menu { list-style: none; padding: 0; margin-top: 6vh; display: grid; gap: 4px; text-align: left; }
-.menu button { font-size: 18px; line-height: 36px; padding: 0 24px 0 36px; position: relative; color: var(--tan); }
-.menu button[aria-selected="true"] { color: var(--cream); }
-.menu button[aria-selected="true"]::before { content: "▶"; position: absolute; left: 6px; color: var(--gold); animation: nudge .6s steps(2) infinite; }
-@keyframes nudge { 50% { transform: translateX(4px); } }
-@keyframes blink { 50% { opacity: 0; } }
-/* 위 띠: 프로젝트 페이지 머리와 같은 모양 */
-.bar { position: fixed; left: 0; right: 0; top: 0; z-index: 8; display: flex; align-items: center; gap: 18px; padding: 12px 24px; font-size: 12px; line-height: 24px; }
-.bar a, .bar button { color: var(--tan); text-decoration: none; }
-.bar a:hover, .bar button:hover, .bar a:focus-visible, .bar button:focus-visible { color: var(--cream); outline: none; }
-.bar .name { color: var(--cream); }
-.bar .r { margin-left: auto; display: flex; gap: 18px; }
-#vbar { background: rgba(27,22,22,.94); border-bottom: 1px solid #2b2424; display: none; }
-#vbar .zones { display: flex; gap: 18px; margin: 0 auto; }
-#vbar .zones button[aria-current="true"] { color: var(--gold); }
-@media (max-width: 760px) { #vbar .zones { display: none; } }
-.t-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: var(--teal-d); z-index: 1; }
-.t-ground::before, .v-ground::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: repeating-linear-gradient(90deg, var(--tan) 0 12px, transparent 12px 24px); }
-.parade { position: absolute; left: 0; bottom: 96px; z-index: 2; display: flex; align-items: flex-end; gap: 12px; animation: march 22s linear infinite; }
-@keyframes march { from { transform: translateX(-100%); } to { transform: translateX(100vw); } }
-
-/* ── 마을 ── */
-.world { position: absolute; left: 0; top: 0; height: 100%; width: 500vw; display: flex; will-change: transform; }
-.zone { width: 100vw; height: 100%; position: relative; }
-.v-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 22vh; background: var(--teal-d); }
-.z-hj .v-ground { background: #5a3a24; } .z-hj .v-ground::before { background: repeating-linear-gradient(90deg, var(--hj) 0 12px, transparent 12px 24px); }
-.z-av .v-ground { background: #2a2f5c; } .z-av .v-ground::before { background: repeating-linear-gradient(90deg, var(--cream) 0 12px, transparent 12px 24px); }
-.board { position: absolute; left: 50%; top: calc(48px + 5vh); width: min(620px, 60vw); transform: translateX(-50%); padding: 12px; }
-.board img { width: 100%; aspect-ratio: 16/6.6; object-fit: cover; }
-.board .t { display: flex; justify-content: space-between; align-items: baseline; margin-top: 10px; }
-.board h2 { font-size: 28px; line-height: 36px; font-weight: 900; }
-.board .r { font-size: 12px; color: var(--gold); }
-.board p, .info p { color: var(--tan); font-size: 14px; }
-.board .r b, .info .r b { font-weight: 400; color: var(--ink); background: var(--gold); padding: 0 6px; margin-left: 6px; }
-.links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-.links a { padding: 8px 14px; font-size: 13px; text-decoration: none; color: var(--cream); }
-.links a:hover, .links a:focus-visible { border-image-source: var(--frame-hot); color: var(--gold); outline: none; }
-.sign { position: absolute; bottom: 22vh; left: 16%; width: 132px; text-align: center; }
-.sign .plate { padding: 6px 8px; font-size: 12px; line-height: 18px; }
-.sign .pole { width: 12px; height: 48px; margin: 0 auto; background: var(--tan); }
-.hello { position: absolute; left: 50%; top: 14vh; transform: translateX(-50%); text-align: center; width: 90vw; }
-.hello h2 { font-size: clamp(28px, 4vw, 48px); line-height: 1.25; }
-.hello h2 b { color: var(--gold); font-weight: 400; }
-.hello p { color: var(--tan); margin-top: 12px; }
-.me { position: absolute; left: 50%; bottom: calc(22vh - 18px); transform: translateX(-50%); z-index: 5; }
-.bubble { position: absolute; left: calc(50% + 64px); bottom: calc(22vh + 150px); z-index: 6; font-size: 12px; line-height: 24px; padding: 6px 12px; white-space: nowrap; display: none; }
-.bubble.on { display: block; }
-.bubble kbd { font-family: inherit; background: var(--gold); color: var(--ink); padding: 0 6px; margin-right: 6px; }
-.next h2 { font-size: 32px; line-height: 44px; }
-
-/* ── 창들 ── */
-.modal { position: fixed; inset: 0; z-index: 30; display: none; place-items: center; background: rgba(27,22,22,.75); }
-.modal.on { display: grid; }
-.win { width: min(640px, 92vw); max-height: 84vh; overflow: auto; padding: 24px; }
-.win .wh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-.win .wh h3 { font-size: 12px; font-weight: 400; color: var(--gold); }
-.win .x { font-size: 12px; color: var(--tan); } .win .x:hover { color: var(--cream); }
-.win h4 { font-size: 26px; line-height: 36px; font-weight: 900; }
-.win .lines { display: grid; gap: 12px; margin-top: 16px; }
-.win .lines div { display: grid; grid-template-columns: 64px 1fr; gap: 12px; }
-.win .lines span { font-size: 12px; color: var(--gold); border-top: 2px solid var(--gold); padding-top: 2px; }
-.win .lines p { color: var(--cream); }
-.win .more { margin-top: 18px; font-size: 12px; color: var(--tan); }
-.intro-card { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; align-items: start; }
-.ic-img { background: #241e1e; padding: 4px; }
-.ic-img img { width: 100%; aspect-ratio: 16/8; object-fit: cover; }
-.ic-meta { margin-top: 14px; font-size: 12px; color: var(--tan); }
-.ic-meta .ic-award { margin: 0 0 0 8px; }
-.ic-line { margin-top: 6px; font-size: 16px; line-height: 28px; color: var(--cream); word-break: keep-all; }
-.ic-facts { display: grid; grid-template-columns: 40px 1fr; gap: 4px 10px; margin-top: 12px; font-size: 12px; line-height: 20px; }
-.ic-facts dt { color: var(--gold); } .ic-facts dd { margin: 0; color: var(--tan); }
-.ic-award { display: inline-block; font-size: 11px; line-height: 20px; padding: 0 6px; background: var(--gold); color: var(--ink); }
-.ic-h { font-size: 12px; color: var(--gold); margin: 18px 0 8px; }
-.ic-best { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.ic-best > div { padding: 10px 12px; }
-.ic-best b { display: block; font-weight: 400; font-size: 20px; line-height: 28px; color: var(--gold); }
-.ic-best span { font-size: 13px; color: var(--cream); }
-.go { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: 18px; padding: 10px 12px; font-size: 14px; color: var(--ink); background: var(--gold); text-decoration: none; }
-.go span { margin-right: auto; } .go kbd { background: var(--ink); color: var(--gold); box-shadow: none; }
-.go:hover, .go:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
-@media (max-width: 760px) { .intro-card, .ic-best { grid-template-columns: 1fr; } }
-.shots { display: grid; grid-template-columns: repeat(var(--k, 2), 1fr); gap: 12px; margin-top: 16px; align-items: end; }
-.shots figure { margin: 0; }
-.shots .im { background: #241e1e; padding: 4px; display: grid; place-items: center; height: 180px; }
-.shots img { max-width: 100%; max-height: 172px; width: auto; height: auto; object-fit: contain; }
-.shots figcaption { font-family: "Galmuri11", monospace; font-size: 12px; color: var(--tan); margin-top: 4px; }
-.shots figcaption b { color: var(--gold); font-weight: 400; }
-/* 연습실 */
-.info { position: absolute; left: 50%; top: calc(48px + 5vh); width: min(620px, 60vw); transform: translateX(-50%); padding: 14px 16px; }
-.info .t { display: flex; justify-content: space-between; align-items: baseline; }
-.info h2 { font-size: 28px; line-height: 36px; font-weight: 900; }
-.info .r { font-size: 12px; color: var(--gold); }
-.info p { color: var(--tan); font-size: 14px; margin-top: 4px; }
-.studio { position: absolute; left: 50%; bottom: 22vh; transform: translateX(-50%); display: flex; align-items: flex-end; gap: 190px; }
-.studio .house { height: min(405px, 50vh); width: auto; image-rendering: pixelated; filter: drop-shadow(0 4px 0 rgba(0,0,0,.35)); }
-.studio .tv { position: relative; flex: none; width: min(320px, 26vw); aspect-ratio: 64 / 54; }
-.studio svg { width: 100%; height: 100%; display: block; }
-.studio .screen { position: absolute; left: 6.25%; top: 7.4%; width: 87.5%; height: 55.6%; overflow: hidden; background: #0d0b0b; }
-.studio .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top left; filter: brightness(.18) saturate(0); transition: filter .25s steps(3); }
-.studio.on .screen img { filter: none; }
-.studio .rec { position: absolute; left: 6px; top: 4px; font-size: 10px; line-height: 16px; padding: 0 5px; background: #1B1616; color: #FDEEDA; opacity: 0; }
-.studio.on .rec { opacity: 1; }
-.studio .rec::before { content: "●"; color: #e5483b; margin-right: 3px; }
-.studio .lamp { animation: none; }
-.studio.on .lamp { animation: lamp 1s steps(2) infinite; }
-@keyframes lamp { 50% { fill: #1B1616; } }
-.dexgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.quests a { color: var(--cream); text-decoration: none; } .quests a:hover { color: var(--gold); }
-.dexgrid a:hover, .dexgrid a:focus-visible { border-image-source: var(--frame-hot); outline: none; }
-.keys { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; }
-.keys h5 { font-size: 12px; font-weight: 400; color: var(--gold); margin-bottom: 8px; }
-.keys dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; align-items: center; font-size: 12px; line-height: 20px; }
-.keys dd { margin: 0; color: var(--cream); font-family: "Noto Sans KR", sans-serif; font-size: 14px; }
-kbd { display: inline-block; min-width: 22px; padding: 0 5px; margin: 0 1px; text-align: center; font-family: "Galmuri11", monospace; font-size: 11px; line-height: 20px; color: var(--ink); background: var(--tan); box-shadow: 0 -2px 0 rgba(0,0,0,.35) inset; }
-@media (max-width: 760px) { .keys { grid-template-columns: 1fr; } }
-.dexgrid a:focus-visible, .quests a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.keyhint { position: absolute; right: 24px; bottom: 132px; z-index: 3; font-size: 12px; color: var(--tan); }
-.keyhint:hover { color: var(--cream); }
-.me.hop { animation: hop .52s steps(8); }
-@keyframes hop { 50% { transform: translate(-50%, -80px); } }
-.dexgrid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: top; }
-.dexgrid b { display: block; font-size: 16px; margin-top: 6px; } .dexgrid small { display: block; font-size: 12px; line-height: 18px; color: var(--tan); word-break: keep-all; }
-.quests { list-style: none; padding: 0; display: grid; gap: 8px; }
-.quests li { display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; padding: 8px 0; border-bottom: 1px solid #2b2424; }
-.quests li::before { content: "✓"; color: var(--gold); font-family: "Galmuri11", monospace; }
-.quests small { color: var(--tan); font-size: 12px; }
-
-/* 전환: 픽셀 칸이 덮였다 걷힌다 */
-#wipe { position: fixed; inset: 0; z-index: 40; pointer-events: none; image-rendering: pixelated; }
-
-/* 설정: 편집 모드 */
-.grid-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 20; display: none;
-  background-image: linear-gradient(to right, rgba(2,100,140,.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(2,100,140,.35) 1px, transparent 1px); background-size: 12px 12px; }
-body.edit .grid-overlay { display: block; }
-.palette { position: fixed; right: 12px; top: 12px; z-index: 21; padding: 10px 12px; font-size: 12px; line-height: 22px; display: none; }
-body.edit .palette { display: block; }
-.palette .sw { display: grid; grid-template-columns: 22px auto auto; gap: 0 10px; align-items: center; }
-.palette i { width: 22px; height: 12px; border: 1px solid var(--tan); }
-.palette small { color: var(--tan); }
-@media (prefers-reduced-motion: reduce) { .sky, .parade { animation: none; } }
-/* 터치: 화면 아래 땅 위에 걷기 버튼 */
-.pad { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9; display: none; align-items: center; gap: 10px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); pointer-events: none; }
-.pad button { pointer-events: auto; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; height: 56px; min-width: 56px; padding: 0 14px; font-size: 18px; color: var(--cream); }
-.pad button.down { border-image-source: var(--frame-hot); color: var(--gold); }
-.pad .act { margin-left: auto; font-size: 13px; color: var(--ink); background: var(--gold); background-clip: padding-box; }
-.pad .act[hidden] { display: none; }
-.pad .jp { font-size: 13px; }
-.touch-only { display: none; }
-@media (pointer: coarse), (max-width: 760px) {
-  body.in-village .pad { display: flex; }
-  .kb-only { display: none !important; }
-  .touch-only { display: inline; }
-  .bubble { display: none !important; }
-  .board, .info { width: calc(100vw - 32px); top: calc(48px + 3vh); }
-  .board img { aspect-ratio: 16/7; }
-  .board .t, .info .t { flex-direction: column; align-items: flex-start; gap: 0; margin-top: 6px; }
-  .board h2, .info h2 { font-size: 22px; line-height: 30px; }
-  .board p, .info p { font-size: 13px; line-height: 20px; }
-  .me { scale: .7; transform-origin: 50% 100%; }
-  .sign { left: 4%; transform: scale(.8); transform-origin: 0 100%; }
-  .studio { gap: 12px; width: calc(100vw - 24px); justify-content: center; }
-  .studio .house { height: min(260px, 34vh); }
-  .studio .tv { width: 38vw; }
-  .hello { top: calc(48px + 8vh); }
-  .hello h2 { font-size: 26px; }
-  .links a { font-size: 12px; padding: 6px 10px; }
+:root { --paper: #FDEEDA; --line: #1B1616; --dim: #8a7d6b; --task: 44px; }
+html, body { height: 100%; overflow: hidden; }
+body { background: #23305a; -webkit-user-select: none; user-select: none; }
+/* ── 바탕 ── */
+.wall { position: fixed; inset: 0 0 var(--task); background: linear-gradient(180deg, #1f2a52 0%, #2c3f73 60%, #43619e 100%); }
+.wall::before { content: ""; position: absolute; inset: 0; opacity: .16; background-image: radial-gradient(#fff 1px, transparent 1.2px); background-size: 6px 6px;
+  -webkit-mask-image: linear-gradient(transparent 35%, #000); mask-image: linear-gradient(transparent 35%, #000); }
+.brand { position: absolute; left: 136px; bottom: 28px; color: rgba(253,238,218,.92); pointer-events: none; }
+.brand b { display: block; font-size: clamp(48px, 7vw, 84px); line-height: 1; font-weight: 400; text-shadow: 4px 4px 0 #18224a; }
+.brand span { font-size: 13px; color: #b9c6ff; }
+/* ── 아이콘 ── */
+.icons { position: fixed; left: 16px; top: 16px; bottom: calc(var(--task) + 16px); display: grid; grid-auto-flow: column; grid-template-rows: repeat(auto-fill, 92px); gap: 4px 8px; align-content: start; }
+.ic { width: 88px; display: grid; justify-items: center; align-content: start; gap: 4px; text-decoration: none; color: var(--paper); font-size: 12px; line-height: 16px; text-align: center; padding: 6px 2px; background: none; border: 0; cursor: pointer; }
+.ic .pic { width: 52px; height: 52px; display: grid; place-items: center; }
+.ic .pic img { max-width: 52px; max-height: 52px; image-rendering: pixelated; }
+.ic .lb { padding: 1px 4px; text-shadow: 1px 1px 0 #18224a; word-break: keep-all; }
+.ic[aria-selected="true"] .lb, .ic:focus-visible .lb { background: #02648C; text-shadow: none; }
+.ic[aria-selected="true"] .pic { outline: 1px dotted var(--paper); outline-offset: 2px; }
+.ic:focus-visible { outline: none; }
+.file { width: 40px; height: 50px; background: var(--paper); position: relative; clip-path: polygon(0 0, 70% 0, 100% 22%, 100% 100%, 0 100%); }
+.file::after { content: attr(data-t); position: absolute; left: 0; right: 0; bottom: 6px; font-size: 10px; line-height: 14px; color: #fff; background: #e5483b; text-align: center; }
+.folder { width: 52px; height: 40px; background: #EBA516; position: relative; box-shadow: inset 0 -6px 0 #c4860a; margin-top: 8px; }
+.folder::before { content: ""; position: absolute; left: 0; top: -6px; width: 22px; height: 8px; background: #EBA516; }
+.aivo-ic { width: 52px; height: 52px; background: #fff; border: 2px solid var(--line); display: grid; place-items: center; }
+.aivo-ic img { max-width: 42px !important; image-rendering: auto !important; }
+/* ── 창: 크림 종이, 먹 2점 테, 딱딱한 그림자 ── */
+.wnd { position: fixed; background: var(--paper); border: 2px solid var(--line); box-shadow: 6px 6px 0 rgba(12,16,36,.5); display: flex; flex-direction: column; min-width: 240px; }
+.wnd[hidden] { display: none; }
+.wnd .tb { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 4px 0 10px; background: var(--acc, #02648C); color: #fff; font-size: 12px; cursor: grab; flex: none; border-bottom: 2px solid var(--line); touch-action: none; }
+.wnd .tb .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wnd.back .tb { background: #9a8f80; }
+.wnd .tb .bt { margin-left: auto; display: flex; gap: 4px; }
+.wnd .tb button { width: 20px; height: 20px; padding: 0; background: var(--paper); border: 2px solid var(--line); color: var(--line); font-size: 11px; line-height: 14px; font-family: inherit; cursor: pointer; }
+.wnd .tb button:hover { background: #fff; }
+.wnd .body { overflow: auto; color: var(--line); font-family: "Noto Sans KR", sans-serif; font-size: 14px; line-height: 23px; -webkit-user-select: text; user-select: text; }
+.wnd .st { display: flex; gap: 16px; padding: 4px 10px; font-size: 11px; line-height: 16px; color: #6b6052; border-top: 2px solid #d8ccb8; flex: none; overflow: hidden; white-space: nowrap; }
+/* 프로젝트 창 */
+.proj { display: grid; grid-template-columns: 1fr 220px; }
+.proj .media { background: #000; display: grid; place-items: center; min-height: 0; }
+.proj .media video, .proj .media img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+.proj .side { padding: 14px 16px; }
+.proj .k { font-family: "Galmuri11", monospace; font-size: 11px; color: var(--acc); }
+.proj h3 { font-size: 24px; line-height: 30px; font-weight: 900; }
+.proj dl { display: grid; grid-template-columns: 34px 1fr; gap: 0 8px; margin: 8px 0 10px; font-size: 12px; line-height: 20px; }
+.proj dt { color: var(--dim); font-family: "Galmuri11", monospace; } .proj dd { margin: 0; }
+.proj dd b { font-weight: 400; font-family: "Galmuri11", monospace; font-size: 11px; background: #EBA516; padding: 0 5px; }
+.proj p { font-size: 13px; line-height: 21px; color: #3a3030; word-break: keep-all; }
+.open { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding: 7px 10px; background: var(--line); color: var(--paper); text-decoration: none; font-family: "Galmuri11", monospace; font-size: 12px; }
+.open:hover, .open:focus-visible { background: var(--acc); outline: none; }
+@media (max-width: 760px) { .proj { grid-template-columns: 1fr; } }
+/* README */
+.readme { padding: 16px 18px; font-family: "Galmuri11", monospace; font-size: 13px; line-height: 22px; }
+.readme h2 { font-size: 20px; line-height: 28px; font-weight: 400; margin-bottom: 6px; }
+.readme p + p { margin-top: 8px; }
+.readme .dim { color: var(--dim); }
+.readme .go { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.readme .go button { font-family: inherit; font-size: 12px; padding: 4px 10px; border: 2px solid var(--line); background: #fff; cursor: pointer; }
+.readme .go button:hover { background: #EBA516; }
+/* 작업 과정 폴더 */
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; padding: 12px; }
+.gallery button { display: grid; gap: 4px; padding: 6px; border: 2px solid transparent; background: none; cursor: pointer; text-align: left; font-family: "Galmuri11", monospace; font-size: 11px; color: var(--line); }
+.gallery button:hover, .gallery button:focus-visible { border-color: var(--line); background: #fff; outline: none; }
+.gallery .th { height: 92px; display: grid; place-items: center; background: #efe3cf; overflow: hidden; }
+.gallery .th img { max-width: 100%; max-height: 92px; image-rendering: pixelated; }
+.viewer { display: grid; place-items: center; background: #efe3cf; padding: 10px; }
+.viewer img { max-width: 100%; max-height: 60vh; image-rendering: pixelated; }
+.viewer p { font-family: "Galmuri11", monospace; font-size: 12px; margin-top: 8px; }
+/* ── 한짝 위젯 ── */
+.hj .body { overflow: hidden; }
+.field { height: 160px; position: relative; background: linear-gradient(#fbe3c4, #f3c99a); overflow: hidden; }
+.field::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22px; background: #c98a52; border-top: 2px solid #8a5a32; }
+.field .me { position: absolute; left: 24px; bottom: 16px; z-index: 2; }
+.field .mob { position: absolute; right: 22px; bottom: 18px; height: 108px; z-index: 2; transform: scaleX(-1); mix-blend-mode: multiply; }
+.field .mob.hurt { animation: hurt .25s steps(2); }
+@keyframes hurt { 50% { transform: scaleX(-1) translateX(-6px); filter: brightness(1.6); } }
+.field .hp { position: absolute; top: 8px; height: 10px; width: 130px; background: var(--line); border: 2px solid var(--line); z-index: 3; }
+.field .hp i { display: block; height: 100%; background: #3fae7a; transition: width .2s steps(3); }
+.field .dmg { position: absolute; z-index: 4; font-family: "Galmuri11", monospace; font-size: 16px; color: #e5483b; text-shadow: 2px 2px 0 #fff; animation: up .8s steps(5) forwards; pointer-events: none; }
+.field .dmg.crit { font-size: 22px; color: #EBA516; text-shadow: 2px 2px 0 var(--line); }
+@keyframes up { to { transform: translateY(-30px); opacity: 0; } }
+/* ── 작업 표시줄 ── */
+.task { position: fixed; left: 0; right: 0; bottom: 0; height: var(--task); background: var(--line); border-top: 2px solid #3a3030; display: flex; align-items: center; gap: 6px; padding: 0 6px; font-size: 12px; color: var(--paper); z-index: 9000; }
+.task button { font-family: inherit; font-size: 12px; color: var(--paper); background: none; border: 0; cursor: pointer; }
+.task .start { display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; background: #EBA516; color: var(--line); }
+.task .start[aria-expanded="true"] { background: var(--paper); }
+.task .apps { display: flex; gap: 6px; overflow: hidden; }
+.task .app { height: 32px; padding: 0 12px; display: flex; align-items: center; gap: 6px; border: 2px solid #3a3030; white-space: nowrap; }
+.task .app.on { border-color: var(--paper); background: #2a2222; }
+.task .app i { width: 10px; height: 10px; display: inline-block; background: var(--acc); }
+.task .tray { margin-left: auto; display: flex; gap: 14px; align-items: center; padding: 0 10px; color: var(--tan); }
+.task .tray a { color: var(--tan); text-decoration: none; } .task .tray a:hover { color: var(--paper); }
+.menu { position: fixed; left: 6px; bottom: calc(var(--task) + 4px); width: 260px; background: var(--paper); border: 2px solid var(--line); box-shadow: 6px 6px 0 rgba(12,16,36,.5); z-index: 9001; display: none; color: var(--line); }
+.menu.on { display: block; }
+.menu .hd { background: #EBA516; padding: 12px; font-size: 18px; line-height: 24px; border-bottom: 2px solid var(--line); }
+.menu .hd small { display: block; font-size: 11px; line-height: 16px; }
+.menu a, .menu button { display: flex; justify-content: space-between; width: 100%; padding: 8px 12px; font-family: inherit; font-size: 13px; color: var(--line); text-decoration: none; background: none; border: 0; cursor: pointer; text-align: left; }
+.menu a:hover, .menu button:hover, .menu a:focus-visible, .menu button:focus-visible { background: var(--line); color: var(--paper); outline: none; }
+.menu kbd, .keys kbd { font-family: inherit; font-size: 10px; background: var(--tan); color: var(--line); padding: 0 5px; }
+.menu hr { border: 0; border-top: 2px solid #d8ccb8; margin: 4px 0; }
+.keys { padding: 14px 16px; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-family: "Galmuri11", monospace; font-size: 12px; line-height: 20px; }
+/* 휴대폰: 창은 화면을 채운다 */
+@media (max-width: 760px) {
+  .brand { left: 16px; bottom: 16px; } .brand b { font-size: 44px; }
+  .icons { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); grid-template-rows: none; right: 16px; bottom: auto; }
+  .ic { width: auto; }
+  .wnd:not(.hj) { left: 6px !important; right: 6px; top: 6px !important; width: auto !important; max-height: calc(100vh - var(--task) - 12px); }
+  .wnd.hj { left: auto !important; right: 6px; top: auto !important; bottom: calc(var(--task) + 6px); width: 260px !important; }
+  .field { height: 120px; } .field .mob { height: 80px; } .field .me { transform: scale(.75); transform-origin: 0 100%; }
+  .task .app span { display: none; } .task .tray .kb { display: none; }
 }
 </style>
 </head>
-<body>
-<!-- 타이틀 -->
-<section class="scene on" id="title" aria-label="타이틀">
-  <div class="sky" aria-hidden="true"></div>
-  <header class="bar g" id="tbar"><span class="name">서가은</span><nav class="r" aria-label="바로 가기"><a href="pdf/seogaeun-game-ui.pdf">PDF</a><a href="https://github.com/Seogaeun03">GitHub</a><a href="mailto:seogu0307@gmail.com">메일</a></nav></header>
-  <div class="center">
-    <p class="role g">게임 UI 디자이너 / 테크니컬 아티스트</p>
-    <h1 class="logo g">SEO <b>GAEUN</b></h1>
-    <p class="intro">게임 화면의 규칙을 세우고, 그 규칙대로 그림이 나오는 제작 흐름을 만들어요.</p>
-    <ul class="menu g" role="listbox" aria-label="메뉴" id="menu">
-      <li><button role="option" aria-selected="true" data-go="village">마을 걸어 보기</button></li>
-      <li><button role="option" aria-selected="false" data-go="dex">프로젝트 목록</button></li>
-      <li><button role="option" aria-selected="false" data-go="contact">연락처</button></li>
-    </ul>
-    <button class="keyhint g kb-only" data-keys type="button"><kbd>?</kbd> 키 안내</button>
-  </div>
-  <div class="t-ground" aria-hidden="true"></div>
-  <div class="parade" aria-hidden="true" id="parade"></div>
-</section>
+<body class="g">
+<div class="wall"></div>
+<div class="brand"><b>SEO GAEUN</b><span>게임 UI 디자이너 / 테크니컬 아티스트</span></div>
 
-<!-- 마을 -->
-<section class="scene" id="village" aria-label="프로젝트 마을">
-  <div class="world" id="world">
-    <div class="zone"><div class="v-ground"></div>
-      <div class="hello"><h2 class="g">프로젝트 <b>세 개</b>가 이 길 위에 있어요</h2><p class="kb-only"><kbd>→</kbd> 걷기 <kbd>F</kbd> 소개</p><p class="touch-only">아래 ◀ ▶ 를 누르고 있거나 화면을 위로 밀면 걸어가요.</p></div>
-    </div>
-    <div class="zone z-dv" data-zone="dv"><div class="v-ground"></div>
-      <div class="sign"><div class="plate frame g">DEVIANT</div><div class="pole"></div></div>
-      <div class="board frame"><img class="px" src="img/highlight-poster.png" alt="DEVIANT 전투 화면"><div class="t"><h2>DEVIANT</h2><span class="r g">2026.10 ~ 진행 중 / 팀장, 아트</span></div><p>잉크로 그린 스케치 세계를 무기를 바꿔 들며 돌파하는 액션 게임</p></div>
-    </div>
-    <div class="zone z-hj" data-zone="hj"><div class="v-ground"></div>
-      <div class="sign"><div class="plate frame g" style="color:var(--hj)">한짝</div><div class="pole" style="background:var(--hj)"></div></div>
-      <div class="board frame"><img src="img/battle.jpg" alt="한짝 전투 화면"><div class="t"><h2>한짝</h2><span class="r g">2026.08 ~ 09 / 팀장, 디자인 총괄<b>우수상</b></span></div><p>바탕화면에 띄워 두면 젓가락이 알아서 싸우는 게임</p></div>
-    </div>
-    <div class="zone z-av" data-zone="av"><div class="v-ground"></div>
-      <div class="sign" style="left:4%"><div class="plate frame g">연습실</div><div class="pole" style="background:var(--cream)"></div></div>
-      <div class="info frame"><div class="t"><h2>AIVO</h2><span class="r g">2026.07 ~ 08 / 프론트엔드<b>우수상</b></span></div><p>발표와 면접 연습을 다시 보여 주는 AI 말하기 코치. 게임이 아니라서 마을의 연습실에 두었어요.</p></div>
-      <div class="studio" id="studio">
-        <img class="house px" src="img/bld-mine2.png" alt="연습실 건물 (직접 다듬은 DEVIANT 마을 건물)">
-        <div class="tv">
-          <svg viewBox="0 0 64 54" shape-rendering="crispEdges" aria-hidden="true">
-            <rect x="1" y="0" width="62" height="40" fill="#1B1616"/><rect x="0" y="1" width="64" height="38" fill="#1B1616"/>
-            <rect x="2" y="2" width="60" height="36" fill="#025673"/><rect x="2" y="2" width="60" height="1" fill="#02648C"/>
-            <rect x="4" y="4" width="56" height="30" fill="#0d0b0b"/>
-            <rect x="6" y="35" width="2" height="1" fill="#D2B396"/><rect x="9" y="35" width="2" height="1" fill="#D2B396"/><rect x="12" y="35" width="2" height="1" fill="#D2B396"/>
-            <rect class="lamp" x="56" y="35" width="2" height="2" fill="#EBA516"/>
-            <rect x="29" y="40" width="6" height="9" fill="#1B1616"/><rect x="30" y="40" width="4" height="9" fill="#025673"/>
-            <rect x="20" y="49" width="24" height="5" fill="#1B1616"/><rect x="21" y="50" width="22" height="3" fill="#025673"/>
-          </svg>
-          <div class="screen" id="screen"><img id="avimg" src="img/aivo-interview-report.jpg" alt="연습실 모니터에 켜진 AIVO 화면"><span class="rec g">REC</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="zone next" data-zone="next"><div class="v-ground"></div>
-      <div class="hello"><h2 class="g">다음 구역은 <b>아직 비어 있어요</b></h2><p>여기를 함께 채울 팀을 찾고 있어요.</p>
-        <nav class="links g" aria-label="연락처"><a class="frame" href="mailto:seogu0307@gmail.com">seogu0307@gmail.com</a><a class="frame" href="https://github.com/Seogaeun03">GitHub</a><a class="frame" href="pdf/seogaeun-game-ui.pdf">PDF 게임 UI</a><a class="frame" href="pdf/seogaeun-technical-art.pdf">PDF 테크니컬 아트</a></nav></div>
-    </div>
-  </div>
-  <div class="me" id="me"><div class="sp pixel" id="sprite"></div></div>
-  <div class="bubble frame g" id="bubble"></div>
-  <div class="pad g" id="pad" aria-label="걷기 버튼"><button class="frame" data-hold="L" type="button" aria-label="왼쪽으로 걷기">◀</button><button class="frame" data-hold="R" type="button" aria-label="오른쪽으로 걷기">▶</button><button class="frame jp" id="pad-jump" type="button">점프</button><button class="frame act" id="pad-act" type="button" hidden></button></div>
-</section>
-<header class="bar g" id="vbar"><button class="name" data-go="title" type="button">서가은</button>
-  <nav class="zones" aria-label="구역" id="zones"><button type="button" data-z="0">입구</button><button type="button" data-z="1">DEVIANT</button><button type="button" data-z="2">한짝</button><button type="button" data-z="3">AIVO</button><button type="button" data-z="4">연락처</button></nav>
-  <span class="r"><button data-go="dex" type="button">목록</button><button class="kb-only" data-keys type="button">키 안내</button></span></header>
+<nav class="icons" id="icons" aria-label="바탕화면 아이콘" role="listbox"></nav>
+<div id="wins"></div>
 
-<!-- 창 -->
-<div class="modal" id="m-case" role="dialog" aria-modal="true" aria-labelledby="case-t"><div class="win frame"><div class="wh"><h3 class="g" id="case-k"></h3><button class="x g" data-close>닫기 ESC</button></div><h4 id="case-t"></h4><div id="case-s"></div><div class="lines" id="case-l"></div><a id="case-more" class="go g" href="#"><span>자세히 보기</span><kbd class="kb-only">F</kbd><kbd class="kb-only">ENTER</kbd></a></div></div>
-<div class="modal" id="m-keys" role="dialog" aria-modal="true" aria-label="키 안내"><div class="win frame"><div class="wh"><h3 class="g">키 안내</h3><button class="x g" data-close>닫기 ESC</button></div>
-  <div class="keys g">
-    <section><h5>타이틀</h5><dl><dt><kbd>↑</kbd><kbd>↓</kbd> <kbd>W</kbd><kbd>S</kbd></dt><dd>메뉴 고르기</dd><dt><kbd>ENTER</kbd> <kbd>SPACE</kbd> <kbd>F</kbd></dt><dd>고른 메뉴 열기</dd><dt><kbd>1</kbd> ~ <kbd>3</kbd></dt><dd>메뉴 바로 열기</dd></dl></section>
-    <section><h5>마을</h5><dl><dt><kbd>←</kbd><kbd>→</kbd> <kbd>A</kbd><kbd>D</kbd></dt><dd>누르고 있으면 걷기</dd><dt><kbd>SHIFT</kbd></dt><dd>같이 누르면 달리기</dd><dt><kbd>SPACE</kbd> <kbd>↑</kbd> <kbd>W</kbd></dt><dd>점프</dd><dt><kbd>F</kbd> <kbd>ENTER</kbd></dt><dd>간판 앞에서 프로젝트 소개 보기</dd><dt><kbd>0</kbd> ~ <kbd>4</kbd></dt><dd>입구, DEVIANT, 한짝, AIVO, 연락처로 이동</dd><dt><kbd>HOME</kbd> <kbd>END</kbd></dt><dd>처음, 끝</dd><dt><kbd>ESC</kbd> <kbd>M</kbd></dt><dd>타이틀로</dd></dl></section>
-    <section><h5>어디서나</h5><dl><dt><kbd>I</kbd></dt><dd>프로젝트 목록</dd><dt><kbd>G</kbd></dt><dd>격자와 팔레트 켜고 끄기</dd><dt><kbd>?</kbd></dt><dd>이 안내</dd></dl></section>
-    <section><h5>창 안에서</h5><dl><dt><kbd>←</kbd><kbd>→</kbd> <kbd>↑</kbd><kbd>↓</kbd></dt><dd>항목 고르기</dd><dt><kbd>F</kbd> <kbd>ENTER</kbd></dt><dd>열기, 소개 창에선 프로젝트 페이지로</dd><dt><kbd>ESC</kbd></dt><dd>닫기</dd></dl></section>
-  </div></div></div>
-<div class="modal" id="m-dex" role="dialog" aria-modal="true" aria-label="프로젝트 목록"><div class="win frame"><div class="wh"><h3 class="g">프로젝트</h3><button class="x g" data-close>닫기 ESC</button></div>
-  <div class="dexgrid">
-    <a class="frame" href="p-deviant.html" style="text-decoration:none;padding:8px;display:block"><img class="px" src="img/highlight-poster.png" alt=""><b>DEVIANT</b><small class="g">2026.10 ~ / 팀장, 아트</small></a>
-    <a class="frame" href="p-hanjjak.html" style="text-decoration:none;padding:8px;display:block"><img src="img/battle.jpg" alt=""><b>한짝</b><small class="g">2026.08 ~ 09 / 팀장, 디자인 총괄</small></a>
-    <a class="frame" href="p-aivo.html" style="text-decoration:none;padding:8px;display:block"><img src="img/aivo-interview-report.jpg" alt=""><b>AIVO</b><small class="g">2026.07 ~ 08 / 프론트엔드</small></a>
-  </div></div></div>
-<div class="toast"></div>
-<canvas id="wipe" aria-hidden="true"></canvas>
-<div class="grid-overlay" aria-hidden="true"></div>
-<div class="palette frame g" aria-label="팔레트"><div class="sw"><i style="background:#FDEEDA"></i>#FDEEDA<small>크림</small></div><div class="sw"><i style="background:#D2B396"></i>#D2B396<small>모래</small></div><div class="sw"><i style="background:#1B1616"></i>#1B1616<small>먹</small></div><div class="sw"><i style="background:#02648C"></i>#02648C<small>목도리</small></div><div class="sw"><i style="background:#025673"></i>#025673<small>그늘</small></div><div class="sw"><i style="background:#EBA516"></i>#EBA516<small>눈</small></div><div class="sw"><i style="background:#F07A2A"></i>#F07A2A<small>한짝</small></div></div>
+<div class="menu" id="menu" role="menu">
+  <div class="hd">서가은<small>게임 UI 디자이너 / 테크니컬 아티스트</small></div>
+  <button data-open="readme" role="menuitem">README.txt <kbd>0</kbd></button>
+  <button data-open="dv" role="menuitem">DEVIANT <kbd>1</kbd></button>
+  <button data-open="hjw" role="menuitem">한짝 <kbd>2</kbd></button>
+  <button data-open="av" role="menuitem">AIVO <kbd>3</kbd></button>
+  <button data-open="work" role="menuitem">작업 과정 <kbd>4</kbd></button>
+  <hr>
+  <a href="pdf/seogaeun-game-ui.pdf" role="menuitem">포트폴리오 PDF (게임 UI)</a>
+  <a href="pdf/seogaeun-technical-art.pdf" role="menuitem">포트폴리오 PDF (테크니컬 아트)</a>
+  <a href="https://github.com/Seogaeun03" role="menuitem">GitHub</a>
+  <a href="mailto:seogu0307@gmail.com" role="menuitem">seogu0307@gmail.com</a>
+  <hr>
+  <button data-open="keys" role="menuitem">키 안내 <kbd>?</kbd></button>
+</div>
+
+<footer class="task">
+  <button class="start" id="start" aria-expanded="false" aria-controls="menu">◆ 서가은</button>
+  <div class="apps" id="apps"></div>
+  <div class="tray"><span class="kb">? 키 안내</span><a href="https://github.com/Seogaeun03">GitHub</a><span id="clock">--:--</span></div>
+</footer>
 
 <script>
 (() => {
-  const W = { sushi:215, mage:163, "white-fox-spirit":197, chef:151, angel:196, "royal-knight":172 };
-  const $ = id => document.getElementById(id);
-  // 타이틀 행진
-  const p = $('parade');
-  p.insertAdjacentHTML('beforeend', '<div class="sp pixel" style="--src:url(img/hero-run.png);--n:12;--w:192px;--h:192px;--t:.72s;margin-bottom:-14px"></div>');
-  for (const s of Object.keys(W)) p.insertAdjacentHTML('beforeend', `<div class="sp" style="--src:url(img/hj-${s}-run.png);--n:4;--w:${Math.round(W[s]*.75)}px;--h:144px;--t:.56s"></div>`);
+const $ = s => document.querySelector(s);
+const PROJ = {
+  dv: { title: 'DEVIANT.exe', acc: '#02648C', name: 'DEVIANT', kind: 'Unity 2D 액션 로그라이트', media: '<video class="px" src="img/highlight.mp4" poster="img/highlight-poster.png" autoplay muted loop playsinline></video>',
+    rows: [['기간', '2026.10 ~ 진행 중'], ['역할', '팀장, 아트 / 6인']], p: '잉크로 그린 세계를 무기를 바꿔 들며 돌파하는 액션 게임. 전투 HUD와 아이콘, 픽셀 규격을 세웠어요.',
+    st: ['HUD 도트 통일', '아이콘 54개', '조작 14 → 7회'], href: 'p-deviant.html' },
+  hj: { title: '한짝.exe', acc: '#d9621c', name: '한짝', kind: '웹 방치형 게임', media: '<video src="img/battle-sushi.webm" poster="img/battle-sushi-poster.jpg" autoplay muted loop playsinline></video>',
+    rows: [['기간', '2026.08 ~ 09'], ['역할', '팀장, 디자인 총괄 / 6인'], ['수상', '<b>우수상</b>']], p: '바탕화면에 띄워 두면 젓가락이 알아서 싸우는 게임. 생성 AI 옷을 그대로 입히는 제작 흐름을 만들었어요.',
+    st: ['치장 세트 10벌', '옷 흔들림 96.9 → 6.9%', '몬스터 90종'], href: 'p-hanjjak.html' },
+  av: { title: 'AIVO.app', acc: '#5c64c8', name: 'AIVO', kind: '웹 서비스', media: '<img src="img/aivo-interview-report.jpg" alt="AIVO 면접 리포트" style="object-position:top left">',
+    rows: [['기간', '2026.07 ~ 08'], ['역할', '프론트엔드 / 6인'], ['수상', '<b>우수상</b>']], p: '발표와 면접 연습을 다시 보여 주는 AI 말하기 코치. 면접과 리포트 화면을 만들었어요.',
+    st: ['Vue 3', '실제 응답 검수', '리포트 그래프'], href: 'p-aivo.html' },
+};
+const WORK = [
+  ['img/hud-before.png', 'HUD 통일 전', 'DEVIANT'], ['img/hud-d1.png', 'HUD 통일 후', 'DEVIANT'],
+  ['img/icons-v1.png', '스킬 아이콘 1차', 'DEVIANT'], ['img/icons-skill.png', '스킬 아이콘 최종', 'DEVIANT'],
+  ['img/bld-base2.png', '건물 밑그림', 'DEVIANT'], ['img/bld-mine2.png', '손으로 다듬은 건물', 'DEVIANT'],
+  ['img/wizard-run-raw.png', '네 칸을 한 장에', '한짝'], ['img/set-sushi.png', '스시야 세트', '한짝'],
+  ['img/deck-pipeline.jpg', '치장 제작 흐름', '한짝'], ['img/collection.jpg', '치장 도감', '한짝'],
+];
+const ICONS = [
+  { id: 'readme', label: 'README.txt', pic: '<span class="file" data-t="TXT" style="--x:0"></span>' },
+  { id: 'dv', label: 'DEVIANT', pic: '<img src="img/icon-dv-hero.png" alt="">' },
+  { id: 'hjw', label: '한짝', pic: '<img src="img/hj-logo.png" alt="" style="image-rendering:auto">' },
+  { id: 'av', label: 'AIVO', pic: '<span class="aivo-ic"><img src="img/aivo-logo.png" alt=""></span>' },
+  { id: 'work', label: '작업 과정', pic: '<span class="folder"></span>' },
+  { href: 'pdf/seogaeun-game-ui.pdf', label: '게임 UI.pdf', pic: '<span class="file" data-t="PDF"></span>' },
+  { href: 'pdf/seogaeun-technical-art.pdf', label: '테크아트.pdf', pic: '<span class="file" data-t="PDF"></span>' },
+  { href: 'https://github.com/Seogaeun03', label: 'GitHub', pic: '<svg width="44" height="44" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#1b1616" d="M5 1h6v1h2v2h1v6h-1v2h-2v1h-1v2H6v-2H5v-1H3v-2H2V4h1V2h2z"/><path fill="#fff" d="M5 4h1v1h4V4h1v1h1v4h-1v1H9v1H7v-1H5V9H4V5h1z"/></svg>' },
+  { href: 'mailto:seogu0307@gmail.com', label: '메일', pic: '<svg width="48" height="36" viewBox="0 0 16 12" shape-rendering="crispEdges"><path fill="#1b1616" d="M0 0h16v12H0z"/><path fill="#fdeeda" d="M1 1h14v10H1z"/><path fill="#e5483b" d="M1 1h1v1h1v1h1v1h1v1h1v1h4V5h1V4h1V3h1V2h1V1h1v1h-1v1h-1v1h-1v1h-1v1h-1v1H6V6H5V5H4V4H3V3H2V2H1z"/></svg>' },
+];
 
-  // 픽셀 전환
-  const cv = $('wipe'), cx = cv.getContext('2d');
-  const wipe = (mid) => new Promise(res => {
-    const S = 24; cv.width = Math.ceil(innerWidth / S); cv.height = Math.ceil(innerHeight / S);
-    cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
-    const cells = []; for (let y = 0; y < cv.height; y++) for (let x = 0; x < cv.width; x++) cells.push([x, y]);
-    cells.sort(() => Math.random() - .5);
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const per = reduce ? cells.length : Math.ceil(cells.length / 14);
-    let i = 0, phase = 0; cx.fillStyle = '#1B1616';
-    const step = () => {
-      for (let k = 0; k < per && i < cells.length; k++, i++) { const [x, y] = cells[i]; phase ? cx.clearRect(x, y, 1, 1) : cx.fillRect(x, y, 1, 1); }
-      if (i < cells.length) return requestAnimationFrame(step);
-      if (phase === 0) { mid(); phase = 1; i = 0; cells.sort(() => Math.random() - .5); return requestAnimationFrame(step); }
-      cx.clearRect(0, 0, cv.width, cv.height); res();
-    };
-    step();
-  });
+// ── 아이콘 ──
+const iconsEl = $('#icons'); let isel = 0;
+const iconEls = ICONS.map((ic, i) => {
+  const el = document.createElement(ic.href ? 'a' : 'button'); el.className = 'ic'; el.setAttribute('role', 'option');
+  if (ic.href) el.href = ic.href; else el.type = 'button';
+  el.innerHTML = `<span class="pic">${ic.pic}</span><span class="lb">${ic.label}</span>`;
+  el.addEventListener('click', e => { if (ic.href) return; selIcon(i); if (e.detail >= 2 || matchMedia('(pointer: coarse)').matches) openWin(ic.id); });
+  el.addEventListener('keydown', e => { if (!ic.href && (e.code === 'Enter' || e.code === 'Space')) { e.preventDefault(); openWin(ic.id); } });
+  iconsEl.appendChild(el); return el;
+});
+const selIcon = (i, focus) => { isel = (i + ICONS.length) % ICONS.length; iconEls.forEach((el, j) => el.setAttribute('aria-selected', j === isel)); if (focus) iconEls[isel].focus(); };
+selIcon(1);
 
-  // 장면 전환
-  let scene = 'title';
-  const setScene = (s, jump) => wipe(() => {
-    scene = s;
-    $('title').classList.toggle('on', s === 'title');
-    $('village').classList.toggle('on', s === 'village');
-    $('vbar').style.display = s === 'village' ? 'flex' : 'none';
-    document.body.classList.toggle('in-village', s === 'village');
-    if (s === 'village') { scrollTo(0, jump ? jump * zoneStep() : 0); update(); } else scrollTo(0, 0);
-  });
-  const zoneStep = () => (document.documentElement.scrollHeight - innerHeight) / 4;
+// ── 창 ──
+let z = 10; const wins = {}; const winsEl = $('#wins'), apps = $('#apps');
+const DEF = {
+  readme: { title: 'README.txt', acc: '#3a3030', w: 380, x: 140, y: 30, body: () => `<div class="readme"><h2>SEO GAEUN</h2>
+      <p>게임 화면의 규칙을 세우고, 그 규칙대로 그림이 나오는 제작 흐름을 만들어요.</p>
+      <p class="dim">아이콘을 두 번 누르거나, 숫자 1 2 3 으로 프로젝트를 열어 보세요.</p>
+      <div class="go"><button data-open="dv">DEVIANT</button><button data-open="hjw">한짝</button><button data-open="av">AIVO</button></div></div>` },
+  dv: { w: 660, x: 300, y: 90 }, hjw: { w: 660, x: 330, y: 120, p: 'hj' }, av: { w: 660, x: 360, y: 150 },
+  work: { title: '작업 과정', acc: '#b8861a', w: 560, h: 420, x: 420, y: 60, body: () => `<div class="gallery">${WORK.map((w, i) => `<button data-view="${i}"><span class="th"><img src="${w[0]}" alt=""></span>${w[1]}<span style="color:#8a7d6b">${w[2]}</span></button>`).join('')}</div>`,
+    st: [`항목 ${WORK.length}개`] },
+  view: { title: '보기', acc: '#3a3030', w: 640, x: 380, y: 80 },
+  keys: { title: '키 안내', acc: '#3a3030', w: 360, x: 460, y: 140, body: () => `<div class="keys">
+      <span><kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd></span><span>아이콘 고르기</span><span><kbd>ENTER</kbd></span><span>열기</span>
+      <span><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></span><span>DEVIANT, 한짝, AIVO</span><span><kbd>4</kbd></span><span>작업 과정</span>
+      <span><kbd>F</kbd></span><span>맨 앞 창의 프로젝트 페이지로</span><span><kbd>ESC</kbd></span><span>맨 앞 창 닫기</span>
+      <span><kbd>TAB</kbd></span><span>창 바꾸기</span><span><kbd>M</kbd></span><span>시작 메뉴</span></div>` },
+  widget: { title: '한짝 위젯', acc: '#d9621c', w: 340, x: -1, y: -1, cls: 'hj', body: () => `<div class="field" id="field">
+      <div class="hp" style="left:8px"><i id="hp-me" style="width:100%"></i></div><div class="hp" style="right:8px"><i id="hp-mob" style="width:100%;background:#e5483b"></i></div>
+      <div class="me" id="me"><div class="sp" id="mesp" style="--src:url(img/hj-sushi-rest.png);--n:4;--w:134px;--h:120px;--t:.9s"></div></div>
+      <img class="mob" id="mob" src="img/octopus.gif" alt=""></div>`, st: ['Lv.<span id="lv">12</span>', '처치 <span id="kills">0</span>'] },
+};
+function projBody(k) {
+  const p = PROJ[k];
+  return `<div class="proj"><div class="media">${p.media}</div><div class="side"><div class="k">${p.kind}</div><h3>${p.name}</h3>
+    <dl>${p.rows.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl><p>${p.p}</p>
+    <a class="open" href="${p.href}"><span>자세히 열기</span><span>F</span></a></div></div>`;
+}
+function openWin(id, opt = {}) {
+  menu(false);
+  if (wins[id]) { wins[id].hidden = false; front(id); return wins[id]; }
+  const pk = DEF[id].p || id, d = DEF[id], P = PROJ[pk];
+  const el = document.createElement('section'); el.className = 'wnd ' + (d.cls || ''); el.dataset.id = id;
+  el.style.setProperty('--acc', P ? P.acc : d.acc);
+  const W = Math.min(d.w, innerWidth - 24);
+  el.style.width = W + 'px'; if (d.h) el.style.height = Math.min(d.h, innerHeight - 80) + 'px';
+  el.style.left = (d.x < 0 ? innerWidth - W - 16 : Math.min(d.x, innerWidth - W - 12)) + 'px';
+  el.style.top = (d.y < 0 ? innerHeight - 44 - 236 : d.y) + 'px';
+  const st = P ? P.st : d.st;
+  el.innerHTML = `<div class="tb"><span class="t">${opt.title || (P ? P.title : d.title)}</span><span class="bt"><button data-min aria-label="내리기">_</button><button data-x aria-label="닫기">×</button></span></div>
+    <div class="body">${opt.body || (P ? projBody(pk) : d.body())}</div>${st ? `<div class="st">${st.map(s => `<span>${s}</span>`).join('')}</div>` : ''}`;
+  el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', P ? P.name : d.title);
+  winsEl.appendChild(el); wins[id] = el;
+  el.addEventListener('pointerdown', () => front(id));
+  el.querySelector('[data-x]').addEventListener('click', e => { e.stopPropagation(); closeWin(id); });
+  el.querySelector('[data-min]').addEventListener('click', e => { e.stopPropagation(); el.hidden = true; bar(); });
+  drag(el);
+  const b = document.createElement('button'); b.className = 'app'; b.dataset.id = id; b.style.setProperty('--acc', P ? P.acc : d.acc);
+  b.innerHTML = `<i></i><span>${P ? P.name : d.title}</span>`;
+  b.addEventListener('click', () => { if (!el.hidden && el.style.zIndex == z) { el.hidden = true; bar(); } else { el.hidden = false; front(id); } });
+  apps.appendChild(b);
+  front(id); return el;
+}
+function closeWin(id) { const el = wins[id]; if (!el) return; el.remove(); delete wins[id]; apps.querySelector(`[data-id="${id}"]`)?.remove(); if (id === 'widget') battle(false); bar(); }
+function front(id) { wins[id].style.zIndex = ++z; bar(); }
+function topWin() { return Object.values(wins).filter(w => !w.hidden).sort((a, b) => b.style.zIndex - a.style.zIndex)[0]; }
+function bar() { const t = topWin(); Object.values(wins).forEach(w => w.classList.toggle('back', w !== t)); apps.querySelectorAll('.app').forEach(b => b.classList.toggle('on', t && b.dataset.id === t.dataset.id)); }
+function drag(el) {
+  const tb = el.querySelector('.tb'); let sx, sy, ox, oy, on = false;
+  tb.addEventListener('pointerdown', e => { if (e.target.closest('button') || innerWidth <= 760) return; on = true; sx = e.clientX; sy = e.clientY; ox = el.offsetLeft; oy = el.offsetTop; tb.setPointerCapture(e.pointerId); tb.style.cursor = 'grabbing'; });
+  tb.addEventListener('pointermove', e => { if (!on) return;
+    el.style.left = Math.max(-el.offsetWidth + 80, Math.min(innerWidth - 80, ox + e.clientX - sx)) + 'px';
+    el.style.top = Math.max(0, Math.min(innerHeight - 80, oy + e.clientY - sy)) + 'px'; });
+  ['pointerup', 'pointercancel'].forEach(t => tb.addEventListener(t, () => { on = false; tb.style.cursor = ''; }));
+}
+document.addEventListener('click', e => {
+  const o = e.target.closest('[data-open]'); if (o) { openWin(o.dataset.open); return; }
+  const v = e.target.closest('[data-view]'); if (v) { const w = WORK[+v.dataset.view]; closeWin('view');
+    openWin('view', { title: w[1], body: `<div class="viewer"><img src="${w[0]}" alt="${w[1]}"><p>${w[2]} / ${w[1]}</p></div>` }); }
+});
 
-  // 타이틀 메뉴
-  const items = [...document.querySelectorAll('#menu button')]; let mi = 0;
-  const sel = k => { mi = (k + items.length) % items.length; items.forEach((b, j) => b.setAttribute('aria-selected', j === mi)); };
-  const run = go => {
-    if (go === 'village') setScene('village');
-    else if (go === 'title') setScene('title');
-    else if (go === 'contact') setScene('village', 4);
-    else open('m-' + go);
-  };
-  items.forEach((b, j) => { b.addEventListener('mouseenter', () => sel(j)); b.addEventListener('click', () => { sel(j); run(b.dataset.go); }); });
-  document.querySelectorAll('#vbar [data-go]').forEach(b => b.addEventListener('click', () => run(b.dataset.go)));
+// ── 시작 메뉴 ──
+const menuEl = $('#menu'), start = $('#start');
+function menu(on) { menuEl.classList.toggle('on', on); start.setAttribute('aria-expanded', on); if (on) menuEl.querySelector('button, a').focus(); }
+start.addEventListener('click', e => { e.stopPropagation(); menu(!menuEl.classList.contains('on')); });
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.menu, #start')) menu(false); });
 
-  // 창
-  const open = id => { closeAll(); $(id).classList.add('on'); ($(id).querySelector('.dexgrid a, .quests a') || $(id).querySelector('[data-close]')).focus(); };
-  const closeAll = () => document.querySelectorAll('.modal').forEach(m => m.classList.remove('on'));
-  document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeAll));
-  document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeAll(); }));
-  document.querySelectorAll('[data-jump]').forEach(b => b.addEventListener('click', () => { closeAll(); scene === 'village' ? scrollTo({ top: +b.dataset.jump * zoneStep(), behavior: 'smooth' }) : setScene('village', +b.dataset.jump); }));
+// ── 시계 ──
+const clock = () => { const d = new Date(); $('#clock').textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
+clock(); setInterval(clock, 10000);
 
-  // 간판 앞 미리보기 = 프로젝트 소개 카드. 자세한 사례는 프로젝트 페이지에서.
-  const CASES = {
-    dv: { kind: 'Unity 2D 액션 로그라이트', name: 'DEVIANT', img: 'img/highlight-poster.png', px: true,
-      meta: '2026.10 ~ 진행 중 / 6인 / 팀장, 아트',
-      line: '잉크로 그린 세계를 무기를 바꿔 들며 돌파하는 액션 게임이에요. 전투 HUD와 아이콘, 픽셀 규격을 세우고 게임 전체 그림을 한 손으로 맞췄어요.', href: 'p-deviant.html' },
-    hj: { kind: '웹 방치형 게임', name: '한짝', img: 'img/battle.jpg', award: '우수상',
-      meta: '2026.08 ~ 09 / 6인 / 팀장, 디자인 총괄',
-      line: '바탕화면에 띄워 두면 젓가락이 알아서 싸우는 게임이에요. UI 규칙을 정하고, 생성 AI 그림을 게임에 그대로 쓸 수 있게 만드는 치장 제작 방식을 설계했어요.', href: 'p-hanjjak.html' },
-    av: { kind: '웹 서비스', name: 'AIVO', img: 'img/aivo-interview-report.jpg', award: '우수상',
-      meta: '2026.07 ~ 08 / 6인 / 프론트엔드',
-      line: '발표와 면접 연습을 분석해 주는 AI 말하기 코치예요. 면접과 리포트 화면을 만들고, 화면 뒤의 데이터가 진짜인지 끝까지 확인했어요.', href: 'p-aivo.html' },
-  };
-  const openCase = z => {
-    const c = CASES[z]; $('case-k').textContent = c.kind; $('case-t').textContent = c.name;
-    $('case-s').innerHTML = `<div class="ic-img"><img ${c.px ? 'class="px"' : ''} src="${c.img}" alt="${c.name} 화면" style="object-position:${z === 'av' ? 'top left' : 'center'}"></div>
-      <p class="ic-meta g">${c.meta}${c.award ? ` <span class="ic-award">${c.award}</span>` : ''}</p>
-      <p class="ic-line">${c.line}</p>`;
-    $('case-l').innerHTML = '';
-    $('case-more').href = c.href;
-    open('m-case');
-  };
-  // 연습실 모니터: 다가가면 켜지고 화면이 넘어간다
-  const studio = $('studio'), avimg = $('avimg');
-  const AV = ['img/aivo-interview-report.jpg', 'img/aivo-presentation-practice.jpg', 'img/aivo-presentation-report.jpg', 'img/aivo-home.jpg'];
-  let avi = 0; setInterval(() => { if (studio.classList.contains('on')) { avi = (avi + 1) % AV.length; avimg.src = AV[avi]; } }, 1800);
+// ── 한짝 위젯: 젓가락이 알아서 싸운다 ──
+const MOBS = ['img/octopus.gif', 'img/chicken-king.gif'];
+let bt = null, mobHp = 100, kills = 0, mi = 0;
+function battle(on) {
+  clearInterval(bt); bt = null; if (!on) return;
+  bt = setInterval(() => {
+    const f = document.getElementById('field'); if (!f) return;
+    const sp = document.getElementById('mesp'), mob = document.getElementById('mob');
+    sp.style.setProperty('--src', 'url(img/hj-sushi-run.png)'); setTimeout(() => sp.style.setProperty('--src', 'url(img/hj-sushi-rest.png)'), 300);
+    const crit = Math.random() < .2, d = Math.round((crit ? 2.2 : 1) * (8 + Math.random() * 10));
+    mobHp -= d; mob.classList.remove('hurt'); void mob.offsetWidth; mob.classList.add('hurt');
+    const n = document.createElement('span'); n.className = 'dmg' + (crit ? ' crit' : ''); n.textContent = '-' + d * 8;
+    n.style.left = (f.clientWidth - 150 + Math.random() * 40) + 'px'; n.style.top = (40 + Math.random() * 30) + 'px'; f.appendChild(n); setTimeout(() => n.remove(), 800);
+    if (mobHp <= 0) { kills++; mobHp = 100; mi = (mi + 1) % MOBS.length; mob.src = MOBS[mi]; document.getElementById('kills').textContent = kills; if (kills % 3 === 0) document.getElementById('lv').textContent = 12 + kills / 3; }
+    document.getElementById('hp-mob').style.width = Math.max(0, mobHp) + '%';
+    document.getElementById('hp-me').style.width = (70 + Math.random() * 30) + '%';
+  }, 900);
+}
 
-  // 마을 걷기
-  const world = $('world'), sp = $('sprite'), bubble = $('bubble'), padAct = $('pad-act'), zbtns = [...document.querySelectorAll('#zones button')];
-  const KEYS = [null, 'dv', 'hj', 'av', null];
-  let moving = false, stopT, zone = -1, look = '', lastY = 0, faceLeft = false;
-  const setLook = (kind, run) => {
-    const key = kind + run + faceLeft; if (key === look) return; look = key;
-    if (kind === 'hj') { sp.className = 'sp' + (faceLeft ? ' flip' : ''); sp.style.cssText = `--src:url(img/hj-sushi-${run ? 'run' : 'rest'}.png);--n:4;--w:${215*.8}px;--h:${192*.8}px;--t:${run ? '.56s' : '.9s'}`; }
-    else { sp.className = 'sp pixel' + (faceLeft ? ' flip' : ''); sp.style.cssText = `--src:url(img/hero-${run ? 'run' : 'idle'}.png);--n:12;--w:192px;--h:192px;--t:${run ? '.72s' : '1.2s'}`; }
-  };
-  const update = () => {
-    if (scene !== 'village') return;
-    const max = document.documentElement.scrollHeight - innerHeight;
-    const x = (max > 0 ? scrollY / max : 0) * 4 * innerWidth;
-    world.style.transform = `translateX(${-x}px)`;
-    const z = Math.min(4, Math.round(x / innerWidth));
-    if (z !== zone) { zone = z; zbtns.forEach((b, k) => b.setAttribute('aria-current', k === z)); }
-    const near = KEYS[z] && Math.abs(x - z * innerWidth) < innerWidth * .18;
-    const say = { 1: 'DEVIANT 소개', 2: '한짝 소개', 3: 'AIVO 소개' };
-    bubble.innerHTML = near ? `<kbd>F</kbd>${say[z]}` : '';
-    bubble.classList.toggle('on', !!near);
-    padAct.hidden = !near; if (near) padAct.textContent = say[z];
-    studio.classList.toggle('on', z === 3 && Math.abs(x - 3 * innerWidth) < innerWidth * .3);
-    setLook(z === 2 ? 'hj' : 'dv', moving);
-  };
-  addEventListener('scroll', () => {
-    if (scene !== 'village') return;
-    faceLeft = scrollY < lastY; lastY = scrollY;
-    moving = true; clearTimeout(stopT); stopT = setTimeout(() => { moving = false; update(); }, 140); update();
-  }, { passive: true });
-  addEventListener('resize', update);
-  // 프로젝트 페이지에서 돌아올 때: ?zone=N 이면 타이틀을 건너뛰고 그 구역에 선다
-  const qz = +new URLSearchParams(location.search).get('zone');
-  if (qz >= 0 && new URLSearchParams(location.search).has('zone')) {
-    scene = 'village'; $('title').classList.remove('on'); $('village').classList.add('on'); $('vbar').style.display = 'flex'; document.body.classList.add('in-village');
-    requestAnimationFrame(() => { scrollTo(0, qz * zoneStep()); update(); });
-  }
+// ── 키 ──
+addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const c = e.code;
+  if (c === 'Slash' || e.key === '?') { e.preventDefault(); openWin('keys'); return; }
+  if (c === 'KeyM') { menu(!menuEl.classList.contains('on')); return; }
+  if (c === 'Escape') { if (menuEl.classList.contains('on')) { menu(false); return; } const t = topWin(); if (t) closeWin(t.dataset.id); return; }
+  if (c === 'Tab') { const list = Object.values(wins).filter(w => !w.hidden); if (list.length > 1) { e.preventDefault(); const t = topWin(); const s = list.sort((a, b) => a.style.zIndex - b.style.zIndex)[0]; front(s.dataset.id); } return; }
+  const num = ['Digit0', 'Digit1', 'Digit2', 'Digit3', 'Digit4'].indexOf(c);
+  if (num >= 0) { openWin(['readme', 'dv', 'hjw', 'av', 'work'][num]); return; }
+  if (c === 'KeyF') { const t = topWin(); const a = t && t.querySelector('.open'); if (a) location.href = a.href; return; }
+  if (menuEl.classList.contains('on')) return;
+  const cols = Math.max(1, Math.round(iconsEl.clientHeight / 96));
+  const mv = { ArrowDown: 1, ArrowUp: -1, ArrowRight: cols, ArrowLeft: -cols }[c];
+  if (mv && !e.target.closest('.wnd .body')) { e.preventDefault(); selIcon(isel + mv, true); }
+  if (c === 'Enter' && document.activeElement === document.body) { const ic = ICONS[isel]; ic.href ? location.href = ic.href : openWin(ic.id); }
+});
 
-  // ── 키 세팅 ──
-  // 글자가 아니라 키 위치(e.code)로 읽는다. 한글 입력 상태여도 F, A, D 가 그대로 동작한다.
-  const held = new Set(); let walkRAF = null, lastT = 0;
-  const walk = t => {
-    const dir = (held.has('R') ? 1 : 0) - (held.has('L') ? 1 : 0);
-    if (!dir || scene !== 'village') { walkRAF = null; lastT = 0; return; }
-    const dt = lastT ? Math.min(.05, (t - lastT) / 1000) : .016; lastT = t;
-    scrollBy(0, dir * innerHeight * (held.has('fast') ? 2.4 : 1.3) * dt);
-    walkRAF = requestAnimationFrame(walk);
-  };
-  const jump = () => { const m = $('me'); if (m.classList.contains('hop')) return; m.classList.add('hop'); setTimeout(() => m.classList.remove('hop'), 520); };
-  const goZone = n => { if (scene === 'village') scrollTo({ top: n * zoneStep(), behavior: 'smooth' }); else setScene('village', n); };
-  const moveFocus = (m, d) => {
-    const els = [...m.querySelectorAll('a[href]:not(#case-more), [data-focus]')]; if (!els.length) return;
-    const i = els.indexOf(document.activeElement); els[(i + d + els.length) % els.length].focus();
-  };
-  const is = (c, ...codes) => codes.includes(c);
-  addEventListener('keydown', e => {
-    if (e.ctrlKey || e.metaKey || e.altKey) return;
-    const c = e.code, m = document.querySelector('.modal.on');
-    if (c === 'Slash' || e.key === '?') { e.preventDefault(); m && m.id === 'm-keys' ? closeAll() : open('m-keys'); return; }
-    if (m) {                                   // 창이 열려 있을 때
-      if (is(c, 'Escape', 'Backspace')) { e.preventDefault(); closeAll(); return; }
-      if (is(c, 'ArrowRight', 'ArrowDown', 'KeyD', 'KeyS')) { e.preventDefault(); moveFocus(m, 1); }
-      if (is(c, 'ArrowLeft', 'ArrowUp', 'KeyA', 'KeyW')) { e.preventDefault(); moveFocus(m, -1); }
-      if (m.id === 'm-case' && is(c, 'Enter', 'KeyF', 'Space')) { e.preventDefault(); location.href = $('case-more').href; }
-      return;
-    }
-    if (is(c, 'KeyI')) { e.preventDefault(); return open('m-dex'); }       // 도감
-    if (is(c, 'KeyG')) { e.preventDefault(); return document.body.classList.toggle('edit'); } // 격자
-    if (scene === 'title') {
-      if (is(c, 'ArrowDown', 'KeyS')) { e.preventDefault(); sel(mi + 1); }
-      if (is(c, 'ArrowUp', 'KeyW')) { e.preventDefault(); sel(mi - 1); }
-      if (is(c, 'Enter', 'Space', 'KeyF')) { e.preventDefault(); run(items[mi].dataset.go); }
-      const n = ['Digit1', 'Digit2', 'Digit3'].indexOf(c); if (n >= 0) { sel(n); run(items[n].dataset.go); }
-      return;
-    }
-    // 마을
-    if (is(c, 'ArrowRight', 'KeyD')) { e.preventDefault(); held.add('R'); if (!walkRAF) walkRAF = requestAnimationFrame(walk); }
-    if (is(c, 'ArrowLeft', 'KeyA')) { e.preventDefault(); held.add('L'); if (!walkRAF) walkRAF = requestAnimationFrame(walk); }
-    if (is(c, 'ShiftLeft', 'ShiftRight')) held.add('fast');
-    if (is(c, 'Space', 'ArrowUp', 'KeyW')) { e.preventDefault(); jump(); }
-    if (is(c, 'KeyF', 'Enter') && KEYS[zone]) { e.preventDefault(); openCase(KEYS[zone]); }
-    if (is(c, 'Home')) { e.preventDefault(); goZone(0); }
-    if (is(c, 'End')) { e.preventDefault(); goZone(4); }
-    const z = ['Digit0', 'Digit1', 'Digit2', 'Digit3', 'Digit4'].indexOf(c); if (z >= 0) goZone(z);
-    if (is(c, 'Escape', 'KeyM')) { held.clear(); setScene('title'); }
-  });
-  addEventListener('keyup', e => {
-    if (is(e.code, 'ArrowRight', 'KeyD')) held.delete('R');
-    if (is(e.code, 'ArrowLeft', 'KeyA')) held.delete('L');
-    if (is(e.code, 'ShiftLeft', 'ShiftRight')) held.delete('fast');
-  });
-  addEventListener('blur', () => held.clear());
-  // 터치 버튼: 누르고 있는 동안 걷는다
-  document.querySelectorAll('#pad [data-hold]').forEach(b => {
-    const k = b.dataset.hold;
-    const on = e => { e.preventDefault(); b.setPointerCapture?.(e.pointerId); held.add(k); b.classList.add('down'); if (!walkRAF) walkRAF = requestAnimationFrame(walk); };
-    const off = () => { held.delete(k); b.classList.remove('down'); };
-    b.addEventListener('pointerdown', on); ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => b.addEventListener(t, off));
-    b.addEventListener('contextmenu', e => e.preventDefault());
-  });
-  $('pad-jump').addEventListener('click', jump);
-  padAct.addEventListener('click', () => KEYS[zone] && openCase(KEYS[zone]));
-  zbtns.forEach((b, k) => b.addEventListener('click', () => goZone(k)));
-  document.querySelectorAll('[data-keys]').forEach(b => b.addEventListener('click', () => open('m-keys')));
-  bubble.addEventListener('click', () => KEYS[zone] && openCase(KEYS[zone]));
-  bubble.style.pointerEvents = 'auto'; bubble.style.cursor = 'pointer';
+// 처음 화면: README 와 한짝 위젯
+// 프로젝트 페이지에서 돌아오면 ?open=N 으로 그 창을 연다
+const back = ['', 'dv', 'hjw', 'av'][+new URLSearchParams(location.search).get('open')] || '';
+if (innerWidth > 760 && !back) openWin('readme'); openWin('widget'); battle(true);
+if (back) openWin(back);
 })();
 </script>
 </body>
