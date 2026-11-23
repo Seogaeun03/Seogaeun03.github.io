@@ -163,6 +163,33 @@ body.edit .palette { display: block; }
 .palette i { width: 22px; height: 12px; border: 1px solid var(--tan); }
 .palette small { color: var(--tan); }
 @media (prefers-reduced-motion: reduce) { .sky, .parade { animation: none; } }
+/* 터치: 화면 아래 땅 위에 걷기 버튼 */
+.pad { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9; display: none; align-items: center; gap: 10px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); pointer-events: none; }
+.pad button { pointer-events: auto; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; height: 56px; min-width: 56px; padding: 0 14px; font-size: 18px; color: var(--cream); }
+.pad button.down { border-image-source: var(--frame-hot); color: var(--gold); }
+.pad .act { margin-left: auto; font-size: 13px; color: var(--ink); background: var(--gold); background-clip: padding-box; }
+.pad .act[hidden] { display: none; }
+.pad .jp { font-size: 13px; }
+.touch-only { display: none; }
+@media (pointer: coarse), (max-width: 760px) {
+  body.in-village .pad { display: flex; }
+  .kb-only { display: none !important; }
+  .touch-only { display: inline; }
+  .bubble { display: none !important; }
+  .board, .info { width: calc(100vw - 32px); top: calc(48px + 3vh); }
+  .board img { aspect-ratio: 16/7; }
+  .board .t, .info .t { flex-direction: column; align-items: flex-start; gap: 0; margin-top: 6px; }
+  .board h2, .info h2 { font-size: 22px; line-height: 30px; }
+  .board p, .info p { font-size: 13px; line-height: 20px; }
+  .me { scale: .7; transform-origin: 50% 100%; }
+  .sign { left: 4%; transform: scale(.8); transform-origin: 0 100%; }
+  .studio { gap: 12px; width: calc(100vw - 24px); justify-content: center; }
+  .studio .house { height: min(260px, 34vh); }
+  .studio .tv { width: 38vw; }
+  .hello { top: calc(48px + 8vh); }
+  .hello h2 { font-size: 26px; }
+  .links a { font-size: 12px; padding: 6px 10px; }
+}
 </style>
 </head>
 <body>
@@ -179,7 +206,7 @@ body.edit .palette { display: block; }
       <li><button role="option" aria-selected="false" data-go="dex">프로젝트 목록</button></li>
       <li><button role="option" aria-selected="false" data-go="contact">연락처</button></li>
     </ul>
-    <button class="keyhint g" data-keys type="button"><kbd>?</kbd> 키 안내</button>
+    <button class="keyhint g kb-only" data-keys type="button"><kbd>?</kbd> 키 안내</button>
   </div>
   <div class="t-ground" aria-hidden="true"></div>
   <div class="parade" aria-hidden="true" id="parade"></div>
@@ -189,7 +216,7 @@ body.edit .palette { display: block; }
 <section class="scene" id="village" aria-label="프로젝트 마을">
   <div class="world" id="world">
     <div class="zone"><div class="v-ground"></div>
-      <div class="hello"><h2 class="g">프로젝트 <b>세 개</b>가 이 길 위에 있어요</h2><p><kbd>→</kbd> 걷기 <kbd>F</kbd> 소개</p></div>
+      <div class="hello"><h2 class="g">프로젝트 <b>세 개</b>가 이 길 위에 있어요</h2><p class="kb-only"><kbd>→</kbd> 걷기 <kbd>F</kbd> 소개</p><p class="touch-only">아래 ◀ ▶ 를 누르고 있거나 화면을 위로 밀면 걸어가요.</p></div>
     </div>
     <div class="zone z-dv" data-zone="dv"><div class="v-ground"></div>
       <div class="sign"><div class="plate frame g">DEVIANT</div><div class="pole"></div></div>
@@ -225,13 +252,14 @@ body.edit .palette { display: block; }
   </div>
   <div class="me" id="me"><div class="sp pixel" id="sprite"></div></div>
   <div class="bubble frame g" id="bubble"></div>
+  <div class="pad g" id="pad" aria-label="걷기 버튼"><button class="frame" data-hold="L" type="button" aria-label="왼쪽으로 걷기">◀</button><button class="frame" data-hold="R" type="button" aria-label="오른쪽으로 걷기">▶</button><button class="frame jp" id="pad-jump" type="button">점프</button><button class="frame act" id="pad-act" type="button" hidden></button></div>
 </section>
 <header class="bar g" id="vbar"><button class="name" data-go="title" type="button">서가은</button>
   <nav class="zones" aria-label="구역" id="zones"><button type="button" data-z="0">입구</button><button type="button" data-z="1">DEVIANT</button><button type="button" data-z="2">한짝</button><button type="button" data-z="3">AIVO</button><button type="button" data-z="4">연락처</button></nav>
-  <span class="r"><button data-go="dex" type="button">목록</button><button data-keys type="button">키 안내</button></span></header>
+  <span class="r"><button data-go="dex" type="button">목록</button><button class="kb-only" data-keys type="button">키 안내</button></span></header>
 
 <!-- 창 -->
-<div class="modal" id="m-case" role="dialog" aria-modal="true" aria-labelledby="case-t"><div class="win frame"><div class="wh"><h3 class="g" id="case-k"></h3><button class="x g" data-close>닫기 ESC</button></div><h4 id="case-t"></h4><div id="case-s"></div><div class="lines" id="case-l"></div><a id="case-more" class="go g" href="#"><span>자세히 보기</span><kbd>F</kbd><kbd>ENTER</kbd></a></div></div>
+<div class="modal" id="m-case" role="dialog" aria-modal="true" aria-labelledby="case-t"><div class="win frame"><div class="wh"><h3 class="g" id="case-k"></h3><button class="x g" data-close>닫기 ESC</button></div><h4 id="case-t"></h4><div id="case-s"></div><div class="lines" id="case-l"></div><a id="case-more" class="go g" href="#"><span>자세히 보기</span><kbd class="kb-only">F</kbd><kbd class="kb-only">ENTER</kbd></a></div></div>
 <div class="modal" id="m-keys" role="dialog" aria-modal="true" aria-label="키 안내"><div class="win frame"><div class="wh"><h3 class="g">키 안내</h3><button class="x g" data-close>닫기 ESC</button></div>
   <div class="keys g">
     <section><h5>타이틀</h5><dl><dt><kbd>↑</kbd><kbd>↓</kbd> <kbd>W</kbd><kbd>S</kbd></dt><dd>메뉴 고르기</dd><dt><kbd>ENTER</kbd> <kbd>SPACE</kbd> <kbd>F</kbd></dt><dd>고른 메뉴 열기</dd><dt><kbd>1</kbd> ~ <kbd>3</kbd></dt><dd>메뉴 바로 열기</dd></dl></section>
@@ -336,7 +364,7 @@ body.edit .palette { display: block; }
   let avi = 0; setInterval(() => { if (studio.classList.contains('on')) { avi = (avi + 1) % AV.length; avimg.src = AV[avi]; } }, 1800);
 
   // 마을 걷기
-  const world = $('world'), sp = $('sprite'), bubble = $('bubble'), zbtns = [...document.querySelectorAll('#zones button')];
+  const world = $('world'), sp = $('sprite'), bubble = $('bubble'), padAct = $('pad-act'), zbtns = [...document.querySelectorAll('#zones button')];
   const KEYS = [null, 'dv', 'hj', 'av', null];
   let moving = false, stopT, zone = -1, look = '', lastY = 0, faceLeft = false;
   const setLook = (kind, run) => {
@@ -355,6 +383,7 @@ body.edit .palette { display: block; }
     const say = { 1: 'DEVIANT 소개', 2: '한짝 소개', 3: 'AIVO 소개' };
     bubble.innerHTML = near ? `<kbd>F</kbd>${say[z]}` : '';
     bubble.classList.toggle('on', !!near);
+    padAct.hidden = !near; if (near) padAct.textContent = say[z];
     studio.classList.toggle('on', z === 3 && Math.abs(x - 3 * innerWidth) < innerWidth * .3);
     setLook(z === 2 ? 'hj' : 'dv', moving);
   };
@@ -425,6 +454,16 @@ body.edit .palette { display: block; }
     if (is(e.code, 'ShiftLeft', 'ShiftRight')) held.delete('fast');
   });
   addEventListener('blur', () => held.clear());
+  // 터치 버튼: 누르고 있는 동안 걷는다
+  document.querySelectorAll('#pad [data-hold]').forEach(b => {
+    const k = b.dataset.hold;
+    const on = e => { e.preventDefault(); b.setPointerCapture?.(e.pointerId); held.add(k); b.classList.add('down'); if (!walkRAF) walkRAF = requestAnimationFrame(walk); };
+    const off = () => { held.delete(k); b.classList.remove('down'); };
+    b.addEventListener('pointerdown', on); ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => b.addEventListener(t, off));
+    b.addEventListener('contextmenu', e => e.preventDefault());
+  });
+  $('pad-jump').addEventListener('click', jump);
+  padAct.addEventListener('click', () => KEYS[zone] && openCase(KEYS[zone]));
   zbtns.forEach((b, k) => b.addEventListener('click', () => goZone(k)));
   document.querySelectorAll('[data-keys]').forEach(b => b.addEventListener('click', () => open('m-keys')));
   bubble.addEventListener('click', () => KEYS[zone] && openCase(KEYS[zone]));
