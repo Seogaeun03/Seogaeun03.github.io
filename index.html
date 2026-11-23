@@ -73,6 +73,38 @@ body { background: #23305a; -webkit-user-select: none; user-select: none; }
 .readme .go { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
 .readme .go button { font-family: inherit; font-size: 12px; padding: 4px 10px; border: 2px solid var(--line); background: #fff; cursor: pointer; }
 .readme .go button:hover { background: #EBA516; }
+/* 프로젝트 문서 창: 프로젝트 페이지 글을 크림 종이에 다시 앉힌다 */
+.doc { max-width: 980px; margin: 0 auto; padding: 8px 28px 48px; font-size: 15px; line-height: 27px; color: var(--line); }
+.doc .phero { padding: 28px 0 24px; }
+.doc .kind { font-family: "Galmuri11", monospace; font-size: 12px; color: var(--acc); }
+.doc h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.1; font-weight: 900; letter-spacing: -.03em; margin: 8px 0 12px; }
+.doc .line { font-size: 18px; line-height: 30px; max-width: 720px; word-break: keep-all; }
+.doc .meta { margin-top: 12px; font-family: "Galmuri11", monospace; font-size: 12px; color: var(--dim); }
+.doc .meta b { font-weight: 400; background: #EBA516; color: var(--line); padding: 0 6px; margin-left: 8px; }
+.doc .cover { margin-top: 24px; box-shadow: 0 0 0 2px var(--line); }
+.doc .cover img, .doc .cover video { width: 100%; aspect-ratio: 16/8; object-fit: cover; display: block; background: #000; }
+.doc .about { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; padding: 36px 0; border-bottom: 2px solid #d8ccb8; }
+.doc .about h2 { font-family: "Galmuri11", monospace; font-size: 12px; font-weight: 400; color: var(--acc); }
+.doc .about p { word-break: keep-all; } .doc .about p + p { margin-top: 10px; color: var(--dim); }
+.doc .work { display: grid; grid-template-columns: 1.35fr 1fr; gap: 32px; align-items: center; padding: 40px 0; border-bottom: 2px solid #d8ccb8; }
+.doc .work.rev { grid-template-columns: 1fr 1.35fr; } .doc .work.rev .vis { order: 2; }
+.doc .work.full { grid-template-columns: 1fr; }
+.doc .vis { display: grid; gap: 10px; } .doc .vis.two { grid-template-columns: 1fr 1fr; }
+.doc .vis figure { margin: 0; }
+.doc .vis .im { background: #1B1616; display: grid; place-items: center; overflow: hidden; box-shadow: 0 0 0 2px var(--line); }
+.doc .vis .im.light { background: #efe3cf; padding: 10px; }
+.doc .vis .im img, .doc .vis .im video { max-width: 100%; max-height: 340px; width: auto; height: auto; display: block; }
+.doc .vis figcaption { font-family: "Galmuri11", monospace; font-size: 12px; color: var(--dim); margin-top: 6px; }
+.doc .txt .no { font-family: "Galmuri11", monospace; font-size: 12px; color: var(--acc); }
+.doc .txt h3 { font-size: 24px; line-height: 32px; font-weight: 900; margin: 4px 0 10px; word-break: keep-all; }
+.doc .txt p { color: #4a4040; word-break: keep-all; } .doc .txt p strong { color: var(--line); background: linear-gradient(transparent 60%, rgba(235,165,22,.45) 60%); }
+.doc .shelf { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px 0; background: #efe3cf; padding: 16px; box-shadow: 0 0 0 2px var(--line); }
+.doc .shelf img { height: 140px; width: auto; margin: 0 auto; }
+.doc .px { image-rendering: pixelated; }
+.doc .nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 32px; font-family: "Galmuri11", monospace; font-size: 13px; }
+.doc .nav button { font: inherit; padding: 8px 14px; background: var(--line); color: var(--paper); border: 0; cursor: pointer; }
+.doc .nav button:hover { background: var(--acc); }
+@media (max-width: 760px) { .doc { padding: 4px 14px 32px; } .doc .about, .doc .work, .doc .work.rev { grid-template-columns: 1fr; gap: 14px; } .doc .work.rev .vis { order: 0; } .doc .shelf img { height: 72px; } }
 /* 작업 과정 폴더 */
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; padding: 12px; }
 .gallery button { display: grid; gap: 4px; padding: 6px; border: 2px solid transparent; background: none; cursor: pointer; text-align: left; font-family: "Galmuri11", monospace; font-size: 11px; color: var(--line); }
@@ -235,17 +267,34 @@ const GLYPH = {
   min: 'M1 6h6v1H1z', max: 'M1 1h6v6H1zM2 3v3h4V3z',
   x: 'M1 1h1v1h1v1h2V2h1V1h1v1H6v1H5v2h1v1h1v1H6V6H5V5H3v1H2v1H1V6h1V5h1V3H2V2H1z',
 };
-const WGLYPH = { readme: 'doc', dv: 'dv', hjw: 'hj', av: 'av', work: 'folder', view: 'img', keys: 'key', widget: 'hj' };
+const WGLYPH = { readme: 'doc', dv: 'dv', hjw: 'hj', av: 'av', work: 'folder', view: 'img', keys: 'key', widget: 'hj', 'doc-dv': 'dv', 'doc-hj': 'hj', 'doc-av': 'av' };
 function projBody(k) {
   const p = PROJ[k];
   return `<div class="proj"><div class="media">${p.media}</div><div class="side"><div class="k">${p.kind}</div><h3>${p.name}</h3>
     <dl>${p.rows.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl><p>${p.p}</p>
-    <a class="open" href="${p.href}"><span>자세히 열기</span><span>F</span></a></div></div>`;
+    <a class="open" href="${p.href}" data-doc="${k}"><span>자세히 열기</span><span>F</span></a></div></div>`;
+}
+const DOCS = { dv: ['p-deviant.html', 'deviant'], hj: ['p-hanjjak.html', 'hanjjak'], av: ['p-aivo.html', 'aivo'] };
+const ORDER = ['dv', 'hj', 'av'];
+async function openDoc(k) {
+  const id = 'doc-' + k, P = PROJ[k];
+  if (wins[id]) { wins[id].hidden = false; front(id); return; }
+  const el = openWin(id, { doc: true, title: P.name + ' / 자세히', acc: P.acc, body: '<div class="doc"><p style="padding:40px 0">불러오는 중</p></div>' });
+  el.classList.add('max');
+  history.replaceState(null, '', '#' + DOCS[k][1]);
+  try {
+    const html = await (await fetch(DOCS[k][0])).text();
+    const dom = new DOMParser().parseFromString(html, 'text/html'), main = dom.querySelector('main');
+    main.querySelector('nav.next')?.remove();
+    const i = ORDER.indexOf(k), prev = ORDER[i - 1], next = ORDER[i + 1];
+    el.querySelector('.body').innerHTML = `<article class="doc">${main.innerHTML}<div class="nav">${prev ? `<button data-docgo="${prev}">← ${PROJ[prev].name}</button>` : '<span></span>'}${next ? `<button data-docgo="${next}">${PROJ[next].name} →</button>` : '<button data-docclose>바탕화면으로</button>'}</div></article>`;
+    el.querySelectorAll('video').forEach(v => { v.muted = true; v.play().catch(() => {}); });
+  } catch (e) { location.href = DOCS[k][0]; }
 }
 function openWin(id, opt = {}) {
   menu(false);
   if (wins[id]) { wins[id].hidden = false; front(id); return wins[id]; }
-  const pk = DEF[id].p || id, d = DEF[id], P = PROJ[pk];
+  const d = DEF[id] || { w: 980, x: 40, y: 20, title: opt.title, acc: opt.acc }, pk = d.p || id, P = opt.doc ? null : PROJ[pk];
   const el = document.createElement('section'); el.className = 'wnd ' + (d.cls || ''); el.dataset.id = id;
   el.style.setProperty('--acc', P ? P.acc : d.acc);
   const W = Math.min(d.w, innerWidth - 24);
@@ -268,7 +317,7 @@ function openWin(id, opt = {}) {
   apps.appendChild(b);
   front(id); return el;
 }
-function closeWin(id) { const el = wins[id]; if (!el) return; el.remove(); delete wins[id]; apps.querySelector(`[data-id="${id}"]`)?.remove(); if (id === 'widget') battle(false); bar(); }
+function closeWin(id) { const el = wins[id]; if (!el) return; if (id.startsWith('doc-')) history.replaceState(null, '', location.pathname); el.remove(); delete wins[id]; apps.querySelector(`[data-id="${id}"]`)?.remove(); if (id === 'widget') battle(false); bar(); }
 function front(id) { wins[id].style.zIndex = ++z; bar(); }
 function topWin() { return Object.values(wins).filter(w => !w.hidden).sort((a, b) => b.style.zIndex - a.style.zIndex)[0]; }
 function bar() { const t = topWin(); Object.values(wins).forEach(w => w.classList.toggle('back', w !== t)); apps.querySelectorAll('.app').forEach(b => b.classList.toggle('on', t && b.dataset.id === t.dataset.id)); }
@@ -281,6 +330,9 @@ function drag(el) {
   ['pointerup', 'pointercancel'].forEach(t => tb.addEventListener(t, () => { on = false; tb.style.cursor = ''; }));
 }
 document.addEventListener('click', e => {
+  const dk = e.target.closest('[data-doc]'); if (dk && !e.ctrlKey && !e.metaKey && !e.shiftKey) { e.preventDefault(); openDoc(dk.dataset.doc); return; }
+  const dg = e.target.closest('[data-docgo]'); if (dg) { const t = topWin(); const go = dg.dataset.docgo; if (t) closeWin(t.dataset.id); openDoc(go); return; }
+  if (e.target.closest('[data-docclose]')) { const t = topWin(); if (t) closeWin(t.dataset.id); return; }
   const o = e.target.closest('[data-open]'); if (o) { openWin(o.dataset.open); return; }
   const v = e.target.closest('[data-view]'); if (v) { const w = WORK[+v.dataset.view]; closeWin('view');
     openWin('view', { title: w[1], body: `<div class="viewer"><img src="${w[0]}" alt="${w[1]}"><p>${w[2]} / ${w[1]}</p></div>` }); }
@@ -358,7 +410,7 @@ addEventListener('keydown', e => {
   if (c === 'Tab') { const list = Object.values(wins).filter(w => !w.hidden); if (list.length > 1) { e.preventDefault(); const t = topWin(); const s = list.sort((a, b) => a.style.zIndex - b.style.zIndex)[0]; front(s.dataset.id); } return; }
   const num = ['Digit0', 'Digit1', 'Digit2', 'Digit3', 'Digit4'].indexOf(c);
   if (num >= 0) { openWin(['readme', 'dv', 'hjw', 'av', 'work'][num]); return; }
-  if (c === 'KeyF') { const t = topWin(); const a = t && t.querySelector('.open'); if (a) location.href = a.href; return; }
+  if (c === 'KeyF') { const t = topWin(); const a = t && t.querySelector('.open[data-doc]'); if (a) openDoc(a.dataset.doc); return; }
   if (menuEl.classList.contains('on')) return;
   const cols = Math.max(1, Math.round(iconsEl.clientHeight / 96));
   const mv = { ArrowDown: 1, ArrowUp: -1, ArrowRight: cols, ArrowLeft: -cols }[c];
@@ -371,6 +423,8 @@ addEventListener('keydown', e => {
 const back = ['', 'dv', 'hjw', 'av'][+new URLSearchParams(location.search).get('open')] || '';
 if (innerWidth > 760 && !back) openWin('readme'); openWin('widget'); battle(true);
 if (back) openWin(back);
+const hashDoc = Object.keys(DOCS).find(k => '#' + DOCS[k][1] === location.hash);
+if (hashDoc) openDoc(hashDoc);
 })();
 </script>
 </body>
