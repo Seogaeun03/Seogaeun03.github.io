@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>서가은 | 게임 UI, 테크니컬 아트</title>
-<meta name="description" content="게임 UI 디자이너, 테크니컬 아티스트 서가은의 포트폴리오. DEVIANT, 한짝, AIVO를 도트 바탕화면에서 열어 보세요.">
+<meta name="description" content="게임 UI 아티스트 서가은의 포트폴리오. DEVIANT, 한짝, AIVO를 도트 바탕화면에서 열어 보세요.">
 <meta name="theme-color" content="#1B1616">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="서가은 포트폴리오">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="서가은 | 게임 UI, 테크니컬 아트">
-<meta property="og:description" content="게임 UI 디자이너, 테크니컬 아티스트 서가은의 포트폴리오. DEVIANT, 한짝, AIVO를 도트 바탕화면에서 열어 보세요.">
+<meta property="og:description" content="게임 UI 아티스트 서가은의 포트폴리오. DEVIANT, 한짝, AIVO를 도트 바탕화면에서 열어 보세요.">
 <meta property="og:url" content="https://seogaeun03.github.io/">
 <meta property="og:image" content="https://seogaeun03.github.io/img/og.png">
 <meta property="og:image:width" content="1200">
@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="도트 바탕화면에 DEVIANT 창과 한짝 위젯이 열린 서가은 포트폴리오 첫 화면">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="서가은 | 게임 UI, 테크니컬 아트">
-<meta name="twitter:description" content="게임 UI 디자이너, 테크니컬 아티스트 서가은의 포트폴리오. DEVIANT, 한짝, AIVO를 도트 바탕화면에서 열어 보세요.">
+<meta name="twitter:description" content="게임 UI 아티스트 서가은의 포트폴리오. DEVIANT, 한짝, AIVO를 도트 바탕화면에서 열어 보세요.">
 <meta name="twitter:image" content="https://seogaeun03.github.io/img/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 shape-rendering=%27crispEdges%27%3E%3Cpath fill=%27%231B1616%27 d=%27M0 0h16v16H0z%27/%3E%3Cpath fill=%27%23EBA516%27 d=%27M7 2h2v2h2v2h2v4h-2v2H9v2H7v-2H5v-2H3V6h2V4h2z%27/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
@@ -30,9 +30,10 @@ body { background: #23305a; -webkit-user-select: none; user-select: none; }
 .wall { position: fixed; inset: 0 0 var(--task); background: linear-gradient(180deg, #1f2a52 0%, #2c3f73 60%, #43619e 100%); }
 .wall::before { content: ""; position: absolute; inset: 0; opacity: .16; background-image: radial-gradient(#fff 1px, transparent 1.2px); background-size: 6px 6px;
   -webkit-mask-image: linear-gradient(transparent 35%, #000); mask-image: linear-gradient(transparent 35%, #000); }
-.brand { position: absolute; left: 136px; bottom: 28px; color: rgba(253,238,218,.92); pointer-events: none; }
+.brand { position: absolute; left: 136px; bottom: calc(var(--task) + 20px); color: rgba(253,238,218,.92); pointer-events: none; }
 .brand b { display: block; font-size: clamp(48px, 7vw, 84px); line-height: 1; font-weight: 400; text-shadow: 4px 4px 0 #18224a; }
-.brand span { font-size: 13px; color: #b9c6ff; }
+.brand span { display: block; margin-top: 6px; font-size: 13px; color: #b9c6ff; }
+.brand .intro { display: none; }
 /* ── 아이콘 ── */
 .icons { position: fixed; left: 16px; top: 16px; bottom: calc(var(--task) + 16px); display: grid; grid-auto-flow: column; grid-template-rows: repeat(auto-fill, 92px); gap: 4px 8px; align-content: start; }
 .ic { width: 88px; display: grid; justify-items: center; align-content: start; gap: 4px; text-decoration: none; color: var(--paper); font-size: 12px; line-height: 16px; text-align: center; padding: 6px 2px; background: none; border: 0; cursor: pointer; }
@@ -168,7 +169,8 @@ body { background: #23305a; -webkit-user-select: none; user-select: none; }
 .keys { padding: 14px 16px; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-family: "Galmuri11", monospace; font-size: 12px; line-height: 20px; }
 /* 휴대폰: 창은 화면을 채운다 */
 @media (max-width: 760px) {
-  .brand { left: 16px; bottom: 16px; } .brand b { font-size: 44px; }
+  .brand { left: 16px; right: 16px; bottom: auto; top: var(--brand-top, 320px); } .brand b { font-size: 44px; }
+  .brand .intro { display: block; margin-top: 8px; font-size: 13px; line-height: 20px; color: #e7ecff; word-break: keep-all; }
   .icons { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); grid-template-rows: none; right: 16px; bottom: auto; }
   .ic { width: auto; }
   .wnd:not(.hj) { left: 6px !important; right: 6px; top: 6px !important; width: auto !important; max-height: calc(100vh - var(--task) - 12px); }
@@ -176,22 +178,30 @@ body { background: #23305a; -webkit-user-select: none; user-select: none; }
   .field { height: 140px; } .field .actor { transform: scale(.78); } .field .me { transform-origin: 0 100%; } .field .mob { transform-origin: 100% 100%; }
   .task .app span { display: none; } .task .tray .kb { display: none; }
 }
+/* 짧은 휴대폰: 위젯을 줄이고 소개 한 줄은 뺀다 */
+@media (max-width: 760px) and (max-height: 720px) {
+  .field { height: 96px; } .field .actor { transform: scale(.55); }
+  .brand .intro { display: none; }
+}
 </style>
 </head>
 <body class="g">
 <div class="wall"></div>
-<div class="brand"><b>SEO GAEUN</b><span>게임 UI 디자이너 / 테크니컬 아티스트</span></div>
+<div class="brand"><b>SEO GAEUN</b><span>게임 UI 아티스트 / 테크니컬 아트</span><p class="intro">생성 AI로 뽑은 그림을 게임에 바로 쓸 수 있게 다듬어요. 아이콘을 눌러 프로젝트를 열어 보세요.</p></div>
 
 <nav class="icons" id="icons" aria-label="바탕화면 아이콘" role="listbox"></nav>
 <div id="wins"></div>
 
 <div class="menu" id="menu" role="menu">
-  <div class="hd">서가은<small>게임 UI 디자이너 / 테크니컬 아티스트</small></div>
+  <div class="hd">서가은<small>게임 UI 아티스트 / 테크니컬 아트</small></div>
   <button data-open="readme" role="menuitem">README.txt <kbd>0</kbd></button>
   <button data-open="dv" role="menuitem">DEVIANT <kbd>1</kbd></button>
   <button data-open="hjw" role="menuitem">한짝 <kbd>2</kbd></button>
   <button data-open="av" role="menuitem">AIVO <kbd>3</kbd></button>
   <button data-open="work" role="menuitem">작업 과정 <kbd>4</kbd></button>
+  <hr>
+  <a href="hanjjak-pipeline/" role="menuitem">한짝 장비 파이프라인 데모</a>
+  <a href="https://github.com/Seogaeun03/palette-snap" role="menuitem">palette-snap (도구)</a>
   <hr>
   <a href="pdf/seogaeun-game-ui.pdf" role="menuitem">포트폴리오 PDF (게임 UI)</a>
   <a href="pdf/seogaeun-technical-art.pdf" role="menuitem">포트폴리오 PDF (테크니컬 아트)</a>
@@ -216,7 +226,7 @@ const PROJ = {
     st: ['HUD 도트 통일', '아이콘 54개', '조작 14 → 7회'], href: 'p-deviant.html' },
   hj: { title: '한짝.exe', acc: '#d9621c', name: '한짝', kind: '웹 방치형 게임', media: '<video src="img/battle-sushi.webm" poster="img/battle-sushi-poster.jpg" autoplay muted loop playsinline></video>',
     rows: [['기간', '2026.08 ~ 09'], ['역할', '팀장, 디자인 총괄 / 6인'], ['수상', '<b>우수상</b>']], p: '바탕화면에 띄워 두면 젓가락이 알아서 싸우는 게임. 생성 AI 옷을 그대로 입히는 제작 흐름을 만들었어요.',
-    st: ['치장 세트 10벌', '옷 흔들림 96.9 → 6.9%', '몬스터 90종'], href: 'p-hanjjak.html' },
+    st: ['치장 28세트 190종', '옷 흔들림 96.9 → 6.9%', '몬스터 90종'], href: 'p-hanjjak.html' },
   av: { title: 'AIVO.app', acc: '#5c64c8', name: 'AIVO', kind: '웹 서비스', media: '<img src="img/aivo-interview-report.jpg" alt="AIVO 면접 리포트" style="object-position:top left">',
     rows: [['기간', '2026.07 ~ 08'], ['역할', '프론트엔드 / 6인'], ['수상', '<b>우수상</b>']], p: '발표와 면접 연습을 다시 보여 주는 AI 말하기 코치. 면접과 리포트 화면을 만들었어요.',
     st: ['Vue 3', '실제 응답 검수', '리포트 그래프'], href: 'p-aivo.html' },
@@ -234,6 +244,8 @@ const ICONS = [
   { id: 'hjw', label: '한짝', pic: '<img src="img/hj-logo.png" alt="" style="image-rendering:auto">' },
   { id: 'av', label: 'AIVO', pic: '<span class="aivo-ic"><img src="img/aivo-logo.png" alt=""></span>' },
   { id: 'work', label: '작업 과정', pic: '<span class="folder"></span>' },
+  { href: 'hanjjak-pipeline/', label: '장비 파이프라인', pic: '<svg width="48" height="48" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#1b1616" d="M0 3h5v6H0zM6 5h4v6H6zM11 7h5v6h-5z"/><path fill="#fdeeda" d="M1 4h3v4H1zM7 6h2v4H7zM12 8h3v4h-3z"/><path fill="#d9621c" d="M2 5h1v2H2zM7 7h2v2H7zM13 9h1v2h-1z"/><path fill="#fdeeda" d="M5 6h1v1H5zM10 8h1v1h-1z"/></svg>' },
+  { href: 'https://github.com/Seogaeun03/palette-snap', label: 'palette-snap', pic: '<svg width="48" height="48" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#1b1616" d="M4 2h7v1h2v1h1v2h1v5h-1v2h-2v1H9v-1H8v-2H6v1H5v1H3v-1H2v-1H1V5h1V4h1V3h1z"/><path fill="#fdeeda" d="M4 3h7v1h2v2h1v5h-1v1h-2v1H9v-2H8V9H6v1H5v1H3v-1H2V5h1V4h1z"/><path fill="#ff5d8f" d="M4 5h2v2H4z"/><path fill="#ffcf4a" d="M7 4h2v2H7z"/><path fill="#2fd3a0" d="M10 5h2v2h-2z"/><path fill="#2f80ff" d="M11 8h2v2h-2z"/></svg>' },
   { href: 'pdf/seogaeun-game-ui.pdf', label: '게임 UI.pdf', pic: '<span class="file" data-t="PDF"></span>' },
   { href: 'pdf/seogaeun-technical-art.pdf', label: '테크아트.pdf', pic: '<span class="file" data-t="PDF"></span>' },
   { href: 'https://github.com/Seogaeun03', label: 'GitHub', pic: '<svg width="44" height="44" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#1b1616" d="M5 1h6v1h2v2h1v6h-1v2h-2v1h-1v2H6v-2H5v-1H3v-2H2V4h1V2h2z"/><path fill="#fff" d="M5 4h1v1h4V4h1v1h1v4h-1v1H9v1H7v-1H5V9H4V5h1z"/></svg>' },
@@ -257,7 +269,7 @@ selIcon(1);
 let z = 10; const wins = {}; const winsEl = $('#wins'), apps = $('#apps');
 const DEF = {
   readme: { title: 'README.txt', acc: '#3a3030', w: 380, x: 140, y: 30, body: () => `<div class="readme"><h2>SEO GAEUN</h2>
-      <p>게임 화면의 규칙을 세우고, 그 규칙대로 그림이 나오는 제작 흐름을 만들어요.</p>
+      <p>게임 UI 아티스트 서가은입니다. 요즘은 생성 AI로 뽑은 그림을 게임에 바로 쓸 수 있게 다듬는 일을 많이 해요.</p>
       <p class="dim">아이콘을 두 번 누르거나, 숫자 1 2 3 으로 프로젝트를 열어 보세요.</p>
       <div class="go"><button data-open="dv">DEVIANT</button><button data-open="hjw">한짝</button><button data-open="av">AIVO</button></div></div>` },
   dv: { w: 660, x: 300, y: 90 }, hjw: { w: 660, x: 330, y: 120, p: 'hj' }, av: { w: 660, x: 360, y: 150 },
@@ -438,6 +450,9 @@ addEventListener('keydown', e => {
 // 처음 화면: README 와 한짝 위젯
 // 프로젝트 페이지에서 돌아오면 ?open=N 으로 그 창을 연다
 const back = ['', 'dv', 'hjw', 'av'][+new URLSearchParams(location.search).get('open')] || '';
+// 휴대폰: 이름을 아이콘 바로 아래에 둔다
+const placeBrand = () => document.documentElement.style.setProperty('--brand-top', (iconsEl.getBoundingClientRect().bottom + 12) + 'px');
+placeBrand(); addEventListener('resize', placeBrand);
 if (innerWidth > 760 && !back) openWin('readme'); openWin('widget'); battle(true);
 if (back) openWin(back);
 const hashDoc = Object.keys(DOCS).find(k => '#' + DOCS[k][1] === location.hash);
